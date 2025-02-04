@@ -1,41 +1,42 @@
 ﻿using System;
-using Livrable1.Controlleur;
-using Livrable1.Vue;
+using Livrable1.Controller;
+using Livrable1.View;
 class Program
 {
     static void Main(string[] args)
     {
-        CtrlSauvegarde sauvegarde = new CtrlSauvegarde();
+        CtrlBackup sauvegarde = new CtrlBackup();
         bool quitter = false;
 
         while (!quitter)
         {
-            VueConsole.AfficherMenu();
+            ViewConsole.ShowMenu();
             ConsoleKeyInfo choix = Console.ReadKey();
             Console.Clear();
 
             switch (choix.KeyChar)
             {
                 case '1':
-                    sauvegarde.AjouterTravail();
+                    sauvegarde.AddBackup();
                     break;
                 case '2':
-                    sauvegarde.ExecuterSauvegarde();
+                    sauvegarde.ExecuteBackup();
                     break;
                 case '3':
-                    sauvegarde.RecupererSauvegarde();
+                    sauvegarde.RecoverBackup();
                     break;
                 case '4':
-                    sauvegarde.ChoisirLangue();
+                    sauvegarde.ChoiceLanguage();
                     break;
                 case '5':
-                    sauvegarde.VoirLogs();
+                    sauvegarde.ShowLogs();
                     break;
                 case '6':
                     quitter = true;
-                    VueConsole.AfficherMenuQuitter();
+                    ViewConsole.ShowMenuLeave();
                     break;
                 default:
+                    ViewConsole.ShowLogo();
                     Console.WriteLine("Choix non valide, veuillez réessayer.");
                     break;
             }
