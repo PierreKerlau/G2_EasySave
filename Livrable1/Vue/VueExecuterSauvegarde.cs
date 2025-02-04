@@ -8,6 +8,10 @@ namespace Livrable1.Vue
 {
     internal class VueExecuterSauvegarde
     {
-        // TODO
+        public static void ExecuterSauvegarde()
+        {
+            VueConsole.AfficherLogo();
+            Console.WriteLine("Exécuter une sauvegarde\n");
+        }
     }
 }

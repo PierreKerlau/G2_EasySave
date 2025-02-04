@@ -11,7 +11,7 @@ namespace Livrable1.Controlleur
     public class CtrlSauvegarde
     {
         private List<CtrlSauvegarde> sauvegardes = new();
-        private const string FilePathSauvegarde = "sauvegardes.json";
+        private const string FILE_PATH_SAUVEGARDE = "sauvegardes.json";
         public CtrlSauvegarde()
         {
             ChargerDonnees();
@@ -19,31 +19,39 @@ namespace Livrable1.Controlleur
 
         public void AjouterTravail()
         {
-            AjouterTravail();
+            VueAjouterTravail.AjouterTravail();
+            Console.WriteLine("Saisir une valeur");
+            var valeur = Console.ReadLine();
+            Console.WriteLine(valeur);
         }
 
         public void ExecuterSauvegarde()
         {
-            Console.WriteLine("Test exécuter sauvegarde");
+            VueExecuterSauvegarde.ExecuterSauvegarde();
+        }
+
+        public void RecupererSauvegarde()
+        {
+            VueRecupererSauvegarde.RecupererSauvegarde();
         }
 
         public void ChoisirLangue()
         {
-            Console.WriteLine("Test choisir langue");
+            VueChoisirLangue.ChoisirLangue();
         }
 
         public void VoirLogs()
         {
-            Console.WriteLine("Test voir logs");
+            VueChoisirLangue.ChoisirLangue();
         }
 
         public void ChargerDonnees()
         {
             try
             {
-                if (File.Exists(FilePathSauvegarde))
+                if (File.Exists(FILE_PATH_SAUVEGARDE))
                 {
-                    string json = File.ReadAllText(FilePathSauvegarde);
+                    string json = File.ReadAllText(FILE_PATH_SAUVEGARDE);
                     sauvegardes = JsonSerializer.Deserialize<List<CtrlSauvegarde>>(json) ?? new List<CtrlSauvegarde>();
                 }
             }

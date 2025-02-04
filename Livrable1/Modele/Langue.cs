@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Livrable1.Modele
 {
-    internal class Langues
+    internal class Langue
     {
         public string nom { get; set; }
         public int idLangue { get; set; }
 
-        public Langues(string nom, int idLangue)
+        public Langue(string nom, int idLangue)
         {
             this.nom = nom;
             this.idLangue = idLangue;

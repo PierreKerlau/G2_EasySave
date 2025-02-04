@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Livrable1.Vue
 {
-    internal class VueAjouterTravail
+    internal class VueRecupererSauvegarde
     {
-        public static void AjouterTravail()
+        public static void RecupererSauvegarde()
         {
             VueConsole.AfficherLogo();
-            Console.WriteLine("Ajouter du travail à effectuer\n");
+            Console.WriteLine("Récupérer une sauvegarde\n");
         }
     }
 }

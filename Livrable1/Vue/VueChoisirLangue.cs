@@ -8,6 +8,10 @@ namespace Livrable1.Vue
 {
     internal class VueChoisirLangue
     {
-        // TODO
+        public static void ChoisirLangue()
+        {
+            VueConsole.AfficherLogo();
+            Console.WriteLine("Choisir une langue\n");
+        }
     }
 }

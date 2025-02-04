@@ -8,6 +8,10 @@ namespace Livrable1.Vue
 {
     internal class VueVoirLogs
     {
-        // TODO
+        public static void VoirLogs()
+        {
+            VueConsole.AfficherLogo();
+            Console.WriteLine("Voir les logs\n");
+        }
     }
 }

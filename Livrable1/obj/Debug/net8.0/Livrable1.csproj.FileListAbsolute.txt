@@ -26,3 +26,4 @@ C:\Users\pierr\source\repos\G2_EasySave\Livrable1\obj\Debug\net8.0\refint\Livrab
 C:\Users\pierr\source\repos\G2_EasySave\Livrable1\obj\Debug\net8.0\Livrable1.pdb
 C:\Users\pierr\source\repos\G2_EasySave\Livrable1\obj\Debug\net8.0\Livrable1.genruntimeconfig.cache
 C:\Users\pierr\source\repos\G2_EasySave\Livrable1\obj\Debug\net8.0\ref\Livrable1.dll
+C:\Users\pierr\source\repos\G2_EasySave\Livrable1\obj\Debug\net8.0\Livrable1.sourcelink.json

@@ -11,12 +11,13 @@ namespace Livrable1.Vue
         public static void AfficherMenu()
         {
             AfficherLogo();
-            Console.WriteLine("===== Menu Sauvegarde =====");
+            Console.WriteLine("====== Menu Sauvegarde ======");
             Console.WriteLine("[1] Ajouter un travail de sauvegarde");
             Console.WriteLine("[2] Exécuter un travail de sauvegarde");
-            Console.WriteLine("[3] Choisir une langue");
-            Console.WriteLine("[4] Voir les journaux de sauvegardes");
-            Console.WriteLine("[5] Quitter");
+            Console.WriteLine("[3] Récupérer une sauvegarde");
+            Console.WriteLine("[4] Choisir une langue");
+            Console.WriteLine("[5] Voir les journaux de sauvegardes");
+            Console.WriteLine("[6] Quitter");
             Console.WriteLine("=============================");
             Console.Write("Votre choix : ");
         }

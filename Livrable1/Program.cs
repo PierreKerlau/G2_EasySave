@@ -23,12 +23,15 @@ class Program
                     sauvegarde.ExecuterSauvegarde();
                     break;
                 case '3':
-                    sauvegarde.ChoisirLangue();
+                    sauvegarde.RecupererSauvegarde();
                     break;
                 case '4':
-                    sauvegarde.VoirLogs();
+                    sauvegarde.ChoisirLangue();
                     break;
                 case '5':
+                    sauvegarde.VoirLogs();
+                    break;
+                case '6':
                     quitter = true;
                     VueConsole.AfficherMenuQuitter();
                     break;

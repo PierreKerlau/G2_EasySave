@@ -8,22 +8,23 @@ namespace Livrable1.Modele
 {
     public class Sauvegarde
     {
-        public string Nom { get; set; }
-        public string CheminSource { get; set; }
-        public string CheminDestination { get; set; }
-        public DateTime DateCreation { get; set; }
+        public string nom { get; set; }
+        public string type { get; set; }
+        public string cheminSource { get; set; }
+        public string cheminDestination { get; set; }
+        public DateTime dateCreation { get; set; }
 
         public Sauvegarde(string nom, string cheminSource, string cheminDestination)
         {
-            Nom = nom;
-            CheminSource = cheminSource;
-            CheminDestination = cheminDestination;
-            DateCreation = DateTime.Now;
+            this.nom = nom;
+            this.cheminSource = cheminSource;
+            this.cheminDestination = cheminDestination;
+            this.dateCreation = DateTime.Now;
         }
 
         public override string ToString()
         {
-            return $"[{DateCreation}] {Nom} - De {CheminSource} vers {CheminDestination}";
+            return $"[{dateCreation}] {nom} - De {cheminSource} vers {cheminDestination}";
         }
     }
 }
