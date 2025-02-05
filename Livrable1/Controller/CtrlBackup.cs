@@ -6,6 +6,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Livrable1.Model;
 using Livrable1.View;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 
 namespace Livrable1.Controller
 {
@@ -205,6 +209,81 @@ namespace Livrable1.Controller
             {
                 Console.WriteLine($"Error loading data: {ex.Message}");
             }
+        }
+
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        public void StartSauvegarde()
+        {
+            Timer timer = new Timer(GenererJson, null, 0, 200); // Mise à jour toutes les 5 sec
+            Console.WriteLine("Mise à jour des états en temps réel... Appuyez sur Entrée pour quitter.");
+            Console.ReadLine();
+        }
+
+        private void GenererJson(object? state)
+        {
+            string filePath = "state.json";
+            List<EtatSauvegarde> sauvegardes;
+
+            // Vérifie si le fichier JSON existe déjà
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    // Lecture du fichier JSON existant
+                    string existingJson = File.ReadAllText(filePath);
+                    sauvegardes = JsonSerializer.Deserialize<List<EtatSauvegarde>>(existingJson) ?? new List<EtatSauvegarde>();
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Erreur de lecture du JSON, création d'un nouveau fichier.");
+                    sauvegardes = new List<EtatSauvegarde>();
+                }
+            }
+            else
+            {
+                sauvegardes = new List<EtatSauvegarde>();
+            }
+
+            // Simulation de plusieurs sauvegardes en cours
+            Random rnd = new Random();
+            for (int i = 1; i <= 3; i++) // Simuler 3 sauvegardes
+            {
+                string nomSauvegarde = "Sauvegarde_" + i;
+
+                // Rechercher si la sauvegarde existe déjà
+                var etat = sauvegardes.Find(s => s.Appellation == nomSauvegarde);
+                if (etat == null)
+                {
+                    // Création d'une nouvelle sauvegarde
+                    etat = new EtatSauvegarde
+                    {
+                        Appellation = nomSauvegarde,
+                        HorodatageDerniereAction = DateTime.Now,
+                        Etat = "Actif",
+                        NombreTotalFichiers = 100,
+                        TailleTotaleFichiersMB = 5000,
+                        Progression = 0
+                    };
+                    sauvegardes.Add(etat);
+                }
+
+                // Mise à jour des valeurs existantes
+                etat.HorodatageDerniereAction = DateTime.Now;
+                etat.Progression = Math.Min(etat.Progression + rnd.Next(1, 10), 100);
+                etat.NombreFichiersRestants = etat.NombreTotalFichiers * (100 - etat.Progression) / 100;
+                etat.TailleFichiersRestantsMB = etat.TailleTotaleFichiersMB * (100 - etat.Progression) / 100;
+                etat.FichierSource = "/mnt/data/source/file" + rnd.Next(1, 100) + ".txt";
+                etat.FichierDestination = "/mnt/data/destination/file" + rnd.Next(1, 100) + ".txt";
+
+                // Si progression à 100%, marquer comme terminé
+                if (etat.Progression == 100)
+                    etat.Etat = "END";
+            }
+
+            // Sérialisation et écriture dans le même fichier JSON
+            string json = JsonSerializer.Serialize(sauvegardes, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filePath, json);
+
         }
     }
 }
