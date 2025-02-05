@@ -11,7 +11,7 @@ namespace Livrable1.View
         public static void AddBackup()
         {
             ViewConsole.ShowLogo();
-            Console.WriteLine("Add work to be done\n");
+            Console.WriteLine("Add a new backup job\n");
         }
     }
 }
