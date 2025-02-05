@@ -6,6 +6,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        CtrlBackup controller = new CtrlBackup();
+        controller.StartSauvegarde();
         Console.OutputEncoding = Encoding.UTF8;
         CtrlBackup sauvegarde = new CtrlBackup();
         bool quitter = false;
