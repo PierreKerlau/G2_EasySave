@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Livrable1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2fe1e7ea61dd6f0b92c667b8293d51c77d525fb9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9e3db56f180ace7b6c3aef9440489a95808b12a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Livrable1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Livrable1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
