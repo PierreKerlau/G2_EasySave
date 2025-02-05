@@ -17,7 +17,7 @@ Notre équipe se compose de 4 membres, tous étudiants en informatique.
 
 **Contenu du projet**
 
-L'application EasySave est un logiciel de sauvegarde. 
+L'application EasySave est un logiciel de sauvegarde. Pour l'utilisateur, l'objectif est de pouvoir sauvegarder des dossiers et des fichiers en utilisant deux types de sauvegardes : les sauvegardes complètes et les sauvegardes différentielles. 
 
 **Outils et langages** 
 
