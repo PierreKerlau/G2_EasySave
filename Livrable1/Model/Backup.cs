@@ -13,6 +13,7 @@ namespace Livrable1.Model
         public string sourcePath { get; set; }
         public string destinationPath { get; set; }
         public DateTime creationDate { get; set; }
+        public bool isDirectory { get; set; }
 
         public Backup(string name, string sourcePath, string destinationPath)
         {
@@ -20,11 +21,13 @@ namespace Livrable1.Model
             this.sourcePath = sourcePath;
             this.destinationPath = destinationPath;
             this.creationDate = DateTime.Now;
+            this.isDirectory = Directory.Exists(sourcePath);
         }
 
         public override string ToString()
         {
-            return $"[{creationDate}] {name} - From {sourcePath} to {destinationPath}";
+            string type = isDirectory ? "Folder" : "File";
+            return $"[{creationDate}] {type}: {name} - From {sourcePath} to {destinationPath}";
         }
     }
 }

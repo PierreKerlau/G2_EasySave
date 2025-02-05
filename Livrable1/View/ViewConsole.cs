@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Livrable1.Controller;
 
 namespace Livrable1.View
 {
@@ -11,21 +12,20 @@ namespace Livrable1.View
         public static void ShowMenu()
         {
             ShowLogo();
-            Console.WriteLine("======== Backup menu ========\n");
-            Console.WriteLine("[1] Add a backup job");
-            Console.WriteLine("[2] Run a backup job");
-            Console.WriteLine("[3] Recover a backup");
-            Console.WriteLine("[4] Choose a language");
-            Console.WriteLine("[5] View backup logs");
-            Console.WriteLine("[6] Exit");
+            Console.WriteLine($"======== {LanguageManager.GetText("menu_title")} ========\n");
+            Console.WriteLine($"[1] {LanguageManager.GetText("menu_add")}");
+            Console.WriteLine($"[2] {LanguageManager.GetText("menu_run")}");
+            Console.WriteLine($"[3] {LanguageManager.GetText("menu_recover")}");
+            Console.WriteLine($"[4] {LanguageManager.GetText("menu_language")}");
+            Console.WriteLine($"[5] {LanguageManager.GetText("menu_leave")}\n");
             Console.WriteLine("=============================");
-            Console.Write("Your choice : ");
+            Console.WriteLine(LanguageManager.GetText("menu_choice"));
         }
 
         public static void ShowMenuLeave()
         {
             ShowLogo();
-            Console.WriteLine("Thanks for using EasySave.");
+            Console.WriteLine(LanguageManager.GetText("menu_thanks"));
         }
 
         public static void ShowLogo()
