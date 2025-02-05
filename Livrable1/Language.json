@@ -1,26 +1,28 @@
 {
-    "en": {
-        "menu_title": "Backup Menu",
-        "menu_add": "Add a backup job",
-        "menu_run": "Run a backup job",
-        "menu_recover": "Recover a backup",
-        "menu_language": "Choose a language",
-        "menu_leave": "Exit",
-        "menu_choice": "Enter your choice : ",
-        "menu_thanks": "Thanks for using EasySave.",
-        "choose_language": "Choose a language:\n[1] English\n[2] Français",
-        "invalid_choice": "Invalid choice, please try again."
-    },
-    "fr": {
-        "menu_title": "Menu de Sauvegarde",
-        "menu_add": "Ajouter une tâche de sauvegarde",
-        "menu_run": "Exécuter une tâche de sauvegarde",
-        "menu_recover": "Récupérer une sauvegarde",
-        "menu_language": "Choisir une langue",
-        "menu_leave": "Quitter",
-        "menu_choice": "Entrez votre choix : ",
-        "menu_thanks": "Merci d'utiliser EasySave.",
-        "choose_language": "Choisissez une langue:\n[1] English\n[2] Français",
-        "invalid_choice": "Choix invalide, veuillez réessayer."
-    }
+  "en": {
+    "menu_title": "Backup Menu",
+    "menu_add": "Add a backup job",
+    "menu_run": "Run a backup job",
+    "menu_recover": "Recover a backup",
+    "menu_language": "Choose a language",
+    "menu_leave": "Exit",
+    "menu_choice": "Enter your choice : ",
+    "menu_thanks": "Thanks for using EasySave.",
+    "choose_language": "Choose a language:\n[1] English\n[2] Français",
+    "invalid_choice": "Invalid choice, please try again.",
+    "menu_logs":  "View the logs"
+  },
+  "fr": {
+    "menu_title": "Menu de Sauvegarde",
+    "menu_add": "Ajouter une tâche de sauvegarde",
+    "menu_run": "Exécuter une tâche de sauvegarde",
+    "menu_recover": "Récupérer une sauvegarde",
+    "menu_language": "Choisir une langue",
+    "menu_leave": "Quitter",
+    "menu_choice": "Entrez votre choix : ",
+    "menu_thanks": "Merci d'utiliser EasySave.",
+    "choose_language": "Choisissez une langue:\n[1] English\n[2] Français",
+    "invalid_choice": "Choix invalide, veuillez réessayer.",
+    "menu_logs": "Voir les logs"
+  }
 }

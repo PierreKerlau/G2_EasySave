@@ -16,10 +16,12 @@ namespace Livrable1.Controller
     {
         private List<Backup> backupJobs = new();
         private List<string> backupNames = new();
+        private Logger logger;
 
         public CtrlBackup()
         {
             LoadData();
+            logger = new Logger();
         }
 
         public void AddBackup()
@@ -110,6 +112,7 @@ namespace Livrable1.Controller
         public void ExecuteBackup()
         {
             ViewExecuteBackup.ExecuteBackup();
+            logger.UpdateState("Backup Operation", "Starting backup");
 
             if (backupJobs.Count == 0)
             {
@@ -143,6 +146,7 @@ namespace Livrable1.Controller
             {
                 Backup backup = backupJobs[index - 1];
                 string destinationFolder = Path.Combine(backup.destinationPath, backup.name);
+                logger.UpdateState(backup.name, $"Starting backup of {backup.name}");
 
                 bool backupExists = Directory.Exists(destinationFolder);
                 if (isDifferential && !backupExists)
@@ -167,11 +171,16 @@ namespace Livrable1.Controller
                     {
                         if (File.Exists(file))
                         {
+                            var startTime = DateTime.Now;
+                            long fileSize = new FileInfo(file).Length;
+
                             if (isDifferential)
                             {
                                 if (!File.Exists(destinationFile) || File.GetLastWriteTime(file) > File.GetLastWriteTime(destinationFile))
                                 {
                                     File.Copy(file, destinationFile, true);
+                                    long transferTime = (long)(DateTime.Now - startTime).TotalMilliseconds;
+                                    logger.LogBackupOperation(backup.name, file, destinationFile, fileSize, transferTime);
                                     Console.WriteLine($"[DIFFERENTIAL] {fileName} copied.");
                                 }
                                 else
@@ -182,24 +191,30 @@ namespace Livrable1.Controller
                             else
                             {
                                 File.Copy(file, destinationFile, true);
+                                long transferTime = (long)(DateTime.Now - startTime).TotalMilliseconds;
+                                logger.LogBackupOperation(backup.name, file, destinationFile, fileSize, transferTime);
                                 Console.WriteLine($"[FULL] {fileName} copied.");
                             }
                         }
                         else
                         {
                             Console.WriteLine($"ERROR: File '{fileName}' not found.");
+                            logger.UpdateState(backup.name, $"Error: File {fileName} not found");
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"ERROR: Failed to backup '{fileName}': {ex.Message}");
+                        logger.UpdateState(backup.name, $"Error: {ex.Message}");
                     }
                 }
+                
+                logger.UpdateState(backup.name, "Backup completed successfully");
             }
 
+            logger.UpdateState("Backup Operation", "All backups completed");
             Console.WriteLine("\nBackup process completed!");
         }
-
 
         private List<int> ParseSelection(string input, int maxIndex)
         {
@@ -392,5 +407,10 @@ namespace Livrable1.Controller
             File.WriteAllText(filePath, json);
 
         }
+        public void ShowLogs()
+        {
+            ViewLogs.ShowLogs();
+        }
     }
+
 }
