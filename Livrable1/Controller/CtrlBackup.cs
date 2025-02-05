@@ -14,8 +14,8 @@ namespace Livrable1.Controller
         private List<Backup> saves = new();
         private const string FILE_PATH_SAVE = "save.json";
 
-        private const string SOURCE_FOLDER = @"C:\Users\pierr\Documents\CESI\CESI_A3\Bloc_2_Genie_Logiciel\Clonage\Source";
-        private const string DESTINATION_FOLDER = @"C:\Users\pierr\Documents\CESI\CESI_A3\Bloc_2_Genie_Logiciel\Clonage\Destination";
+        private const string SOURCE_FOLDER = @"D:\CESI\FISA A3 INFO\Semestre 5\Bloc 2 - Génie logiciel\Livrables\Livrable 1\Source";
+        private const string DESTINATION_FOLDER = @"D:\CESI\FISA A3 INFO\Semestre 5\Bloc 2 - Génie logiciel\Livrables\Livrable 1\Destination";
 
         private List<Backup> backupJobs = new();
 
@@ -177,7 +177,67 @@ namespace Livrable1.Controller
 
         public void RecoverBackup()
         {
-            ViewRecoverBackup.RecoverBackup();
+            bool continueRecovery;
+            do
+            {
+                Console.Clear();
+                ViewRecoverBackup.RecoverBackup();
+                Console.Write("Select backup type - Complete (C) / Differential (D): ");
+                string backupType = Console.ReadLine().Trim().ToLower();
+
+                bool isDifferential = backupType == "d";
+
+                Console.WriteLine("\nAvailable backups:");
+                foreach (var backup in backupJobs)
+                {
+                    Console.WriteLine($"- {backup.name}");
+                }
+
+                string backupName;
+                Backup selectedBackup = null;
+                do
+                {
+                    Console.Write("\nEnter the name of the backup to recover: ");
+                    backupName = Console.ReadLine().Trim();
+                    selectedBackup = backupJobs.FirstOrDefault(b => b.name.Equals(backupName, StringComparison.OrdinalIgnoreCase));
+
+                    if (selectedBackup == null)
+                    {
+                        Console.WriteLine("ERROR: Backup name not found. Please try again.");
+                    }
+                } while (selectedBackup == null);
+
+                Console.WriteLine("\nStarting recovery...");
+                string destinationFolder = selectedBackup.destinationPath;
+                string[] files = selectedBackup.sourcePath.Split(" | ");
+
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    string sourceFile = Path.Combine(destinationFolder, selectedBackup.name, fileName);
+                    string recoverPath = Path.Combine(destinationFolder, fileName);
+
+                    try
+                    {
+                        if (File.Exists(sourceFile))
+                        {
+                            File.Copy(sourceFile, recoverPath, true);
+                            Console.WriteLine($"[RECOVERY] {fileName} restored.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"ERROR: File '{fileName}' not found in backup.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"ERROR: Failed to recover '{fileName}': {ex.Message}");
+                    }
+                }
+
+                Console.Write("\nDo you want to recover another backup? (o/N): ");
+                continueRecovery = Console.ReadLine().Trim().ToLower() == "o";
+            } while (continueRecovery);
         }
 
         public void ChoiceLanguage()
