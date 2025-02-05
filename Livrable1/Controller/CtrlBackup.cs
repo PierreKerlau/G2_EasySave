@@ -37,11 +37,6 @@ namespace Livrable1.Controller
             ViewChoiceLanguage.ChoiceLanguage();
         }
 
-        public void ShowLogs()
-        {
-            ViewChoiceLanguage.ChoiceLanguage();
-        }
-
         public void LoadData()
         {
             try

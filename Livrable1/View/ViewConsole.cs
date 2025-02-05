@@ -16,8 +16,7 @@ namespace Livrable1.View
             Console.WriteLine("[2] Run a backup job");
             Console.WriteLine("[3] Recover a backup");
             Console.WriteLine("[4] Choose a language");
-            Console.WriteLine("[5] View backup logs");
-            Console.WriteLine("[6] Exit");
+            Console.WriteLine("[5] Exit");
             Console.WriteLine("=============================");
             Console.Write("Your choice : ");
         }

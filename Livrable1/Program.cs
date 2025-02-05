@@ -29,9 +29,6 @@ class Program
                     sauvegarde.ChoiceLanguage();
                     break;
                 case '5':
-                    sauvegarde.ShowLogs();
-                    break;
-                case '6':
                     quitter = true;
                     ViewConsole.ShowMenuLeave();
                     break;
