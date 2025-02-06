@@ -17,8 +17,7 @@ namespace Livrable1.View
             Console.WriteLine($"[2] {LanguageManager.GetText("menu_run")}");
             Console.WriteLine($"[3] {LanguageManager.GetText("menu_recover")}");
             Console.WriteLine($"[4] {LanguageManager.GetText("menu_language")}");
-            Console.WriteLine($"[5] {LanguageManager.GetText("menu_logs")}");
-            Console.WriteLine($"[6] {LanguageManager.GetText("menu_leave")}\n");
+            Console.WriteLine($"[5] {LanguageManager.GetText("menu_leave")}\n");
             Console.WriteLine("=============================");
             Console.WriteLine(LanguageManager.GetText("menu_choice"));
         }
