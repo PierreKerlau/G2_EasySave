@@ -17,6 +17,7 @@ namespace Livrable1.Controller
         private List<Backup> backupJobs = new();
         private List<string> backupNames = new();
         private Logger logger;
+        private readonly object _lockFile = new object();
 
         public CtrlBackup()
         {
@@ -344,7 +345,7 @@ namespace Livrable1.Controller
         private void GenererJson(object? state)
         {
             string filePath = "state.json";
-            List<EtatSauvegarde> sauvegardes;
+            List<EtatSauvegarde> sauvegardes = new();
 
             // Vérifie si le fichier JSON existe déjà
             if (File.Exists(filePath))
@@ -402,10 +403,25 @@ namespace Livrable1.Controller
                     etat.Etat = "END";
             }
 
-            // Sérialisation et écriture dans le même fichier JSON
-            string json = JsonSerializer.Serialize(sauvegardes, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, json);
-
+            // Sérialisation et écriture dans le fichier JSON avec verrou
+            try
+            {
+                string json = JsonSerializer.Serialize(sauvegardes, new JsonSerializerOptions { WriteIndented = true });
+                
+                lock (_lockFile)
+                {
+                    // Utilisation de FileShare.ReadWrite pour permettre la lecture pendant l'écriture
+                    using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                    using (StreamWriter sw = new StreamWriter(fs))
+                    {
+                        sw.Write(json);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de l'écriture du fichier state.json : {ex.Message}");
+            }
         }
         public void ShowLogs()
         {
