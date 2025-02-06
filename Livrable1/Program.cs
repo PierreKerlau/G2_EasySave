@@ -6,6 +6,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        CtrlBackup controller = new CtrlBackup();
+        controller.StartSauvegarde();
         Console.OutputEncoding = Encoding.UTF8;
         CtrlBackup sauvegarde = new CtrlBackup();
         bool quitter = false;
@@ -23,7 +25,8 @@ class Program
                 case '2': sauvegarde.ExecuteBackup(); break;
                 case '3': sauvegarde.RecoverBackup(); break;
                 case '4': sauvegarde.ChoiceLanguage(); break;
-                case '5': quitter = true; ViewConsole.ShowMenuLeave(); break;
+                case '5': sauvegarde.ShowLogs(); break;
+                case '6': quitter = true; ViewConsole.ShowMenuLeave(); break;
                 default: Console.WriteLine(LanguageManager.GetText("invalid_choice")); break;
             }
             Console.WriteLine("\nAppuyez sur une touche pour continuer...");
