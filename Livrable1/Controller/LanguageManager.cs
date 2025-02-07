@@ -1,4 +1,5 @@
 ﻿
+using Livrable1.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,9 +20,8 @@ namespace Livrable1.Controller
         public void ChoiceLanguage()
         {
             Console.Clear();
+            ViewConsole.ShowLogo();
             Console.WriteLine(LanguageManager.GetText("choose_language"));
-            Console.WriteLine("1. " + LanguageManager.GetText("english"));
-            Console.WriteLine("2. " + LanguageManager.GetText("french"));
 
             ConsoleKeyInfo choice = Console.ReadKey();
 
@@ -40,8 +40,6 @@ namespace Livrable1.Controller
                 Console.WriteLine($"\n{LanguageManager.GetText("invalid_choice")}");
             }
 
-            Console.WriteLine("\n" + LanguageManager.GetText("press_any_key"));
-            Console.ReadKey(); // Attend que l'utilisateur appuie sur une touche pour revenir au menu.
         }
 
         public static void LoadLanguages()

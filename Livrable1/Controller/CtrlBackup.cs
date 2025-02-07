@@ -79,7 +79,7 @@ namespace Livrable1.Controller
                     Console.WriteLine($"[{i + 1}] {Path.GetFileName(files[i])}");
                 }
 
-                Console.Write("\n" + LanguageManager.GetText("no_files_found"));
+                Console.Write("\n" + LanguageManager.GetText("select_file_number"));
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice >= 0 && choice <= files.Length)
                 {
                     if (choice == 0) break;
