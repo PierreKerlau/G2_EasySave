@@ -2,8 +2,9 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Linq;
+using Livrable1.Model;
 
-namespace Livrable1.Model
+namespace Livrable1.Controller
 {
     public class Logger
     {
@@ -43,12 +44,12 @@ namespace Livrable1.Model
             dailyLogs = dailyLogs.Where(log => log.Name != null).ToList();
             dailyLogs.Add(logEntry);
 
-            string jsonContent = JsonSerializer.Serialize(dailyLogs, new JsonSerializerOptions 
-            { 
+            string jsonContent = JsonSerializer.Serialize(dailyLogs, new JsonSerializerOptions
+            {
                 WriteIndented = true,
                 PropertyNamingPolicy = null
             });
-            
+
             File.WriteAllText(logFilePath, jsonContent);
         }
 
@@ -65,7 +66,7 @@ namespace Livrable1.Model
             if (File.Exists(_stateFilePath))
             {
                 string existingContent = File.ReadAllText(_stateFilePath);
-                states = JsonSerializer.Deserialize<Dictionary<string, StateEntry>>(existingContent) 
+                states = JsonSerializer.Deserialize<Dictionary<string, StateEntry>>(existingContent)
                     ?? new Dictionary<string, StateEntry>();
             }
 
@@ -74,4 +75,4 @@ namespace Livrable1.Model
             File.WriteAllText(_stateFilePath, jsonContent);
         }
     }
-} 
+}

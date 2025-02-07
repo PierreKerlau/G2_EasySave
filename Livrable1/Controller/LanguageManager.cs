@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace Livrable1.Controller
 {
-    public static class LanguageManager
+    public class LanguageManager
     {
         private static Dictionary<string, Dictionary<string, string>> languages = new();
         private static string currentLanguage = "en"; // Langue par défaut
@@ -14,6 +14,34 @@ namespace Livrable1.Controller
         static LanguageManager()
         {
             LoadLanguages();
+        }
+
+        public void ChoiceLanguage()
+        {
+            Console.Clear();
+            Console.WriteLine(LanguageManager.GetText("choose_language"));
+            Console.WriteLine("1. " + LanguageManager.GetText("english"));
+            Console.WriteLine("2. " + LanguageManager.GetText("french"));
+
+            ConsoleKeyInfo choice = Console.ReadKey();
+
+            if (choice.KeyChar == '1')
+            {
+                LanguageManager.SetLanguage("en");
+                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " English.");
+            }
+            else if (choice.KeyChar == '2')
+            {
+                LanguageManager.SetLanguage("fr");
+                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " Français.");
+            }
+            else
+            {
+                Console.WriteLine($"\n{LanguageManager.GetText("invalid_choice")}");
+            }
+
+            Console.WriteLine("\n" + LanguageManager.GetText("press_any_key"));
+            Console.ReadKey(); // Attend que l'utilisateur appuie sur une touche pour revenir au menu.
         }
 
         public static void LoadLanguages()

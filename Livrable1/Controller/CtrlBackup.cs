@@ -29,7 +29,7 @@ namespace Livrable1.Controller
         {
             ViewAddBackup.AddBackup();
 
-            // Vérification du nom de sauvegarde
+            // Choix du nom de la sauvegarde et vérification de la non-existence
             string backupName;
             do
             {
@@ -41,7 +41,7 @@ namespace Livrable1.Controller
                 }
             } while (backupNames.Contains(backupName));
 
-            backupNames.Add(backupName); // Ajouter le nom à la liste une fois validé
+            backupNames.Add(backupName);
 
             // Vérification du chemin source
             string sourcePath;
@@ -320,34 +320,6 @@ namespace Livrable1.Controller
             } while (continueRecovery);
         }
 
-        public void ChoiceLanguage()
-        {
-            Console.Clear();
-            Console.WriteLine(LanguageManager.GetText("choose_language"));
-            Console.WriteLine("1. " + LanguageManager.GetText("english"));
-            Console.WriteLine("2. " + LanguageManager.GetText("french"));
-
-            ConsoleKeyInfo choice = Console.ReadKey();
-
-            if (choice.KeyChar == '1')
-            {
-                LanguageManager.SetLanguage("en");
-                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " English.");
-            }
-            else if (choice.KeyChar == '2')
-            {
-                LanguageManager.SetLanguage("fr");
-                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " Français.");
-            }
-            else
-            {
-                Console.WriteLine($"\n{LanguageManager.GetText("invalid_choice")}");
-            }
-
-            Console.WriteLine("\n" + LanguageManager.GetText("press_any_key"));
-            Console.ReadKey(); // Attend que l'utilisateur appuie sur une touche pour revenir au menu.
-        }
-
         private void LoadData()
         {
             // TODO
@@ -357,8 +329,8 @@ namespace Livrable1.Controller
         public void StartSauvegarde()
         {
             Timer timer = new Timer(GenererJson, null, 0, 200); // Mise à jour toutes les 5 sec
-            Console.WriteLine(LanguageManager.GetText("log_state_update"));
-            Console.ReadLine();
+            //Console.WriteLine(LanguageManager.GetText("log_state_update"));
+            //Console.ReadLine();
         }
 
         private void GenererJson(object? state)
