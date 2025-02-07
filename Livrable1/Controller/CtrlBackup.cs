@@ -33,11 +33,11 @@ namespace Livrable1.Controller
             string backupName;
             do
             {
-                Console.Write("\nEnter a name for the backup: ");
+                Console.Write("\n" + LanguageManager.GetText("enter_backup_name"));
                 backupName = Console.ReadLine().Trim();
                 if (backupNames.Contains(backupName))
                 {
-                    Console.WriteLine("ERROR: Backup name already exists. Please choose a different name.");
+                    Console.WriteLine(LanguageManager.GetText("backup_name_exists"));
                 }
             } while (backupNames.Contains(backupName));
 
@@ -47,7 +47,7 @@ namespace Livrable1.Controller
             string sourcePath;
             do
             {
-                Console.Write("\nEnter the source path: ");
+                Console.Write("\n" + LanguageManager.GetText("enter_source_path"));
                 sourcePath = Console.ReadLine().Trim();
             } while (!Directory.Exists(sourcePath));
 
@@ -55,7 +55,7 @@ namespace Livrable1.Controller
             string destinationPath;
             do
             {
-                Console.Write("\nEnter the destination path: ");
+                Console.Write("\n" + LanguageManager.GetText("enter_destination_path"));
                 destinationPath = Console.ReadLine().Trim();
             } while (!Directory.Exists(destinationPath));
 
@@ -69,31 +69,31 @@ namespace Livrable1.Controller
 
                 if (files.Length == 0)
                 {
-                    Console.WriteLine("No files found in the source folder.");
+                    Console.WriteLine(LanguageManager.GetText("no_files_found"));
                     break;
                 }
 
-                Console.WriteLine("\nAvailable files:");
+                Console.WriteLine("\n" + LanguageManager.GetText("available_files"));
                 for (int i = 0; i < files.Length; i++)
                 {
                     Console.WriteLine($"[{i + 1}] {Path.GetFileName(files[i])}");
                 }
 
-                Console.Write("\nSelect a file number to add to backup (or 0 to finish): ");
+                Console.Write("\n" + LanguageManager.GetText("no_files_found"));
                 if (int.TryParse(Console.ReadLine(), out int choice) && choice >= 0 && choice <= files.Length)
                 {
                     if (choice == 0) break;
 
                     string selectedFile = files[choice - 1];
                     selectedFiles.Add(selectedFile);
-                    Console.WriteLine($"File added to backup queue: {Path.GetFileName(selectedFile)}");
+                    Console.WriteLine($"{LanguageManager.GetText("file_added")} {Path.GetFileName(selectedFile)}");
 
-                    Console.Write("\nDo you want to add another file? (o/N): ");
+                    Console.Write("\n" + LanguageManager.GetText("add_another_file"));
                     addMoreFiles = Console.ReadLine().Trim().ToLower() == "o";
                 }
                 else
                 {
-                    Console.WriteLine("Invalid choice. Please select a valid file number.");
+                    Console.WriteLine(LanguageManager.GetText("invalid_file_choice"));
                 }
             }
 
@@ -102,11 +102,11 @@ namespace Livrable1.Controller
             {
                 string combinedSource = string.Join(" | ", selectedFiles);
                 backupJobs.Add(new Backup(backupName, combinedSource, destinationPath));
-                Console.WriteLine($"Backup job '{backupName}' with {selectedFiles.Count} files added successfully!");
+                Console.WriteLine($"{LanguageManager.GetText("backup_job_added")} '{backupName}' {LanguageManager.GetText("with_files")} {selectedFiles.Count} {LanguageManager.GetText("files_added_successfully")}");
             }
             else
             {
-                Console.WriteLine("No files selected for backup.");
+                Console.WriteLine(LanguageManager.GetText("no_files_selected"));
             }
         }
 
@@ -117,31 +117,31 @@ namespace Livrable1.Controller
 
             if (backupJobs.Count == 0)
             {
-                Console.WriteLine("No backup jobs in queue.");
+                Console.WriteLine(LanguageManager.GetText("no_backup_jobs"));
                 return;
             }
 
-            Console.WriteLine("\nAvailable backup jobs:");
+            Console.WriteLine("\n" + LanguageManager.GetText("available_backup"));
             for (int i = 0; i < backupJobs.Count; i++)
             {
                 Console.WriteLine($"[{i + 1}] {backupJobs[i].name}");
             }
 
-            Console.Write("\nEnter the backup(s) to execute (Press ? for help): ");
+            Console.Write("\n" + LanguageManager.GetText("backup_to_execute"));
             string input = Console.ReadLine();
             List<int> selectedIndexes = ParseSelection(input, backupJobs.Count);
 
             if (selectedIndexes.Count == 0)
             {
-                Console.WriteLine("No valid selection. Operation canceled.");
+                Console.WriteLine(LanguageManager.GetText("invalid_backup_selection"));
                 return;
             }
 
-            Console.Write("\nSelect backup type - Full (F) / Differential (D): ");
+            Console.Write("\n" + LanguageManager.GetText("backup_type"));
             string backupType = Console.ReadLine().Trim().ToLower();
             bool isDifferential = backupType == "d";
 
-            Console.WriteLine("\nStarting backup...");
+            Console.WriteLine("\n" + LanguageManager.GetText("starting_backup"));
 
             foreach (int index in selectedIndexes)
             {
@@ -152,7 +152,7 @@ namespace Livrable1.Controller
                 bool backupExists = Directory.Exists(destinationFolder);
                 if (isDifferential && !backupExists)
                 {
-                    Console.WriteLine($"No previous backup found for '{backup.name}'. Performing full backup instead.");
+                    Console.WriteLine($"{LanguageManager.GetText("no_backup_found_for")} '{backup.name}'. {LanguageManager.GetText("performing_full_backup_instead")}");
                     isDifferential = false;
                 }
 
@@ -182,11 +182,11 @@ namespace Livrable1.Controller
                                     File.Copy(file, destinationFile, true);
                                     long transferTime = (long)(DateTime.Now - startTime).TotalMilliseconds;
                                     logger.LogBackupOperation(backup.name, file, destinationFile, fileSize, transferTime);
-                                    Console.WriteLine($"[DIFFERENTIAL] {fileName} copied.");
+                                    Console.WriteLine($"{LanguageManager.GetText("differential_file")} '{fileName}'. {LanguageManager.GetText("file_copied")}");
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"[DIFFERENTIAL] {fileName} is unchanged. Skipping...");
+                                    Console.WriteLine($"{LanguageManager.GetText("differential_file")} '{fileName}'. {LanguageManager.GetText("is_unchanged")}");
                                 }
                             }
                             else
@@ -194,27 +194,27 @@ namespace Livrable1.Controller
                                 File.Copy(file, destinationFile, true);
                                 long transferTime = (long)(DateTime.Now - startTime).TotalMilliseconds;
                                 logger.LogBackupOperation(backup.name, file, destinationFile, fileSize, transferTime);
-                                Console.WriteLine($"[FULL] {fileName} copied.");
+                                Console.WriteLine($"{LanguageManager.GetText("full_file")} '{fileName}'. {LanguageManager.GetText("file_copied")}");
                             }
                         }
                         else
                         {
-                            Console.WriteLine($"ERROR: File '{fileName}' not found.");
+                            Console.WriteLine($"{LanguageManager.GetText("error_file")} '{fileName}'. {LanguageManager.GetText("not_found")}");
                             logger.UpdateState(backup.name, $"Error: File {fileName} not found");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"ERROR: Failed to backup '{fileName}': {ex.Message}");
+                        Console.WriteLine($"{LanguageManager.GetText("error_failed_backup")} '{fileName}': {ex.Message}");
                         logger.UpdateState(backup.name, $"Error: {ex.Message}");
                     }
                 }
                 
-                logger.UpdateState(backup.name, "Backup completed successfully");
+                logger.UpdateState(backup.name, LanguageManager.GetText("backup_completed"));
             }
 
             logger.UpdateState("Backup Operation", "All backups completed");
-            Console.WriteLine("\nBackup process completed!");
+            Console.WriteLine("\n" + LanguageManager.GetText("backup_process_completed"));
         }
 
         private List<int> ParseSelection(string input, int maxIndex)
@@ -247,7 +247,7 @@ namespace Livrable1.Controller
             }
             catch
             {
-                Console.WriteLine("Invalid selection format. Please use: x, x-y, or x;y");
+                Console.WriteLine(LanguageManager.GetText("invalid_selection_format"));
             }
 
             return selectedIndexes.Distinct().OrderBy(n => n).ToList();
@@ -260,12 +260,12 @@ namespace Livrable1.Controller
             {
                 Console.Clear();
                 ViewRecoverBackup.RecoverBackup();
-                Console.Write("Select backup type - Complete (C) / Differential (D): ");
+                Console.Write(LanguageManager.GetText("backup_type"));
                 string backupType = Console.ReadLine().Trim().ToLower();
 
                 bool isDifferential = backupType == "d";
 
-                Console.WriteLine("\nAvailable backups:");
+                Console.WriteLine("\n" + LanguageManager.GetText("available_backup"));
                 foreach (var backup in backupJobs)
                 {
                     Console.WriteLine($"- {backup.name}");
@@ -275,17 +275,17 @@ namespace Livrable1.Controller
                 Backup selectedBackup = null;
                 do
                 {
-                    Console.Write("\nEnter the name of the backup to recover: ");
+                    Console.Write("\n" + LanguageManager.GetText("enter_name_backup_recover"));
                     backupName = Console.ReadLine().Trim();
                     selectedBackup = backupJobs.FirstOrDefault(b => b.name.Equals(backupName, StringComparison.OrdinalIgnoreCase));
 
                     if (selectedBackup == null)
                     {
-                        Console.WriteLine("ERROR: Backup name not found. Please try again.");
+                        Console.WriteLine(LanguageManager.GetText("backup_name_not_found"));
                     }
                 } while (selectedBackup == null);
 
-                Console.WriteLine("\nStarting recovery...");
+                Console.WriteLine("\n" + LanguageManager.GetText("starting_recovery"));
                 string destinationFolder = selectedBackup.destinationPath;
                 string[] files = selectedBackup.sourcePath.Split(" | ");
 
@@ -300,20 +300,22 @@ namespace Livrable1.Controller
                         if (File.Exists(sourceFile))
                         {
                             File.Copy(sourceFile, recoverPath, true);
-                            Console.WriteLine($"[RECOVERY] {fileName} restored.");
+                            Console.WriteLine($"{LanguageManager.GetText("file_recovery")} '{fileName}' {LanguageManager.GetText("file_restored")}");
+
                         }
                         else
                         {
-                            Console.WriteLine($"ERROR: File '{fileName}' not found in backup.");
+                            Console.WriteLine($"{LanguageManager.GetText("error_file")} '{fileName}' {LanguageManager.GetText("not_found_in_backup")}");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"ERROR: Failed to recover '{fileName}': {ex.Message}");
+                        Console.WriteLine($"{LanguageManager.GetText("error_failed_recover")} '{fileName}': {ex.Message}");
+
                     }
                 }
 
-                Console.Write("\nDo you want to recover another backup? (o/N): ");
+                Console.Write("\n" + LanguageManager.GetText("recovery_another"));
                 continueRecovery = Console.ReadLine().Trim().ToLower() == "o";
             } while (continueRecovery);
         }
@@ -322,11 +324,28 @@ namespace Livrable1.Controller
         {
             Console.Clear();
             Console.WriteLine(LanguageManager.GetText("choose_language"));
+            Console.WriteLine("1. " + LanguageManager.GetText("english"));
+            Console.WriteLine("2. " + LanguageManager.GetText("french"));
+
             ConsoleKeyInfo choice = Console.ReadKey();
 
-            if (choice.KeyChar == '1') LanguageManager.SetLanguage("en");
-            else if (choice.KeyChar == '2') LanguageManager.SetLanguage("fr");
-            else Console.WriteLine($"\n{LanguageManager.GetText("invalid_choice")}");
+            if (choice.KeyChar == '1')
+            {
+                LanguageManager.SetLanguage("en");
+                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " English.");
+            }
+            else if (choice.KeyChar == '2')
+            {
+                LanguageManager.SetLanguage("fr");
+                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " Français.");
+            }
+            else
+            {
+                Console.WriteLine($"\n{LanguageManager.GetText("invalid_choice")}");
+            }
+
+            Console.WriteLine("\n" + LanguageManager.GetText("press_any_key"));
+            Console.ReadKey(); // Attend que l'utilisateur appuie sur une touche pour revenir au menu.
         }
 
         private void LoadData()
@@ -338,7 +357,7 @@ namespace Livrable1.Controller
         public void StartSauvegarde()
         {
             Timer timer = new Timer(GenererJson, null, 0, 200); // Mise à jour toutes les 5 sec
-            Console.WriteLine("Mise à jour des états en temps réel... Appuyez sur Entrée pour quitter.");
+            Console.WriteLine(LanguageManager.GetText("log_state_update"));
             Console.ReadLine();
         }
 
@@ -358,7 +377,7 @@ namespace Livrable1.Controller
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Erreur de lecture du JSON, création d'un nouveau fichier.");
+                    Console.WriteLine(LanguageManager.GetText("log_state_error_json"));
                     sauvegardes = new List<EtatSauvegarde>();
                 }
             }
@@ -420,7 +439,7 @@ namespace Livrable1.Controller
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erreur lors de l'écriture du fichier state.json : {ex.Message}");
+                Console.WriteLine($"{LanguageManager.GetText("log_state_error_writting_json")} {ex.Message}");
             }
         }
         public void ShowLogs()
