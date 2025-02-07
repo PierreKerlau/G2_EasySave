@@ -1,0 +1,12 @@
+{
+  "Backup Operation": {
+    "BackupName": "Backup Operation",
+    "LastActionTimestamp": "2025-02-07T19:06:22.7438509+01:00",
+    "CurrentAction": "All backups completed"
+  },
+  "test": {
+    "BackupName": "test",
+    "LastActionTimestamp": "2025-02-07T19:06:22.7430653+01:00",
+    "CurrentAction": "Backup completed successfully"
+  }
+}
