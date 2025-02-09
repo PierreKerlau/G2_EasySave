@@ -31,7 +31,7 @@ class Program
                 case '6': quitter = true; ViewConsole.ShowMenuLeave(); break;
                 default: Console.WriteLine(LanguageManager.GetText("invalid_choice")); break;
             }
-            Console.Write(LanguageManager.GetText("press_any_key"));
+            Console.Write("\n" + LanguageManager.GetText("press_any_key"));
             Console.ReadKey();
             Console.Clear();
         }
