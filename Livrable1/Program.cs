@@ -10,13 +10,16 @@ class Program
 
         CtrlBackup controller = new CtrlBackup();
         LanguageManager languageManager = new LanguageManager();
-        controller.StartSauvegarde();
+        
         Console.OutputEncoding = Encoding.UTF8;
         CtrlBackup sauvegarde = new CtrlBackup();
+
         bool quitter = false;
 
         while (!quitter)
         {
+            
+            //Write
             ViewConsole.ShowMenu();
             ConsoleKeyInfo choix = Console.ReadKey();
             Console.Clear();

@@ -18,11 +18,19 @@ namespace Livrable1.Controller
         private List<string> backupNames = new();
         private Logger logger;
         private readonly object _lockFile = new object();
+        public EtatSauvegarde EtatSauvegarde;
+        public SaveManager SaveManager;
 
         public CtrlBackup()
         {
             LoadData();
             logger = new Logger();
+            EtatSauvegarde = new EtatSauvegarde(this);
+            SaveManager = new SaveManager(EtatSauvegarde);
+
+            SaveManager.Saves = EtatSauvegarde.ReadState();
+            EtatSauvegarde.WriteState(SaveManager.Saves);
+
         }
 
         public void AddBackup()
@@ -63,6 +71,8 @@ namespace Livrable1.Controller
             List<string> selectedFiles = new();
             bool addMoreFiles = true;
 
+            
+
             while (addMoreFiles)
             {
                 string[] files = Directory.GetFiles(sourcePath);
@@ -100,6 +110,17 @@ namespace Livrable1.Controller
             // Si des fichiers ont été sélectionnés, crée une seule sauvegarde
             if (selectedFiles.Count > 0)
             {
+                Save save = new(
+                backupName,
+                sourcePath,
+                destinationPath,
+                selectedFiles.Count
+                );
+
+                SaveManager.Saves.Add(save);
+                EtatSauvegarde.WriteState(SaveManager.Saves);
+
+
                 string combinedSource = string.Join(" | ", selectedFiles);
                 backupJobs.Add(new Backup(backupName, combinedSource, destinationPath));
                 Console.WriteLine($"{LanguageManager.GetText("backup_job_added")} '{backupName}' {LanguageManager.GetText("with_files")} {selectedFiles.Count} {LanguageManager.GetText("files_added_successfully")}");
@@ -108,6 +129,7 @@ namespace Livrable1.Controller
             {
                 Console.WriteLine(LanguageManager.GetText("no_files_selected"));
             }
+
         }
 
         public void ExecuteBackup()
@@ -325,95 +347,6 @@ namespace Livrable1.Controller
             // TODO
         }
 
-        //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        public void StartSauvegarde()
-        {
-            Timer timer = new Timer(GenererJson, null, 0, 200); // Mise à jour toutes les 5 sec
-            //Console.WriteLine(LanguageManager.GetText("log_state_update"));
-            //Console.ReadLine();
-        }
-
-        private void GenererJson(object? state)
-        {
-            string filePath = "state.json";
-            List<EtatSauvegarde> sauvegardes = new();
-
-            // Vérifie si le fichier JSON existe déjà
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    // Lecture du fichier JSON existant
-                    string existingJson = File.ReadAllText(filePath);
-                    sauvegardes = JsonSerializer.Deserialize<List<EtatSauvegarde>>(existingJson) ?? new List<EtatSauvegarde>();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine(LanguageManager.GetText("log_state_error_json"));
-                    sauvegardes = new List<EtatSauvegarde>();
-                }
-            }
-            else
-            {
-                sauvegardes = new List<EtatSauvegarde>();
-            }
-
-            // Simulation de plusieurs sauvegardes en cours
-            Random rnd = new Random();
-            for (int i = 1; i <= 3; i++) // Simuler 3 sauvegardes
-            {
-                string nomSauvegarde = "Sauvegarde_" + i;
-
-                // Rechercher si la sauvegarde existe déjà
-                var etat = sauvegardes.Find(s => s.Appellation == nomSauvegarde);
-                if (etat == null)
-                {
-                    // Création d'une nouvelle sauvegarde
-                    etat = new EtatSauvegarde
-                    {
-                        Appellation = nomSauvegarde,
-                        HorodatageDerniereAction = DateTime.Now,
-                        Etat = "Actif",
-                        NombreTotalFichiers = 100,
-                        TailleTotaleFichiersMB = 5000,
-                        Progression = 0
-                    };
-                    sauvegardes.Add(etat);
-                }
-
-                // Mise à jour des valeurs existantes
-                etat.HorodatageDerniereAction = DateTime.Now;
-                etat.Progression = Math.Min(etat.Progression + rnd.Next(1, 10), 100);
-                etat.NombreFichiersRestants = etat.NombreTotalFichiers * (100 - etat.Progression) / 100;
-                etat.TailleFichiersRestantsMB = etat.TailleTotaleFichiersMB * (100 - etat.Progression) / 100;
-                etat.FichierSource = "/mnt/data/source/file" + rnd.Next(1, 100) + ".txt";
-                etat.FichierDestination = "/mnt/data/destination/file" + rnd.Next(1, 100) + ".txt";
-
-                // Si progression à 100%, marquer comme terminé
-                if (etat.Progression == 100)
-                    etat.Etat = "END";
-            }
-
-            // Sérialisation et écriture dans le fichier JSON avec verrou
-            try
-            {
-                string json = JsonSerializer.Serialize(sauvegardes, new JsonSerializerOptions { WriteIndented = true });
-                
-                lock (_lockFile)
-                {
-                    // Utilisation de FileShare.ReadWrite pour permettre la lecture pendant l'écriture
-                    using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
-                    using (StreamWriter sw = new StreamWriter(fs))
-                    {
-                        sw.Write(json);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{LanguageManager.GetText("log_state_error_writting_json")} {ex.Message}");
-            }
-        }
         public void ShowLogs()
         {
             ViewLogs.ShowLogs();
