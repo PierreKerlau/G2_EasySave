@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Pierre\\Source\\Repos\\G2EasySave\\Livrable1\\Livrable1.csproj": {}
+    "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave\\Livrable1\\Livrable1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Pierre\\Source\\Repos\\G2EasySave\\Livrable1\\Livrable1.csproj": {
+    "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave\\Livrable1\\Livrable1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Pierre\\Source\\Repos\\G2EasySave\\Livrable1\\Livrable1.csproj",
+        "projectUniqueName": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave\\Livrable1\\Livrable1.csproj",
         "projectName": "Livrable1",
-        "projectPath": "C:\\Users\\Pierre\\Source\\Repos\\G2EasySave\\Livrable1\\Livrable1.csproj",
+        "projectPath": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave\\Livrable1\\Livrable1.csproj",
         "packagesPath": "C:\\Users\\Pierre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Pierre\\Source\\Repos\\G2EasySave\\Livrable1\\obj\\",
+        "outputPath": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave\\Livrable1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
