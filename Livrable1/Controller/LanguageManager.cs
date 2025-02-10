@@ -44,7 +44,7 @@ namespace Livrable1.Controller
 
         public static void LoadLanguages()
         {
-            string filePath = "../../../Language.json"; // Assure-toi que le fichier JSON est à cet emplacement
+            string filePath = "../../../Language.json"; 
 
             if (File.Exists(filePath))
             {
@@ -55,17 +55,17 @@ namespace Livrable1.Controller
 
                     if (languages == null)
                     {
-                        Console.WriteLine("Erreur: Impossible de charger les données des langues.");
+                        Console.WriteLine(LanguageManager.GetText("error_charging_data"));
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Erreur lors du chargement du fichier de langue: {ex.Message}");
+                    Console.WriteLine($"{LanguageManager.GetText("error_charging_files")} '{ex.Message}'");
                 }
             }
             else
             {
-                Console.WriteLine("Erreur: Le fichier de langue n'existe pas.");
+                Console.WriteLine(LanguageManager.GetText("error_file_not_exist"));
             }
         }
 
@@ -78,7 +78,7 @@ namespace Livrable1.Controller
             }
             else
             {
-                Console.WriteLine($"WARNING: Key '{key}' not found for language '{currentLanguage}'");
+                Console.WriteLine($"{LanguageManager.GetText("warning_key")} '{key}'. {LanguageManager.GetText("not_found_for_language")}'{currentLanguage}'");
                 return $"======== {key} ========"; // Retourne la clé brute si non trouvé
             }
         }
@@ -91,7 +91,7 @@ namespace Livrable1.Controller
             }
             else
             {
-                Console.WriteLine($"Langue '{language}' non trouvée, utilisant la langue par défaut.");
+                Console.WriteLine($"{LanguageManager.GetText("language")} '{language}'. {LanguageManager.GetText("language_default")}");
                 currentLanguage = "en"; // Langue par défaut
             }
         }
