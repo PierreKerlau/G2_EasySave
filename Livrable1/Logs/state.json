@@ -3,6 +3,11 @@
     "name": "test",
     "realDirectoryPath": "C:\\ProjetEasySave\\path\\source",
     "copyDirectoryPath": "C:\\ProjetEasySave\\path\\destination",
-    "fileNumber": 1
+    "fileNumber": 1,
+    "dernierHorodatage": "2025-02-10T09:09:10.1753715+01:00",
+    "actif": false,
+    "tailleTotale": 967,
+    "fichiersRestants": 0,
+    "tailleRestante": 0
   }
 ]

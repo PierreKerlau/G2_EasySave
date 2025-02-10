@@ -17,14 +17,34 @@ namespace Livrable1.Model
         public string FichierSource { get; set; } = "";
         public string FichierDestination { get; set; } = "";
         public int nbrFichier { get; set; } = 0;
+        // A rajouter ici 
 
-        public Save(string Name, string FichierS, string FichierD, int nbrF) 
+        //----------------------------//
+
+        public DateTime DernierHorodatage { get; set; } = DateTime.Now;
+        public bool Actif { get; set; } = true;
+        public long TailleTotale { get; set; } = 0;
+        public int FichiersRestants { get; set; } = 0;
+        public long TailleRestante { get; set; } = 0;
+
+        //----------------------------//
+
+        public Save(string Name, string FichierS, string FichierD, int nbrF,/*--*/DateTime horodatage, bool actif, long tailleTotale, int fichiersRestants, long tailleRestante/*--*/) 
         {
 
             Appellation = Name;
             FichierSource = FichierS;
             FichierDestination = FichierD;
             nbrFichier = nbrF;
+            // A rajouter ici
+
+            //----------------------------------------//
+            DernierHorodatage = horodatage;
+            Actif = actif;
+            TailleTotale = tailleTotale;
+            FichiersRestants = fichiersRestants;
+            TailleRestante = tailleRestante;
+            //----------------------------------------//
 
         }
 
@@ -132,6 +152,13 @@ namespace Livrable1.Model
                                 string? sourcePath = element.GetProperty("realDirectoryPath").GetString();
                                 string? destinationPath = element.GetProperty("copyDirectoryPath").GetString();
                                 int fileNumber = element.GetProperty("fileNumber").GetInt32();
+                                //----------------------------------------------------------------------------------------//
+                                DateTime lastTimestamp = element.GetProperty("dernierHorodatage").GetDateTime();
+                                bool isActive = element.GetProperty("actif").GetBoolean();
+                                long totalSize = element.GetProperty("tailleTotale").GetInt64();
+                                int remainingFiles = element.GetProperty("fichiersRestants").GetInt32();
+                                long remainingSize = element.GetProperty("tailleRestante").GetInt64();
+                                //----------------------------------------------------------------------------------------//
 
                                 // Vérifie que les propriétés essentielles ne sont pas nulles ou vides
                                 if (saveName != null && !string.IsNullOrEmpty(sourcePath) && !string.IsNullOrEmpty(destinationPath))
@@ -141,7 +168,16 @@ namespace Livrable1.Model
                                         saveName,
                                         sourcePath,
                                         destinationPath,
-                                        fileNumber
+                                        fileNumber,
+                                        // A rajouter ici
+
+                                        //-------------------------------------------//
+                                        lastTimestamp,
+                                        isActive,
+                                        totalSize,
+                                        remainingFiles,
+                                        remainingSize
+                                        //-------------------------------------------//
                                         );
 
                                     states.Add(save); // Ajoute l'objet sauvegarde à la liste
@@ -167,7 +203,18 @@ namespace Livrable1.Model
                 name = save.Appellation,
                 realDirectoryPath = save.FichierSource,
                 copyDirectoryPath = save.FichierDestination,
-                fileNumber = save.nbrFichier
+                fileNumber = save.nbrFichier,
+                // A rajouter ici
+
+                //--------------------------------------------------------------//
+                dernierHorodatage = save.DernierHorodatage,
+                actif = save.Actif,
+                tailleTotale = save.TailleTotale,
+                fichiersRestants = save.FichiersRestants,
+                tailleRestante = save.TailleRestante
+                //--------------------------------------------------------------//
+
+
             }).ToList();
 
             string json = JsonSerializer.Serialize(savesToStore, new JsonSerializerOptions { WriteIndented = true });

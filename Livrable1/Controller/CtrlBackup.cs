@@ -110,11 +110,24 @@ namespace Livrable1.Controller
             // Si des fichiers ont été sélectionnés, crée une seule sauvegarde
             if (selectedFiles.Count > 0)
             {
+                long totalSize = selectedFiles.Sum(file => new FileInfo(file).Length);
                 Save save = new(
                 backupName,
                 sourcePath,
                 destinationPath,
-                selectedFiles.Count
+                selectedFiles.Count,
+                // A rajouter ici
+
+                //----------------------------//
+
+                DateTime.Now,
+                true, // Actif par défaut
+                totalSize,
+                selectedFiles.Count,
+                totalSize
+
+                //----------------------------//
+
                 );
 
                 SaveManager.Saves.Add(save);
@@ -185,10 +198,23 @@ namespace Livrable1.Controller
 
                 string[] files = backup.sourcePath.Split(" | ");
 
+
+                //--------------------------//
+                var save = SaveManager.Saves.FirstOrDefault(s => s.Appellation == backup.name);
+                if (save != null)
+                {
+                    save.FichiersRestants = files.Length;
+                    save.TailleRestante = save.TailleTotale;
+                    EtatSauvegarde.WriteState(SaveManager.Saves);
+                }
+                //--------------------------//
+
                 foreach (string file in files)
                 {
                     string fileName = Path.GetFileName(file);
                     string destinationFile = Path.Combine(destinationFolder, fileName);
+
+                    
 
                     try
                     {
@@ -218,25 +244,53 @@ namespace Livrable1.Controller
                                 logger.LogBackupOperation(backup.name, file, destinationFile, fileSize, transferTime);
                                 Console.WriteLine($"{LanguageManager.GetText("full_file")} '{fileName}'. {LanguageManager.GetText("file_copied")}");
                             }
+
+                            //---------------------------------------//
+                            if (save != null)
+                            {
+                                save.FichiersRestants--;
+                                save.TailleRestante -= fileSize;
+                                save.DernierHorodatage = DateTime.Now;
+                                EtatSauvegarde.WriteState(SaveManager.Saves);
+                            }
+                            //--------------------------------------//
+
                         }
                         else
                         {
                             Console.WriteLine($"{LanguageManager.GetText("error_file")} '{fileName}'. {LanguageManager.GetText("not_found")}");
                             logger.UpdateState(backup.name, $"Error: File {fileName} not found");
                         }
+
+                        
+
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"{LanguageManager.GetText("error_failed_backup")} '{fileName}': {ex.Message}");
                         logger.UpdateState(backup.name, $"Error: {ex.Message}");
                     }
+
+
+                    EtatSauvegarde.WriteState(SaveManager.Saves);
+                    //-------------------------------//
+                    if (save != null && save.FichiersRestants == 0)
+                    {
+                        save.Actif = false;
+                        
+                    }
+                    //------------------------------//
+
                 }
-                
+
                 logger.UpdateState(backup.name, LanguageManager.GetText("backup_completed"));
             }
 
             logger.UpdateState("Backup Operation", "All backups completed");
             Console.WriteLine("\n" + LanguageManager.GetText("backup_process_completed"));
+
+            
+
         }
 
         private List<int> ParseSelection(string input, int maxIndex)
