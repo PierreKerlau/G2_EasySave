@@ -107,7 +107,7 @@
     "files_added_successfully": "fichiers a été ajoutée avec succès !",
 
     "backup_name_not_found": "ERREUR : Le nom de la sauvegarde est introuvable. Veuillez réessayer.",
-    "enter_name_backup_recover": "Enter the name of the backup to recover: ",
+    "enter_name_backup_recover": "Entrez le nom de la sauvegarde : ",
     "starting_recovery": "Récupération en cours...",
     "file_recovery": "[RECUPERATION] ",
     "file_restored": "restoré.",

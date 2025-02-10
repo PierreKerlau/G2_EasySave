@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Livrable1.Controller;
 
 namespace Livrable1.View
 {
@@ -11,7 +12,7 @@ namespace Livrable1.View
         public static void RecoverBackup()
         {
             ViewConsole.ShowLogo();
-            Console.WriteLine("Recover a backup\n");
+            Console.WriteLine(LanguageManager.GetText("menu_recover") + "\n");
         }
     }
 }
