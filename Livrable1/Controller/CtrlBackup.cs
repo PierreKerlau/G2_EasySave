@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Livrable1.logger;
 
 namespace Livrable1.Controller
 {

@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.Json;
 using Livrable1.Model;
 using System.Collections.Generic;
+using Livrable1.logger;
 
 namespace Livrable1.View
 {
@@ -11,7 +12,7 @@ namespace Livrable1.View
         public static void ShowLogs()
         {
             ViewConsole.ShowLogo();
-            string logDirectory = "Logs";
+            string logDirectory = @"../../../Logs";
             Console.WriteLine($"Chemin du dossier des logs : {Path.GetFullPath(logDirectory)}");
 
             string todayLogFile = Path.Combine(logDirectory, $"log_{DateTime.Now:yyyy-MM-dd}.json");
