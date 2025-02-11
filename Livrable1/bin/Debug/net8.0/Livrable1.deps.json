@@ -7,14 +7,30 @@
   "targets": {
     ".NETCoreApp,Version=v8.0": {
       "Livrable1/1.0.0": {
+        "dependencies": {
+          "Livrable1.logger": "1.0.0"
+        },
         "runtime": {
           "Livrable1.dll": {}
+        }
+      },
+      "Livrable1.logger/1.0.0": {
+        "runtime": {
+          "Livrable1.logger.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
   },
   "libraries": {
     "Livrable1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Livrable1.logger/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livrable1", "Livrable1\Livrable1.csproj", "{365CE2C8-3163-4898-8009-7041A18FA528}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livrable1.logger", "Livrable1.logger\Livrable1.logger.csproj", "{32DF7C42-94D0-4ACB-8AB7-9516FAE90CBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{365CE2C8-3163-4898-8009-7041A18FA528}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{365CE2C8-3163-4898-8009-7041A18FA528}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{365CE2C8-3163-4898-8009-7041A18FA528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32DF7C42-94D0-4ACB-8AB7-9516FAE90CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32DF7C42-94D0-4ACB-8AB7-9516FAE90CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32DF7C42-94D0-4ACB-8AB7-9516FAE90CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32DF7C42-94D0-4ACB-8AB7-9516FAE90CBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

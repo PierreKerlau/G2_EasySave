@@ -2,6 +2,7 @@
 using System.Text;
 using Livrable1.Controller;
 using Livrable1.View;
+using Livrable1.logger;
 class Program
 {
     static void Main(string[] args)

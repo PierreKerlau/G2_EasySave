@@ -1,20 +1,45 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Text.Json;
+using System.Collections.Generic;
 using System.Linq;
-using Livrable1.Model;
 
-namespace Livrable1.Controller
+namespace Livrable1.logger
 {
+    public class LogEntry
+    {
+        public string Name { get; set; }
+        public string FileSource { get; set; }
+        public string FileTarget { get; set; }
+        public long FileSize { get; set; }
+        public double FileTransferTime { get; set; }
+        public string time { get; set; }
+
+        public LogEntry()
+        {
+            time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+        }
+    }
+
+    public class StateEntry
+    {
+        public string BackupName { get; set; }
+        public DateTime LastActionTimestamp { get; set; }
+        public string CurrentAction { get; set; }
+    }
+
     public class Logger
     {
         private readonly string _logDirectory;
         private readonly string _stateFilePath;
 
-        public Logger(string logDirectory = "Logs")
+        public Logger(string logDirectory = @"../../../Logs")
         {
             _logDirectory = logDirectory;
-            Directory.CreateDirectory(_logDirectory);
+            if (!Directory.Exists(_logDirectory))
+            {
+                Directory.CreateDirectory(_logDirectory);
+            }
             _stateFilePath = Path.Combine(_logDirectory, "backup_state.json");
         }
 

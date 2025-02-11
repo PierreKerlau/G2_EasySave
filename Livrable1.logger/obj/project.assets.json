@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {
-      "Livrable1.logger/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "compile": {
-          "bin/placeholder/Livrable1.logger.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Livrable1.logger.dll": {}
-        }
-      }
-    }
+    "net8.0": {}
   },
-  "libraries": {
-    "Livrable1.logger/1.0.0": {
-      "type": "project",
-      "path": "../Livrable1.logger/Livrable1.logger.csproj",
-      "msbuildProject": "../Livrable1.logger/Livrable1.logger.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net8.0": [
-      "Livrable1.logger >= 1.0.0"
-    ]
+    "net8.0": []
   },
   "packageFolders": {
     "C:\\Users\\picou\\.nuget\\packages\\": {},
@@ -33,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1\\Livrable1.csproj",
-      "projectName": "Livrable1",
-      "projectPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1\\Livrable1.csproj",
+      "projectUniqueName": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
+      "projectName": "Livrable1.logger",
+      "projectPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
       "packagesPath": "C:\\Users\\picou\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1\\obj\\",
+      "outputPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -57,11 +38,7 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {
-            "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj": {
-              "projectPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

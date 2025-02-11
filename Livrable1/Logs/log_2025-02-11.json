@@ -1,0 +1,34 @@
+[
+  {
+    "Name": "ACIDE",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\ACIDE\\tteesstt.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0.001,
+    "time": "11/02/2025 16:08:07"
+  },
+  {
+    "Name": "ACIDE",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\0602.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\ACIDE\\0602.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0,
+    "time": "11/02/2025 16:08:07"
+  },
+  {
+    "Name": "Ttetst",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\0602.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\Ttetst\\0602.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0.001,
+    "time": "11/02/2025 16:11:10"
+  },
+  {
+    "Name": "LOGS",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\LOGS\\tteesstt.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0.001,
+    "time": "11/02/2025 16:13:10"
+  }
+]
