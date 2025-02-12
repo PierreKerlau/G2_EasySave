@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Livrable1.View
 {
     /// <summary>
-    /// Logique d'interaction pour ViewRecoverBackup.xaml
+    /// Logique d'interaction pour ViewParameter.xaml
     /// </summary>
-    public partial class ViewRecoverBackup : Window
+    public partial class ViewParameter : Window
     {
-        public ViewRecoverBackup()
+        public ViewParameter()
         {
             InitializeComponent();
         }

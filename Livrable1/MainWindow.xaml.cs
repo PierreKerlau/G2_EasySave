@@ -38,6 +38,28 @@ namespace Livrable1
             this.Close();
         }
 
+        private void ButtonShowViewRecoverBackup_Click(object sender, RoutedEventArgs e)
+        {
+            // Ouverture de la vue ViewRecoverBackup et fermeture de la vue principale
+            ViewRecoverBackup viewRecoverBackup = new ViewRecoverBackup();
+            viewRecoverBackup.Show();
+            this.Close();
+        }
 
+        private void ButtonShowViewLogs_Click(object sender, RoutedEventArgs e)
+        {
+            // Ouverture de la vue ViewLogs et fermeture de la vue principale
+            ViewLogs viewLogs = new ViewLogs();
+            viewLogs.Show();
+            this.Close();
+        }
+
+        private void ButtonShowViewParameter_Click(object sender, RoutedEventArgs e)
+        {
+            // Ouverture de la vue ViewParameter et fermeture de la vue principale
+            ViewParameter viewParameter = new ViewParameter();
+            viewParameter.Show();
+            this.Close();
+        }
     }
 }

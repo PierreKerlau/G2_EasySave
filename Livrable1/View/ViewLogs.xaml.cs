@@ -23,5 +23,13 @@ namespace Livrable1.View
         {
             InitializeComponent();
         }
+
+        private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
+        {
+            // Ouverture de la fenêtre principale et fermeture de la fenêtre actuelle
+            MainWindow viewMain = new MainWindow();
+            viewMain.Show();
+            this.Close();
+        }
     }
 }

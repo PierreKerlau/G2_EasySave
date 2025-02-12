@@ -16,6 +16,9 @@
     <Compile Update="View\ViewLogs.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\ViewParameter.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\ViewRecoverBackup.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +34,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ViewLogs.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\ViewParameter.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ViewRecoverBackup.xaml">
