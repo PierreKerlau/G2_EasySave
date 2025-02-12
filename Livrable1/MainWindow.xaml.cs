@@ -24,13 +24,18 @@ namespace Livrable1
 
         private void ButtonShowViewAddBackup_Click(object sender, RoutedEventArgs e)
         {
-            // Ouverture de la vue et fermeture de la vue principale
+            // Ouverture de la vue ViewAddBackup et fermeture de la vue principale
             ViewAddBackup viewAddBackup = new ViewAddBackup();
             viewAddBackup.Show();
             this.Close();
+        }
 
-
-            // Fermeture de la vue 
+        private void ButtonShowViewExecuteBackup_Click(object sender, RoutedEventArgs e)
+        {
+            // Ouverture de la vue ViewExecuteBackup et fermeture de la vue principale
+            ViewExecuteBackup viewExecuteBackup = new ViewExecuteBackup();
+            viewExecuteBackup.Show();
+            this.Close();
         }
 
 
