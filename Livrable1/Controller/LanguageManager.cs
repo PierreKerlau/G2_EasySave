@@ -1,74 +1,99 @@
-﻿using System;
+﻿
+using Livrable1.View;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
 namespace Livrable1.Controller
 {
-    public static class LanguageManager
+    public class LanguageManager
     {
-        private static Dictionary<string, Dictionary<string, string>> translations = new();
-        private static string currentLanguage = "en"; // Default language
+        private static Dictionary<string, Dictionary<string, string>> languages = new();
+        private static string currentLanguage = "en"; // Langue par défaut
+
+        static LanguageManager()
+        {
+            LoadLanguages();
+        }
+
+        public void ChoiceLanguage()
+        {
+            Console.Clear();
+            ViewConsole.ShowLogo();
+            Console.WriteLine(LanguageManager.GetText("choose_language"));
+
+            ConsoleKeyInfo choice = Console.ReadKey();
+
+            if (choice.KeyChar == '1')
+            {
+                LanguageManager.SetLanguage("en");
+                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " English.");
+            }
+            else if (choice.KeyChar == '2')
+            {
+                LanguageManager.SetLanguage("fr");
+                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " Français.");
+            }
+            else
+            {
+                Console.WriteLine($"\n{LanguageManager.GetText("invalid_choice")}");
+            }
+
+        }
 
         public static void LoadLanguages()
         {
-            string filePath = "../../../Language.json";
+            string filePath = "../../../Language.json"; 
 
-            Console.WriteLine(Path.GetFullPath(filePath));
-
-            if (!File.Exists(filePath))
+            if (File.Exists(filePath))
             {
-                Console.WriteLine("ERROR: Language file not found!");
-                return;
-            }
-
-            try
-            {
-                string json = File.ReadAllText(filePath);
-                translations = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(json) ?? new();
-
-                if (translations.Count == 0)
+                try
                 {
-                    Console.WriteLine("ERROR: Language file is empty or incorrectly formatted!");
+                    string jsonContent = File.ReadAllText(filePath);
+                    languages = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonContent);
+
+                    if (languages == null)
+                    {
+                        Console.WriteLine(LanguageManager.GetText("error_charging_data"));
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Languages loaded successfully!");
+                    Console.WriteLine($"{LanguageManager.GetText("error_charging_files")} '{ex.Message}'");
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine($"ERROR: Failed to load language file: {ex.Message}");
+                Console.WriteLine(LanguageManager.GetText("error_file_not_exist"));
             }
         }
 
         public static string GetText(string key)
         {
-            if (translations.ContainsKey(currentLanguage) && translations[currentLanguage].ContainsKey(key))
+            // Vérifie si la clé existe pour la langue actuelle
+            if (languages.ContainsKey(currentLanguage) && languages[currentLanguage].ContainsKey(key))
             {
-                return translations[currentLanguage][key];
-            }
-
-            Console.WriteLine($"WARNING: Key '{key}' not found for language '{currentLanguage}'");
-            return key;
-        }
-
-        public static void SetLanguage(string lang)
-        {
-            if (translations.ContainsKey(lang))
-            {
-                currentLanguage = lang;
-                Console.WriteLine($"Language changed to {lang}");
+                return languages[currentLanguage][key];
             }
             else
             {
-                Console.WriteLine("ERROR: Language not available!");
+                Console.WriteLine($"{LanguageManager.GetText("warning_key")} '{key}'. {LanguageManager.GetText("not_found_for_language")}'{currentLanguage}'");
+                return $"======== {key} ========"; // Retourne la clé brute si non trouvé
             }
         }
 
-        public static string GetCurrentLanguage()
+        public static void SetLanguage(string language)
         {
-            return currentLanguage;
+            if (languages.ContainsKey(language))
+            {
+                currentLanguage = language;
+            }
+            else
+            {
+                Console.WriteLine($"{LanguageManager.GetText("language")} '{language}'. {LanguageManager.GetText("language_default")}");
+                currentLanguage = "en"; // Langue par défaut
+            }
         }
     }
 }
