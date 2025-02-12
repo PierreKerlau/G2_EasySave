@@ -1,0 +1,35 @@
+[
+  {
+    "name": "ACIDE",
+    "realDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source",
+    "copyDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination",
+    "fileNumber": 2,
+    "dernierHorodatage": "2025-02-11T16:08:07.1982716+01:00",
+    "actif": true,
+    "tailleTotale": 0,
+    "fichiersRestants": 0,
+    "tailleRestante": 0
+  },
+  {
+    "name": "Ttetst",
+    "realDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source",
+    "copyDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination",
+    "fileNumber": 1,
+    "dernierHorodatage": "2025-02-11T16:11:10.1873333+01:00",
+    "actif": true,
+    "tailleTotale": 0,
+    "fichiersRestants": 0,
+    "tailleRestante": 0
+  },
+  {
+    "name": "LOGS",
+    "realDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source",
+    "copyDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination",
+    "fileNumber": 1,
+    "dernierHorodatage": "2025-02-11T16:13:10.1144699+01:00",
+    "actif": true,
+    "tailleTotale": 0,
+    "fichiersRestants": 0,
+    "tailleRestante": 0
+  }
+]
