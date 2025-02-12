@@ -8,23 +8,23 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\picou\\.nuget\\packages\\": {},
+    "C:\\Users\\pierr\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
+      "projectUniqueName": "C:\\Users\\pierr\\source\\repos\\G2_EasySave_Copy\\Livrable1.logger\\Livrable1.logger.csproj",
       "projectName": "Livrable1.logger",
-      "projectPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
-      "packagesPath": "C:\\Users\\picou\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\obj\\",
+      "projectPath": "C:\\Users\\pierr\\source\\repos\\G2_EasySave_Copy\\Livrable1.logger\\Livrable1.logger.csproj",
+      "packagesPath": "C:\\Users\\pierr\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\pierr\\source\\repos\\G2_EasySave_Copy\\Livrable1.logger\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\picou\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pierr\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
