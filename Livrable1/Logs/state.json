@@ -31,5 +31,49 @@
     "tailleTotale": 0,
     "fichiersRestants": 0,
     "tailleRestante": 0
+  },
+  {
+    "name": "OUI",
+    "realDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source",
+    "copyDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination",
+    "fileNumber": 1,
+    "dernierHorodatage": "2025-02-12T12:13:42.7050377+01:00",
+    "actif": false,
+    "tailleTotale": 0,
+    "fichiersRestants": 0,
+    "tailleRestante": 0
+  },
+  {
+    "name": "XMLTEST",
+    "realDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source",
+    "copyDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination",
+    "fileNumber": 1,
+    "dernierHorodatage": "2025-02-12T12:14:13.4847668+01:00",
+    "actif": true,
+    "tailleTotale": 0,
+    "fichiersRestants": 0,
+    "tailleRestante": 0
+  },
+  {
+    "name": "xxmml",
+    "realDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source",
+    "copyDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination",
+    "fileNumber": 1,
+    "dernierHorodatage": "2025-02-12T12:27:34.5572002+01:00",
+    "actif": false,
+    "tailleTotale": 0,
+    "fichiersRestants": 0,
+    "tailleRestante": 0
+  },
+  {
+    "name": "JSON",
+    "realDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source",
+    "copyDirectoryPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination",
+    "fileNumber": 2,
+    "dernierHorodatage": "2025-02-12T13:56:19.7473665+01:00",
+    "actif": true,
+    "tailleTotale": 0,
+    "fichiersRestants": 0,
+    "tailleRestante": 0
   }
 ]

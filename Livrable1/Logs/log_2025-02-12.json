@@ -1,0 +1,26 @@
+[
+  {
+    "Name": "OUI",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\0602.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\OUI\\0602.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0.002,
+    "time": "12/02/2025 12:13:42"
+  },
+  {
+    "Name": "JSON",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\0602.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\JSON\\0602.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0.001,
+    "time": "12/02/2025 13:56:19"
+  },
+  {
+    "Name": "JSON",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\JSON\\tteesstt.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0,
+    "time": "12/02/2025 13:56:19"
+  }
+]

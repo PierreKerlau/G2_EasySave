@@ -38,7 +38,6 @@ namespace Livrable1.Controller
         {
             ViewAddBackup.AddBackup();
 
-            // Choix du nom de la sauvegarde et vérification de la non-existence
             string backupName;
             do
             {
@@ -52,7 +51,6 @@ namespace Livrable1.Controller
 
             backupNames.Add(backupName);
 
-            // Vérification du chemin source
             string sourcePath;
             do
             {
@@ -60,7 +58,6 @@ namespace Livrable1.Controller
                 sourcePath = Console.ReadLine().Trim();
             } while (!Directory.Exists(sourcePath));
 
-            // Vérification du chemin destination
             string destinationPath;
             do
             {
@@ -68,7 +65,9 @@ namespace Livrable1.Controller
                 destinationPath = Console.ReadLine().Trim();
             } while (!Directory.Exists(destinationPath));
 
-            // Ajout des fichiers sélectionnés
+            string format = ViewAddBackup.ChooseLogFormat();
+            logger = new Logger(@"../../../Logs", format);
+
             List<string> selectedFiles = new();
             bool addMoreFiles = true;
 
@@ -108,7 +107,6 @@ namespace Livrable1.Controller
                 }
             }
 
-            // Si des fichiers ont été sélectionnés, crée une seule sauvegarde
             if (selectedFiles.Count > 0)
             {
                 long totalSize = selectedFiles.Sum(file => new FileInfo(file).Length);
