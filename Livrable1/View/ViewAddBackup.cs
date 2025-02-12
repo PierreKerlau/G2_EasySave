@@ -20,10 +20,10 @@ namespace Livrable1.View
             string format;
             do
             {
-                Console.WriteLine("\nChoisissez le format des logs :");
+                Console.WriteLine(LanguageManager.GetText("log_format"));
                 Console.WriteLine("1. JSON");
                 Console.WriteLine("2. XML");
-                Console.Write("Votre choix (1 ou 2) : ");
+                Console.Write(LanguageManager.GetText("format_choice"));
                 string choice = Console.ReadLine().Trim();
 
                 if (choice == "1")

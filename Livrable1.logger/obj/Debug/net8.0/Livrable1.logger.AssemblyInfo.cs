@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Livrable1.logger")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+102d80a972e0308750b1061ecf81fb47589306ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc2fa11f2961503dcee98384bb82a9288491458a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Livrable1.logger")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Livrable1.logger")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
