@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLogEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LogEntry>
+    <Name>XMLTEST</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\XMLTEST\tteesstt.txt</FileTarget>
+    <FileSize>0</FileSize>
+    <FileTransferTime>0.001</FileTransferTime>
+    <time>12/02/2025 12:14:13</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>xxmml</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\xxmml\tteesstt.txt</FileTarget>
+    <FileSize>0</FileSize>
+    <FileTransferTime>0.002</FileTransferTime>
+    <time>12/02/2025 12:27:34</time>
+  </LogEntry>
+</ArrayOfLogEntry>

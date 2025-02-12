@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace Livrable1.logger
 {
@@ -32,8 +33,9 @@ namespace Livrable1.logger
     {
         private readonly string _logDirectory;
         private readonly string _stateFilePath;
+        private string _logFormat;
 
-        public Logger(string logDirectory = @"../../../Logs")
+        public Logger(string logDirectory = @"../../../Logs", string format = "json")
         {
             _logDirectory = logDirectory;
             if (!Directory.Exists(_logDirectory))
@@ -41,6 +43,7 @@ namespace Livrable1.logger
                 Directory.CreateDirectory(_logDirectory);
             }
             _stateFilePath = Path.Combine(_logDirectory, "backup_state.json");
+            _logFormat = format.ToLower();
         }
 
         public void LogBackupOperation(string jobName, string sourcePath, string destinationPath, long fileSize, long transferTime)
@@ -53,29 +56,47 @@ namespace Livrable1.logger
                 FileSource = sourcePath,
                 FileTarget = destinationPath,
                 FileSize = fileSize,
-                FileTransferTime = transferTime / 1000.0, // Conversion en secondes
+                FileTransferTime = transferTime / 1000.0,
             };
 
-            string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.json";
+            string extension = _logFormat == "xml" ? "xml" : "json";
+            string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.{extension}";
             string logFilePath = Path.Combine(_logDirectory, logFileName);
 
             List<LogEntry> dailyLogs = new();
             if (File.Exists(logFilePath))
             {
-                string existingContent = File.ReadAllText(logFilePath);
-                dailyLogs = JsonSerializer.Deserialize<List<LogEntry>>(existingContent) ?? new List<LogEntry>();
+                if (_logFormat == "xml")
+                {
+                    var serializer = new XmlSerializer(typeof(List<LogEntry>));
+                    using var reader = new StreamReader(logFilePath);
+                    dailyLogs = (List<LogEntry>)serializer.Deserialize(reader);
+                }
+                else
+                {
+                    string existingContent = File.ReadAllText(logFilePath);
+                    dailyLogs = JsonSerializer.Deserialize<List<LogEntry>>(existingContent) ?? new List<LogEntry>();
+                }
             }
 
             dailyLogs = dailyLogs.Where(log => log.Name != null).ToList();
             dailyLogs.Add(logEntry);
 
-            string jsonContent = JsonSerializer.Serialize(dailyLogs, new JsonSerializerOptions
+            if (_logFormat == "xml")
             {
-                WriteIndented = true,
-                PropertyNamingPolicy = null
-            });
-
-            File.WriteAllText(logFilePath, jsonContent);
+                var serializer = new XmlSerializer(typeof(List<LogEntry>));
+                using var writer = new StreamWriter(logFilePath);
+                serializer.Serialize(writer, dailyLogs);
+            }
+            else
+            {
+                string jsonContent = JsonSerializer.Serialize(dailyLogs, new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    PropertyNamingPolicy = null
+                });
+                File.WriteAllText(logFilePath, jsonContent);
+            }
         }
 
         public void UpdateState(string backupName, string currentAction)

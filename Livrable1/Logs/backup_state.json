@@ -1,7 +1,7 @@
 {
   "Backup Operation": {
     "BackupName": "Backup Operation",
-    "LastActionTimestamp": "2025-02-11T16:13:10.1169007+01:00",
+    "LastActionTimestamp": "2025-02-12T13:56:19.7497064+01:00",
     "CurrentAction": "All backups completed"
   },
   "ACIDE": {
@@ -17,6 +17,26 @@
   "LOGS": {
     "BackupName": "LOGS",
     "LastActionTimestamp": "2025-02-11T16:13:10.1159657+01:00",
+    "CurrentAction": "Backup completed successfully"
+  },
+  "OUI": {
+    "BackupName": "OUI",
+    "LastActionTimestamp": "2025-02-12T12:13:42.7081355+01:00",
+    "CurrentAction": "Backup completed successfully"
+  },
+  "XMLTEST": {
+    "BackupName": "XMLTEST",
+    "LastActionTimestamp": "2025-02-12T12:14:13.4879979+01:00",
+    "CurrentAction": "Backup completed successfully"
+  },
+  "xxmml": {
+    "BackupName": "xxmml",
+    "LastActionTimestamp": "2025-02-12T12:27:34.5611712+01:00",
+    "CurrentAction": "Backup completed successfully"
+  },
+  "JSON": {
+    "BackupName": "JSON",
+    "LastActionTimestamp": "2025-02-12T13:56:19.7486635+01:00",
     "CurrentAction": "Backup completed successfully"
   }
 }
