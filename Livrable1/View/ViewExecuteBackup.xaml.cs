@@ -31,5 +31,10 @@ namespace Livrable1.View
             viewMain.Show();
             this.Close();
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
