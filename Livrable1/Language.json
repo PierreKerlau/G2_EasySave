@@ -75,7 +75,21 @@
 
     "log_state_update": "Updating status in real time... Press Enter to exit.",
     "log_state_error_json": "Error reading JSON, creation of a new file.",
-    "log_state_error_writting_json": "Error writing state.json : "
+    "log_state_error_writting_json": "Error writing state.json : ",
+
+    "menu_software": "Business Software",
+    "calculator": "Calculator",
+    "notepad": "Notepad",
+    "encrypt_extensions": "Extensions to Encrypt",
+    "extension_pdf": "PDF Files",
+    "extension_png": "PNG Files",
+    "extension_json": "JSON Files",
+    "extension_xml": "XML Files",
+    "extension_docx": "DOCX Files",
+    "log_format": "Log Format",
+    "format_json": "JSON Format",
+    "format_xml": "XML Format",
+    "app_closing": "A business software is running. EasySave will now close."
 
   },
   "fr": {
@@ -154,7 +168,21 @@
 
     "log_state_update": "Mise à jour des états en temps réel... Appuyez sur Entrée pour quitter.",
     "log_state_error_json": "Erreur de lecture du JSON, création d'un nouveau fichier.",
-    "log_state_error_writting_json": "Erreur lors de l'écriture du fichier state.json : "
+    "log_state_error_writting_json": "Erreur lors de l'écriture du fichier state.json : ",
+
+    "menu_software": "Logiciels métier",
+    "calculator": "Calculatrice",
+    "notepad": "Notepad",
+    "encrypt_extensions": "Extensions à crypter",
+    "extension_pdf": "Fichiers PDF",
+    "extension_png": "Fichiers PNG",
+    "extension_json": "Fichiers JSON",
+    "extension_xml": "Fichiers XML",
+    "extension_docx": "Fichiers DOCX",
+    "log_format": "Format des logs",
+    "format_json": "Format JSON",
+    "format_xml": "Format XML",
+    "app_closing": "Un logiciel métier est en cours d'exécution. EasySave va maintenant se fermer."
 
   }
 }
