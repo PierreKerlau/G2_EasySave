@@ -1,99 +1,88 @@
-﻿
-//using Livrable1.View;
-//using System;
-//using System.Collections.Generic;
-//using System.IO;
-//using System.Text.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Windows;
 
-//namespace Livrable1.Controller
-//{
-//    public class LanguageManager
-//    {
-//        private static Dictionary<string, Dictionary<string, string>> languages = new();
-//        private static string currentLanguage = "en"; // Langue par défaut
+namespace Livrable1.Controller
+{
+    public static class LanguageManager
+    {
+        private static Dictionary<string, Dictionary<string, string>> _translations;
+        private static string _currentLanguage;
+        public static event EventHandler LanguageChanged;
 
-//        static LanguageManager()
-//        {
-//            LoadLanguages();
-//        }
+        static LanguageManager()
+        {
+            _translations = new Dictionary<string, Dictionary<string, string>>();
+            _currentLanguage = "en";
+            LoadTranslations();
+        }
 
-//        public void ChoiceLanguage()
-//        {
-//            Console.Clear();
-//            ViewConsole.ShowLogo();
-//            Console.WriteLine(LanguageManager.GetText("choose_language"));
+        private static void LoadTranslations()
+        {
+            try
+            {
+                string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Language.json");
+                if (File.Exists(jsonPath))
+                {
+                    string jsonContent = File.ReadAllText(jsonPath);
+                    var loadedTranslations = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonContent);
+                    if (loadedTranslations != null)
+                    {
+                        _translations = loadedTranslations;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading translations: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-//            ConsoleKeyInfo choice = Console.ReadKey();
+        public static void SetLanguage(string languageCode)
+        {
+            if (_translations.ContainsKey(languageCode))
+            {
+                _currentLanguage = languageCode;
+                OnLanguageChanged();
+            }
+        }
 
-//            if (choice.KeyChar == '1')
-//            {
-//                LanguageManager.SetLanguage("en");
-//                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " English.");
-//            }
-//            else if (choice.KeyChar == '2')
-//            {
-//                LanguageManager.SetLanguage("fr");
-//                Console.WriteLine("\n" + LanguageManager.GetText("language_changed") + " Français.");
-//            }
-//            else
-//            {
-//                Console.WriteLine($"\n{LanguageManager.GetText("invalid_choice")}");
-//            }
+        public static string GetText(string key)
+        {
+            try
+            {
+                if (_translations.ContainsKey(_currentLanguage) &&
+                    _translations[_currentLanguage].ContainsKey(key))
+                {
+                    return _translations[_currentLanguage][key];
+                }
 
-//        }
+                // Fallback to English if key not found in current language
+                if (_translations["en"].ContainsKey(key))
+                {
+                    return _translations["en"][key];
+                }
 
-//        public static void LoadLanguages()
-//        {
-//            string filePath = "../../../Language.json"; 
+                return $"[{key}]";
+            }
+            catch
+            {
+                return $"[{key}]";
+            }
+        }
 
-//            if (File.Exists(filePath))
-//            {
-//                try
-//                {
-//                    string jsonContent = File.ReadAllText(filePath);
-//                    languages = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonContent);
+        private static void OnLanguageChanged()
+        {
+            LanguageChanged?.Invoke(null, EventArgs.Empty);
+        }
 
-//                    if (languages == null)
-//                    {
-//                        Console.WriteLine(LanguageManager.GetText("error_charging_data"));
-//                    }
-//                }
-//                catch (Exception ex)
-//                {
-//                    Console.WriteLine($"{LanguageManager.GetText("error_charging_files")} '{ex.Message}'");
-//                }
-//            }
-//            else
-//            {
-//                Console.WriteLine(LanguageManager.GetText("error_file_not_exist"));
-//            }
-//        }
+        public static string CurrentLanguage => _currentLanguage;
 
-//        public static string GetText(string key)
-//        {
-//            // Vérifie si la clé existe pour la langue actuelle
-//            if (languages.ContainsKey(currentLanguage) && languages[currentLanguage].ContainsKey(key))
-//            {
-//                return languages[currentLanguage][key];
-//            }
-//            else
-//            {
-//                Console.WriteLine($"{LanguageManager.GetText("warning_key")} '{key}'. {LanguageManager.GetText("not_found_for_language")}'{currentLanguage}'");
-//                return $"======== {key} ========"; // Retourne la clé brute si non trouvé
-//            }
-//        }
-
-//        public static void SetLanguage(string language)
-//        {
-//            if (languages.ContainsKey(language))
-//            {
-//                currentLanguage = language;
-//            }
-//            else
-//            {
-//                Console.WriteLine($"{LanguageManager.GetText("language")} '{language}'. {LanguageManager.GetText("language_default")}");
-//                currentLanguage = "en"; // Langue par défaut
-//            }
-//        }
-//    }
-//}
+        public static bool IsLanguageAvailable(string languageCode)
+        {
+            return _translations.ContainsKey(languageCode);
+        }
+    }
+}
