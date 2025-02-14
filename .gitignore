@@ -6,4 +6,8 @@
 .vs
 Livrable1/bin
 Livrable1/obj
+CryptoSoft/bin
+CryptoSoft/obj
+Livrable1.Logger/bin
+Livrable1.Logger/obj
 .env
