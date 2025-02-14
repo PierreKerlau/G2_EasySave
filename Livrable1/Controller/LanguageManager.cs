@@ -72,7 +72,7 @@ namespace Livrable1.Controller
                 return $"[{key}]";
             }
         }
-
+            
         private static void OnLanguageChanged()
         {
             LanguageChanged?.Invoke(null, EventArgs.Empty);
