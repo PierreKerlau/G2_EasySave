@@ -19,6 +19,7 @@ namespace Livrable1.View
             InitializeComponent();
             backupJobs = GetBackupJobs(); // Charge backup jobs
             DisplayBackupJobs(); // Display backup jobs in Checkboxes
+            UpdateUILanguageRecoveryBackup(); // Update language
         }
 
         // Method to get back backup jobs list
@@ -179,7 +180,7 @@ namespace Livrable1.View
             this.Close();
         }
 
-        private void UpdateUILanguage()
+        private void UpdateUILanguageRecoveryBackup()
         {
             LabelMainViewRecoverBackup.Content = LanguageManager.GetText("recover_backup_jobs");
             LabelMainSelectRecoverBackup.Content = LanguageManager.GetText("select_backup_to_recover");

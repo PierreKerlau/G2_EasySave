@@ -112,7 +112,12 @@
     "full_backup_checkbox": "Full Backup",
     "differential_backup_checkbox": "Differential Backup",
     "cancel": "Cancel",
-    "validate": "Validate"
+    "validate": "Validate",
+
+    "button_add_backup": "Add a backup job",
+    "button_parameter": "Modify parameters",
+    "button_execute_backup": "Execute a backup job",
+    "button_recover_backup": "Recover a backup"
 
 
   },
@@ -229,7 +234,12 @@
     "full_backup_checkbox": "Sauvegarde complète",
     "differential_backup_checkbox": "Sauvegarde différentielle",
     "cancel": "Annuler",
-    "validate": "Valider"
+    "validate": "Valider",
+
+    "button_add_backup": "Ajouter une sauvegarde",
+    "button_parameter": "Modifier les paramètres",
+    "button_execute_backup": "Exécuter une sauvegarde",
+    "button_recover_backup": "Récupérer une sauvegarde"
 
   }
 }

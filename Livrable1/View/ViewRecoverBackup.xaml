@@ -57,9 +57,9 @@
 
             <!-- Backup type (Full or Differential) -->
             <RadioButton x:Name="FullBackupCheckBox" Content="Full Backup" 
-                      HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Margin="280,67,0,0"/>
+                      HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Margin="232,67,0,0"/>
             <RadioButton x:Name="DifferentialBackupCheckBox" Content="Differential Backup" 
-                      HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Margin="280,99,0,0" Grid.ColumnSpan="2"/>
+                      HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Margin="232,99,0,0"/>
         </Grid>
 
         <!-- Buttons -->

@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Livrable1.View;
+using Livrable1.Controller;
 
 namespace Livrable1
 {
@@ -20,6 +21,7 @@ namespace Livrable1
         public MainWindow()
         {
             InitializeComponent();
+            UpdateUILanguageMainWindows();
         }
 
         private void ButtonShowViewAddBackup_Click(object sender, RoutedEventArgs e)
@@ -60,6 +62,14 @@ namespace Livrable1
             ViewParameter viewParameter = new ViewParameter();
             viewParameter.Show();
             this.Close();
+        }
+
+        private void UpdateUILanguageMainWindows()
+        {
+            ButtonShowViewAddBackup.Content = LanguageManager.GetText("button_add_backup");
+            ButtonShowViewParameter.Content = LanguageManager.GetText("button_parameter");
+            ButtonShowViewExecuteBackup.Content = LanguageManager.GetText("button_execute_backup");
+            ButtonShowViewRecoverBackup.Content = LanguageManager.GetText("button_recover_backup");
         }
     }
 }
