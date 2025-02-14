@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Livrable1.Controller;
 
 namespace Livrable1.View
 {
@@ -55,7 +56,7 @@ namespace Livrable1.View
 
             if (selectedBackups.Count == 0)
             {
-                MessageBox.Show("Please select a backup type.");
+                MessageBox.Show(LanguageManager.GetText("select_backup_type"));
                 return;
             }
 
@@ -71,7 +72,7 @@ namespace Livrable1.View
             {
                 RecoverBackup(selectedBackup, backupType);
             }
-            MessageBox.Show("Recover complete.");
+            MessageBox.Show(LanguageManager.GetText("recover_complete"));
         }
 
         // Recover selected files (from destination folder to source folder)
@@ -92,7 +93,7 @@ namespace Livrable1.View
 
                     // Debug: Display files in the destination folder
                     string[] filesInDestination = Directory.GetFiles(destinationFolder);
-                    MessageBox.Show("Files in the destination folder: " + string.Join(", ", filesInDestination.Select(f => Path.GetFileName(f))));
+                    MessageBox.Show(LanguageManager.GetText("destination_folder" + string.Join(", ", filesInDestination.Select(f => Path.GetFileName(f)))));
 
                     foreach (var fileName in selectedFiles)
                     {
@@ -101,8 +102,7 @@ namespace Livrable1.View
                         string recoverPath = Path.Combine(destinationFolder, fileName);  // Path of the file in the destination
 
                         // Debug: Display files searched for
-                        MessageBox.Show($"File search '{fileName}' in the destination folder: {recoverPath}");
-
+                        MessageBox.Show($"{LanguageManager.GetText("file_search")} '{fileName}' {LanguageManager.GetText("in_destination_folder")} {recoverPath}");
                         // Case-insensitive file name comparison
                         bool fileExists = filesInDestination.Any(file => string.Equals(Path.GetFileName(file), fileName, StringComparison.OrdinalIgnoreCase));
 
@@ -112,7 +112,7 @@ namespace Livrable1.View
                             if (backupType == "full")
                             {
                                 File.Copy(recoverPath, sourceFile, true); // Copies the file to the source folder
-                                MessageBox.Show($"File'{fileName}' has been successfully recovered (complete).");
+                                MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("been_success_recover_complete")}");
                             }
                             // Differential backup: only copy if the file was modified after the last copy
                             else if (backupType == "differential")
@@ -126,35 +126,35 @@ namespace Livrable1.View
                                     if (destinationLastModified > sourceLastModified)
                                     {
                                         File.Copy(recoverPath, sourceFile, true);
-                                        MessageBox.Show($"File '{fileName}' has been successfully recovered (différentiel).");
+                                        MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("been_success_recover_diff")}");
                                     }
                                     else
                                     {
-                                        MessageBox.Show($"File '{fileName}' has not been modified, no recovery required.");
+                                        MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("no_recover_required")}");
                                     }
                                 }
                                 else
                                 {
                                     // Source file does not exist, copy directly
                                     File.Copy(recoverPath, sourceFile, true);
-                                    MessageBox.Show($"File '{fileName}' has been successfully recovered (differential - new file).");
+                                    MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("sucessfully_recovered")}");
                                 }
                             }
                         }
                         else
                         {
-                            MessageBox.Show($"File '{fileName}' does not exist in the destination folder.");
+                            MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("dont_exist_in_destination_folder")}");
                         }
                     }
                 }
                 else
                 {
-                    MessageBox.Show($"The destination directory '{destinationFolder}' does not exist.");
+                    MessageBox.Show($"{LanguageManager.GetText("destination_directory")} '{destinationFolder}' {LanguageManager.GetText("does_not_exist")}");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error during recovery: {ex.Message}");
+                MessageBox.Show($"{LanguageManager.GetText("error_during_recovery")} {ex.Message}");
             }
         }
 
@@ -177,6 +177,18 @@ namespace Livrable1.View
             MainWindow viewMain = new MainWindow();
             viewMain.Show();
             this.Close();
+        }
+
+        private void UpdateUILanguage()
+        {
+            LabelMainViewRecoverBackup.Content = LanguageManager.GetText("recover_backup_jobs");
+            LabelMainSelectRecoverBackup.Content = LanguageManager.GetText("select_backup_to_recover");
+            LabelMainBackupType.Content = LanguageManager.GetText("choose_backup_type");
+            FullBackupCheckBox.Content = LanguageManager.GetText("full_backup_checkbox");
+            DifferentialBackupCheckBox.Content = LanguageManager.GetText("differential_backup_checkbox");
+            ButtonCancel.Content = LanguageManager.GetText("cancel");
+            ButtonValidate.Content = LanguageManager.GetText("validate");
+            ButtonLeave.Content = LanguageManager.GetText("menu_leave");
         }
     }
 

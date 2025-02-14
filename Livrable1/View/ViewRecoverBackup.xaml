@@ -69,7 +69,7 @@
                     Margin="10,0" Background="#FFBD0000" Foreground="White" Click="ButtonCancel_Click"/>
             <Button x:Name="ButtonValidate" Content="Validate" Width="80" Height="30" 
                     Margin="10,0" Background="#FF0FB700" Foreground="White" Click="ButtonValidate_Click"/>
-            <Button x:Name="ButtonLeave" Content="Leave" Width="80" Height="30" 
+            <Button x:Name="ButtonLeave" Content="Exit" Width="80" Height="30" 
                     Margin="10,0" Click="ButtonLeave_Click"/>
         </StackPanel>
     </Grid>

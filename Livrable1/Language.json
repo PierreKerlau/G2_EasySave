@@ -89,7 +89,31 @@
     "log_format": "Log Format",
     "format_json": "JSON Format",
     "format_xml": "XML Format",
-    "app_closing": "A business software is running. EasySave will now close."
+    "app_closing": "A business software is running. EasySave will now close.",
+
+    "select_backup_type": "Please select a backup type.",
+    "recover_complete": "Recover complete.",
+    "destination_folder": "Files in the destination folder: ",
+    "file_search": "File search",
+    "in_destination_folder": "in the destination folder: ",
+    "file_has": "File",
+    "been_success_recover_complete": "has been successfully recovered (complete).",
+    "been_success_recover_diff": "has been successfully recovered (differential).",
+    "no_recover_required": "has not been modified, no recovery required.",
+    "sucessfully_recovered": "has been successfully recovered (differential - new file).",
+    "dont_exist_in_destination_folder": "does not exist in the destination folder.",
+    "destination_directory": "The destination directory",
+    "does_not_exist": "does not exist",
+    "error_during_recovery": "Error during recovery: ",
+
+    "recover_backup_jobs": "Recover backup jobs",
+    "select_backup_to_recover": "Select backup jobs to recover",
+    "choose_backup_type": "Choose the backup type",
+    "full_backup_checkbox": "Full Backup",
+    "differential_backup_checkbox": "Differential Backup",
+    "cancel": "Cancel",
+    "validate": "Validate"
+
 
   },
   "fr": {
@@ -182,7 +206,30 @@
     "log_format": "Format des logs",
     "format_json": "Format JSON",
     "format_xml": "Format XML",
-    "app_closing": "Un logiciel métier est en cours d'exécution. EasySave va maintenant se fermer."
+    "app_closing": "Un logiciel métier est en cours d'exécution. EasySave va maintenant se fermer.",
+
+    "select_backup_type": "Veuillez sélectionner un type de sauvegarde.",
+    "recover_complete": "Récupération complète.",
+    "destination_folder": "Fichiers dans le dossier de destination : ",
+    "file_search": "Recherche de fichiers",
+    "in_destination_folder": "dans le dossier de destination : ",
+    "file_has": "Fichier",
+    "been_success_recover_complete": "a été récupéré avec succès (complet).",
+    "been_success_recover_diff": "a été récupéré avec succès (différentielle).",
+    "no_recover_required": "n'a pas été modifié, aucune récupération n'est nécessaire.",
+    "sucessfully_recovered": "a été récupéré avec succès (différentielle - nouveau fichier).",
+    "dont_exist_in_destination_folder": "n'existe pas dans le dossier de destination.",
+    "destination_directory": "Le répertoire de destination",
+    "does_not_exist": "n'existe pas'",
+    "error_during_recovery": "Erreur durant la récupération : ",
+
+    "recover_backup_jobs": "Récupération de sauvegardes",
+    "select_backup_to_recover": "Sélectionnez une sauvegarde à récupérer",
+    "choose_backup_type": "Choisissez le type de sauvegarde",
+    "full_backup_checkbox": "Sauvegarde complète",
+    "differential_backup_checkbox": "Sauvegarde différentielle",
+    "cancel": "Annuler",
+    "validate": "Valider"
 
   }
 }
