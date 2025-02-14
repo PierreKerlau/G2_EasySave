@@ -5,12 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Livrable1.View"
         mc:Ignorable="d"
-        Title="ViewRecoverBackup" Height="450" Width="800">
+        Title="ViewRecoverBackup" Height="450" Width="800" ResizeMode="CanResizeWithGrip">
     <Grid>
-        <Grid Margin="0,0,0,346">
-            <Label x:Name="LabelMainViewTitle" Content="EasySave" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Franklin Gothic Demi" FontSize="36"/>
-        </Grid>
-        <Button x:Name="ButtonLeave" Content="Leave" HorizontalAlignment="Left" Margin="716,370,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1"/>
+        <!-- Defining rows and columns for the grid -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Title -->
+        <Label x:Name="LabelMainViewTitle" Content="EasySave" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" 
+               FontFamily="Franklin Gothic Demi" FontSize="36" 
+               Grid.Row="0" Grid.ColumnSpan="2" Margin="0,10"/>
+        <Label x:Name="LabelMainViewRecoverBackup" Content="Recover backup jobs" 
+               HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"
+               Grid.Row="0" Margin="46,66,0,0" Grid.Column="1" Grid.RowSpan="2" RenderTransformOrigin="0.183,0.614"/>
+
+        <!-- Backup selection -->
+        <Label x:Name="LabelMainSelectRecoverBackup" Content="Select backup jobs to recover"
+               HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"
+               Grid.Row="1" Grid.Column="0" Margin="74,24,0,0" Grid.ColumnSpan="2"/>
+
+        <!-- StackPanel to display Checkboxes dynamically -->
+        <StackPanel x:Name="BackupCheckboxesPanel" 
+                    Grid.Row="1" Grid.Column="0" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    Margin="90,85,0,10">
+            <!-- CheckBoxes will be added here dynamically via C# -->
+        </StackPanel>
+
+        <!-- Choice of backup type -->
+        <Label x:Name="LabelMainBackupType" Content="Choose the backup type"
+               HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18"
+               Grid.Row="1" Grid.Column="1" Margin="0,24,74,0"/>
+
+        <!-- Using Grid instead of StackPanel for dynamic layout -->
+        <Grid Grid.Row="1" Grid.Column="1" Margin="0,40,20,10">
+            <!-- Column Definitions for checkboxes -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="399.774"/>
+                <ColumnDefinition Width="0.161"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Backup type (Full or Differential) -->
+            <RadioButton x:Name="FullBackupCheckBox" Content="Full Backup" 
+                      HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Margin="280,67,0,0"/>
+            <RadioButton x:Name="DifferentialBackupCheckBox" Content="Differential Backup" 
+                      HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Margin="280,99,0,0" Grid.ColumnSpan="2"/>
+        </Grid>
+
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,306,0,0" Grid.RowSpan="2">
+            <Button x:Name="ButtonCancel" Content="Cancel" Width="80" Height="30" 
+                    Margin="10,0" Background="#FFBD0000" Foreground="White" Click="ButtonCancel_Click"/>
+            <Button x:Name="ButtonValidate" Content="Validate" Width="80" Height="30" 
+                    Margin="10,0" Background="#FF0FB700" Foreground="White" Click="ButtonValidate_Click"/>
+            <Button x:Name="ButtonLeave" Content="Leave" Width="80" Height="30" 
+                    Margin="10,0" Click="ButtonLeave_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
