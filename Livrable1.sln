@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livrable1.logger", "Livrabl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livrable1", "Livrable1\Livrable1.csproj", "{88DE4FD5-0EBF-4352-87BC-E3A9D3E1D2C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoSoft", "CryptoSoft\CryptoSoft.csproj", "{5CBA2B1C-5EA7-4FB3-A80D-E0BE81C14891}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{88DE4FD5-0EBF-4352-87BC-E3A9D3E1D2C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88DE4FD5-0EBF-4352-87BC-E3A9D3E1D2C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88DE4FD5-0EBF-4352-87BC-E3A9D3E1D2C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CBA2B1C-5EA7-4FB3-A80D-E0BE81C14891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CBA2B1C-5EA7-4FB3-A80D-E0BE81C14891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CBA2B1C-5EA7-4FB3-A80D-E0BE81C14891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CBA2B1C-5EA7-4FB3-A80D-E0BE81C14891}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

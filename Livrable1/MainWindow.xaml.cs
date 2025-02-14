@@ -46,13 +46,6 @@ namespace Livrable1
             this.Close();
         }
 
-        private void ButtonShowViewLogs_Click(object sender, RoutedEventArgs e)
-        {
-            // Ouverture de la vue ViewLogs et fermeture de la vue principale
-            ViewLogs viewLogs = new ViewLogs();
-            viewLogs.Show();
-            this.Close();
-        }
 
         private void ButtonShowViewParameter_Click(object sender, RoutedEventArgs e)
         {

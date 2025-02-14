@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CryptoSoft\CryptoSoft.csproj" />
+    <ProjectReference Include="..\Livrable1.logger\Livrable1.logger.csproj" />
+  </ItemGroup>
+
 </Project>
