@@ -72,7 +72,7 @@
 //            List<string> selectedFiles = new();
 //            bool addMoreFiles = true;
 
-            
+
 
 //            while (addMoreFiles)
 //            {
@@ -215,7 +215,7 @@
 //                    string fileName = Path.GetFileName(file);
 //                    string destinationFile = Path.Combine(destinationFolder, fileName);
 
-                    
+
 
 //                    try
 //                    {
@@ -263,7 +263,7 @@
 //                            logger.UpdateState(backup.name, $"Error: File {fileName} not found");
 //                        }
 
-                        
+
 
 //                    }
 //                    catch (Exception ex)
@@ -278,7 +278,7 @@
 //                    if (save != null && save.FichiersRestants == 0)
 //                    {
 //                        save.Actif = false;
-                        
+
 //                    }
 //                    //------------------------------//
 
@@ -290,7 +290,7 @@
 //            logger.UpdateState("Backup Operation", "All backups completed");
 //            Console.WriteLine("\n" + LanguageManager.GetText("backup_process_completed"));
 
-            
+
 
 //        }
 
