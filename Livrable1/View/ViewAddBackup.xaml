@@ -6,11 +6,59 @@
         xmlns:local="clr-namespace:Livrable1.View"
         mc:Ignorable="d"
         Title="ViewAddBackup" Height="450" Width="800">
+
+    
+    
     <Grid>
+
+        
+
+        <Grid>
+            <!-- Validate First Condition -->
+            <Button x:Name="ButtonValidate" Content="Validate" HorizontalAlignment="Left" Margin="265,160,0,0" VerticalAlignment="Top" Click="FirstValidateAddBackup" Background="#FF0FB700" Foreground="White" Width="60"/>
+            <!-- Cancel First Condition -->
+            <Button x:Name="ButtonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="475,160,0,0" VerticalAlignment="Top" Click="FirstCancelAddBackups_Click" Background="#FFBD0000" Foreground="White" Width="60"/>
+            <!-- Leave -->
+            <Button x:Name="ButtonLeave" Content="Leave" HorizontalAlignment="Left" Margin="716,370,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1"/>
+            <!-- Validate Second Condition -->
+            <Button x:Name="ButtonValidate2" Content="Validate" HorizontalAlignment="Left" Margin="265,370,0,0" VerticalAlignment="Top" Click="SecondValidateAddBackup" Background="#FF0FB700" Foreground="White" Width="60"/>
+            <!-- Cancel Second Condition -->
+            <Button x:Name="ButtonCancel2" Content="Cancel" HorizontalAlignment="Left" Margin="475,370,0,0" VerticalAlignment="Top" Click="SecondCancelAddBackups" Background="#FFBD0000" Foreground="White" Width="60"/>
+            
+            
+            <!-- TextBlock Name -->
+            <TextBox x:Name="txtNameSave" Text="{Binding NameSave, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="100,120,0,0"/>
+            <!-- TextBlock SourcePath -->
+            <TextBox x:Name="txtCheminSource" Text="{Binding CheminSource, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="310,120,0,0"/>
+            <!-- TextBlock DestinationPath -->
+            <TextBox x:Name="txtCheminDestination" Text="{Binding CheminDestination, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="520,120,0,0"/>
+            
+            
+            <!-- List Files -->
+            <Grid Margin="100,200,100,80">
+                <ListView x:Name="ListFiles" ItemsSource="{Binding Files}" SelectionMode="Multiple" MaxHeight="300">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="5"/>
+                                <Image Source="{Binding FileIcon}" Width="20" Height="20" Margin="5"/>
+                                <TextBlock Text="{Binding FileName}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+
+        </Grid>
+
         <Grid Margin="0,0,0,346">
             <Label x:Name="LabelMainViewTitle" Content="EasySave" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Franklin Gothic Demi" FontSize="36"/>
         </Grid>
-        <Button x:Name="ButtonLeave" Content="Leave" HorizontalAlignment="Left" Margin="716,370,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1"/>
+
+
+        <Label x:Name="LabelTitleExecuteBackup" Content="Add Backup Jobs" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" FontSize="18"/>
 
     </Grid>
+
 </Window>

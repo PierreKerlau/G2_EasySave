@@ -6,11 +6,47 @@
         xmlns:local="clr-namespace:Livrable1.View"
         mc:Ignorable="d"
         Title="ViewExecuteBackup" Height="450" Width="800">
+    
     <Grid>
+        
         <Grid Margin="0,0,0,346">
             <Label x:Name="LabelMainViewTitle" Content="EasySave" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Franklin Gothic Demi" FontSize="36"/>
         </Grid>
+        
         <Button x:Name="ButtonLeave" Content="Leave" HorizontalAlignment="Left" Margin="716,370,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1"/>
 
+        <Button x:Name="ButtonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="30,160,0,0" VerticalAlignment="Top" Click="CancelSelectedBackups" Background="#FFBD0000" Foreground="White" Width="60"/>
+        <Button x:Name="ShowSave" Content="Voir les &#x0a;saves" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,190,0,0" Click="ShowSelectedBackups" Height="40" Width="60"/>
+
+
+        <Button x:Name="ButtonValidate" Content="Validate" HorizontalAlignment="Left" Margin="30,130,0,0" VerticalAlignment="Top" Click="ValidateSelectedBackups" Background="#FF0FB700" Foreground="White" Width="60"/>
+        
+        
+        <Grid>
+            <ListView ItemsSource="{Binding Save}" Margin="100,120,100,80">
+                <ListView.View>
+                    <GridView>
+                        <!-- Case à cocher -->
+                        <GridViewColumn Header="✓" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        
+                        
+                        <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding name}" Width="120"/>
+                        <GridViewColumn Header="Type" DisplayMemberBinding="{Binding type}" Width="80"/>
+                        <GridViewColumn Header="Source" DisplayMemberBinding="{Binding sourcePath}" Width="180"/>
+                        <GridViewColumn Header="Destination" DisplayMemberBinding="{Binding destinationPath}" Width="180"/>
+                        <GridViewColumn Header="Date" DisplayMemberBinding="{Binding creationDate}" Width="120"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Label x:Name="LabelTitleExecuteBackup" Content="Execute Backup Jobs" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" FontSize="18"/>
+
     </Grid>
+    
 </Window>
