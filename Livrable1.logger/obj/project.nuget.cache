@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "ngNl67Vx7PE=",
+  "dgSpecHash": "WuJM37DvifA=",
   "success": true,
-  "projectFilePath": "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\V1\\Livrable1.logger\\Livrable1.logger.csproj",
+  "projectFilePath": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1.logger\\Livrable1.logger.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problème de lecture du fichier cache C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1.logger\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
