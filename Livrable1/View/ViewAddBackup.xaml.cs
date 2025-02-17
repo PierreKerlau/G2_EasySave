@@ -1,4 +1,4 @@
-﻿using Livrable1.Controller;
+﻿using Livrable1.ViewModel;
 using Livrable1.Model;
 using Livrable1.View;
 using System;
@@ -31,6 +31,7 @@ namespace Livrable1.View
         {
             InitializeComponent();
             this.DataContext = new AddSaveViewModel();
+            ListFiles.Visibility = Visibility.Collapsed;
         }
 
         private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
@@ -75,6 +76,7 @@ namespace Livrable1.View
 
                 if (result)
                 {
+                    ListFiles.Visibility = Visibility.Visible;
                     viewModel.LoadFilesFromSource(sourcePath);
 
                     MessageBox.Show("Sauvegarde ajoutée avec succès !");
@@ -88,6 +90,7 @@ namespace Livrable1.View
             {
                 MessageBox.Show("Echec du Valider !");
             }
+            
         }
         //-------------------End Methods for Validate 1-------------------//
 
@@ -121,7 +124,8 @@ namespace Livrable1.View
                     txtNameSave.Clear();
                     txtCheminSource.Clear();
                     txtCheminDestination.Clear();
-                    ListFiles.ItemsSource = null;
+                    //ListFiles.ItemsSource = null;
+                    ListFiles.Visibility = Visibility.Collapsed;
 
                 }
             }

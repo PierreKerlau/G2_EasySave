@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Windows;
 
-namespace Livrable1.Controller
+namespace Livrable1.ViewModel
 {
     public static class LanguageManager
     {

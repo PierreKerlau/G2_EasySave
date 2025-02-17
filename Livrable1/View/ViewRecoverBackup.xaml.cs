@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Livrable1.Controller;
+using Livrable1.ViewModel;
 
 namespace Livrable1.View
 {

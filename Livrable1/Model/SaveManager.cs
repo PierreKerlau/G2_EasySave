@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Livrable1.Model;
 
-namespace Livrable1.Controller
+namespace Livrable1.ViewModel
 {
     public class SaveManager
     {

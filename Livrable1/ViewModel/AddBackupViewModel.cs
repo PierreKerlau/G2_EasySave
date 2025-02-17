@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Livrable1.Controller;
+using Livrable1.ViewModel;
 using Livrable1.View;
 using System.ComponentModel;
 using System.IO;
@@ -18,7 +18,7 @@ using System.Windows.Media;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------//
 
-namespace Livrable1.Controller
+namespace Livrable1.ViewModel
 {
 
     //---------------------Model---------------------//
