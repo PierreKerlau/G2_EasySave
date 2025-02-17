@@ -14,15 +14,9 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Livrable1.logger")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< Updated upstream:Livrable1.logger/obj/Release/net8.0/Livrable1.logger.AssemblyInfo.cs
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1afd773f6adaf317227a71395534bebab05177cf")]
 [assembly: System.Reflection.AssemblyProductAttribute("Livrable1.logger")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Livrable1.logger")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64e3f3955456156fb68e81278bc9d1c4ae0315a9")]
-[assembly: System.Reflection.AssemblyProductAttribute("Livrable1")]
-[assembly: System.Reflection.AssemblyTitleAttribute("Livrable1")]
->>>>>>> Stashed changes:Livrable1/obj/Debug/net8.0/Livrable1.AssemblyInfo.cs
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Généré par la classe MSBuild WriteCodeFragment.

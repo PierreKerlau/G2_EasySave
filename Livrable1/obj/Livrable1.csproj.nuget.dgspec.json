@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1\\Livrable1.csproj": {}
+    "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\V1\\Livrable1\\Livrable1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1\\Livrable1.csproj": {
+    "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\V1\\Livrable1\\Livrable1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1\\Livrable1.csproj",
+        "projectUniqueName": "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\V1\\Livrable1\\Livrable1.csproj",
         "projectName": "Livrable1",
-        "projectPath": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1\\Livrable1.csproj",
-        "packagesPath": "C:\\Users\\Pierre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1\\obj\\",
+        "projectPath": "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\V1\\Livrable1\\Livrable1.csproj",
+        "packagesPath": "C:\\Users\\adeli\\.nuget\\packages\\",
+        "outputPath": "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\V1\\Livrable1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Pierre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\adeli\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

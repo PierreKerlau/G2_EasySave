@@ -32,7 +32,7 @@ namespace Livrable1.Controller
         //---------Variable---------//
 
 
-        //---------Constructeur---------//
+        //---------Constructueur---------//
         public SaveInformation(string nameSave, string cheminSource, string cheminDestination)
         {
             NameSave = nameSave;
@@ -40,10 +40,10 @@ namespace Livrable1.Controller
             CheminDestination = cheminDestination;
             LoadFiles();
         }
-        //---------Constructeur---------//
+        //---------Constructueur---------//
 
 
-        //---------Méthodes pour valider les chemins---------//
+        //---------Methods pour Valider le Chemin d'accès---------//
         public bool ValidatePaths()
         {
             // Vérifier si le chemin source existe
@@ -55,7 +55,7 @@ namespace Livrable1.Controller
 
             // Vérifier si le chemin de destination existe
             if (!Directory.Exists(CheminDestination))
-            {
+            { 
                 MessageBox.Show("Le chemin de destination n'existe pas.");
                 return false;
             }
@@ -70,10 +70,10 @@ namespace Livrable1.Controller
 
             return true;
         }
-        //---------Méthodes pour valider les chemins---------//
+        //---------Methods pour Valider le Chemin d'accès---------//
 
 
-        //---------Méthodes pour charger les fichiers---------//
+        //---------Methods pour Charger les fichiers---------//
         public void LoadFiles()
         {
             Files.Clear(); // Réinitialise la liste
@@ -86,15 +86,16 @@ namespace Livrable1.Controller
                 }
             }
         }
-        //---------Méthodes pour charger les fichiers---------//
+        //---------Methods pour Charger les fichiers---------//
 
 
-        //---------Méthodes pour sélectionner les fichiers---------//
+        //---------Methods Selectionner les fichiers---------//
+
         public void SetSelectedFiles(List<FileInformation> selectedFiles)
         {
             Files = selectedFiles;
         }
-        //---------Méthodes pour sélectionner les fichiers---------//
+        //---------Methods Selectionner les fichiers---------//
 
     }
     //---------------------------//
@@ -124,22 +125,18 @@ namespace Livrable1.Controller
 
         public List<SaveInformation> Backups { get; set; } = new List<SaveInformation>();
 
+
         public bool AddSaveMethod(SaveInformation backup)
         {
-            // Vérifier que la sauvegarde est valide avant de l'ajouter
+            // On peut vérifier ici que la sauvegarde est valide avant de l'ajouter.
             if (!backup.ValidatePaths())
             {
                 return false;
             }
 
             Backups.Add(backup);
-
-            // ✅ Enregistrer la sauvegarde dans SaveManager pour qu'elle soit visible dans ExecuteBackup
-            SaveManager.Instance.AddBackup(backup);
-
             return true;
         }
-
         public ObservableCollection<FileInformation> Files { get; set; } = new ObservableCollection<FileInformation>();
 
         public void LoadFilesFromSource(string sourcePath)
