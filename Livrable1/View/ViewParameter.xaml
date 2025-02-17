@@ -36,6 +36,7 @@
                 <StackPanel Grid.Column="0" Margin="0,0,50,0">
                     <CheckBox x:Name="CheckBoxPDF" Content="PDF" Margin="0,5,0,5" Checked="CheckBox_Checked_PDF"/>
                     <CheckBox x:Name="CheckBoxPNG" Content="PNG" Margin="0,5,0,5" Checked="CheckBox_Checked_PNG"/>
+                    <CheckBox x:Name="CheckBoxTXT" Content="TXT" Margin="0,5,0,5" Checked="CheckBox_Checked_TXT"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <CheckBox x:Name="CheckBoxJSON" Content="JSON" Margin="0,5,0,5" Checked="CheckBox_Checked_JSON"/>

@@ -26,6 +26,28 @@ namespace Livrable1.View
         {
             InitializeComponent();
 
+            // Lire la clé depuis le fichier .env
+            try
+            {
+                string projectRoot = System.IO.Path.GetFullPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\.."));
+                string envPath = System.IO.Path.Combine(projectRoot, ".env");
+                
+                string[] lines = System.IO.File.ReadAllLines(envPath);
+                foreach (string line in lines)
+                {
+                    if (line.StartsWith("EASYSAVE_CRYPTO_KEY="))
+                    {
+                        string key = line.Substring("EASYSAVE_CRYPTO_KEY=".Length);
+                        Environment.SetEnvironmentVariable("EASYSAVE_CRYPTO_KEY", key);
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la lecture du fichier .env : " + ex.Message);
+            }
+
             // Initialiser l'état des CheckBox
             InitializeCheckBoxStates();
 
@@ -55,20 +77,22 @@ namespace Livrable1.View
             var checkBoxJSON = this.FindName("CheckBoxJSON") as CheckBox;
             var checkBoxXML = this.FindName("CheckBoxXML") as CheckBox;
             var checkBoxDOCX = this.FindName("CheckBoxDOCX") as CheckBox;
+            var checkBoxTXT = this.FindName("CheckBoxTXT") as CheckBox;
 
-            if (checkBoxCalculator != null) checkBoxCalculator.IsChecked = StateManager.IsCalculatorEnabled;
-            if (checkBoxNotepad != null) checkBoxNotepad.IsChecked = StateManager.IsNotePadEnabled;
-            if (checkBoxPDF != null) checkBoxPDF.IsChecked = StateManager.IsPdfEnabled;
-            if (checkBoxPNG != null) checkBoxPNG.IsChecked = StateManager.IsPngEnabled;
-            if (checkBoxJSON != null) checkBoxJSON.IsChecked = StateManager.IsJsonEnabled;
-            if (checkBoxXML != null) checkBoxXML.IsChecked = StateManager.IsXmlEnabled;
-            if (checkBoxDOCX != null) checkBoxDOCX.IsChecked = StateManager.IsDocxEnabled;
+            if (checkBoxCalculator != null) checkBoxCalculator.IsChecked = StateViewModel.IsCalculatorEnabled;
+            if (checkBoxNotepad != null) checkBoxNotepad.IsChecked = StateViewModel.IsNotePadEnabled;
+            if (checkBoxPDF != null) checkBoxPDF.IsChecked = StateViewModel.IsPdfEnabled;
+            if (checkBoxPNG != null) checkBoxPNG.IsChecked = StateViewModel.IsPngEnabled;
+            if (checkBoxJSON != null) checkBoxJSON.IsChecked = StateViewModel.IsJsonEnabled;
+            if (checkBoxXML != null) checkBoxXML.IsChecked = StateViewModel.IsXmlEnabled;
+            if (checkBoxDOCX != null) checkBoxDOCX.IsChecked = StateViewModel.IsDocxEnabled;
+            if (checkBoxTXT != null) checkBoxTXT.IsChecked = StateViewModel.IsTxtEnabled;
             // Initialiser l'état des RadioButtons pour le format de log
             var radioButtonJSON = this.FindName("RadioButtonLogJSON") as RadioButton;
             var radioButtonXML = this.FindName("RadioButtonLogXML") as RadioButton;
 
-            if (radioButtonJSON != null) radioButtonJSON.IsChecked = StateManager.IsJsonOn;
-            if (radioButtonXML != null) radioButtonXML.IsChecked = StateManager.IsXmlOn;
+            if (radioButtonJSON != null) radioButtonJSON.IsChecked = StateViewModel.IsJsonOn;
+            if (radioButtonXML != null) radioButtonXML.IsChecked = StateViewModel.IsXmlOn;
         }
 
         private void OnLanguageChanged(object sender, EventArgs e)
@@ -128,15 +152,15 @@ namespace Livrable1.View
                     case "RadioButtonLogJSON":
                         if (radioButton.IsChecked == true)
                         {
-                            StateManager.IsJsonOn = true;
-                            StateManager.IsXmlOn = false;
+                            StateViewModel.IsJsonOn = true;
+                            StateViewModel.IsXmlOn = false;
                         }
                         break;
                     case "RadioButtonLogXML":
                         if (radioButton.IsChecked == true)
                         {
-                            StateManager.IsXmlOn = true;
-                            StateManager.IsJsonOn = false;
+                            StateViewModel.IsXmlOn = true;
+                            StateViewModel.IsJsonOn = false;
                         }
                         break;
                 }
@@ -147,7 +171,7 @@ namespace Livrable1.View
         {
             if (sender is CheckBox checkBox)
             {
-                StateManager.IsCalculatorEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.IsCalculatorEnabled = checkBox.IsChecked ?? false;
             }
         }
 
@@ -155,7 +179,7 @@ namespace Livrable1.View
         {
             if (sender is CheckBox checkBox)
             {
-                StateManager.IsNotePadEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.IsNotePadEnabled = checkBox.IsChecked ?? false;
             }
         }
 
@@ -163,7 +187,7 @@ namespace Livrable1.View
         {
             if (sender is CheckBox checkBox)
             {
-                StateManager.IsPdfEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.IsPdfEnabled = checkBox.IsChecked ?? false;
             }
         }
 
@@ -171,7 +195,7 @@ namespace Livrable1.View
         {
             if (sender is CheckBox checkBox)
             {
-                StateManager.IsPngEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.IsPngEnabled = checkBox.IsChecked ?? false;
             }
         }
 
@@ -179,7 +203,7 @@ namespace Livrable1.View
         {
             if (sender is CheckBox checkBox)
             {
-                StateManager.IsJsonEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.IsJsonEnabled = checkBox.IsChecked ?? false;
             }
         }
 
@@ -187,7 +211,7 @@ namespace Livrable1.View
         {
             if (sender is CheckBox checkBox)
             {
-                StateManager.IsXmlEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.IsXmlEnabled = checkBox.IsChecked ?? false;
             }
         }
 
@@ -195,7 +219,19 @@ namespace Livrable1.View
         {
             if (sender is CheckBox checkBox)
             {
-                StateManager.IsDocxEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.IsDocxEnabled = checkBox.IsChecked ?? false;
+            }
+        }
+
+        private void CheckBox_Checked_TXT(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsTxtEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.UpdateExtensionEncryption(".txt", checkBox.IsChecked ?? false);
+                
+                // Forcer la checkbox à rester cochée
+                checkBox.IsChecked = StateViewModel.IsTxtEnabled;
             }
         }
     }

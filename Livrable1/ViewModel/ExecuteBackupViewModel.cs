@@ -4,6 +4,8 @@ using System.IO;
 using Livrable1.Model;
 using Livrable1.ViewModel;
 using System.Linq;
+using EasySave.Cryptography;
+using System.Windows;
 
 namespace Livrable1.ViewModel
 {
@@ -39,15 +41,39 @@ namespace Livrable1.ViewModel
 
                 foreach (var file in backup.Files)
                 {
-                    string destFile = Path.Combine(backup.CheminDestination, file.FileName);
-                    File.Copy(file.FilePath, destFile, true);
-                }
+                    try
+                    {
+                        string destFile = Path.Combine(backup.CheminDestination, file.FileName);
+                        string extension = Path.GetExtension(file.FilePath);
+                        
+                        MessageBox.Show($"Traitement du fichier : {file.FileName}\n" +
+                                      $"Extension : {extension}\n" +
+                                      $"Chemin source : {file.FilePath}\n" +
+                                      $"Chemin destination : {destFile}");
 
-                Console.WriteLine($"Sauvegarde complète terminée pour {backup.NameSave}");
+                        if (CryptoManager.ShouldEncrypt(file.FilePath))
+                        {
+                            MessageBox.Show($"Tentative de cryptage pour {file.FileName}");
+                            CryptoManager.EncryptFile(file.FilePath, destFile);
+                            MessageBox.Show($"Cryptage terminé pour {file.FileName}");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Copie simple pour {file.FileName}");
+                            File.Copy(file.FilePath, destFile, true);
+                        }
+                    }
+                    catch (Exception fileEx)
+                    {
+                        MessageBox.Show($"Erreur sur le fichier {file.FileName} : {fileEx.Message}\n" +
+                                      $"Stack trace : {fileEx.StackTrace}");
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erreur lors de la sauvegarde complète : {ex.Message}");
+                MessageBox.Show($"Erreur générale : {ex.Message}\n" +
+                               $"Stack trace : {ex.StackTrace}");
             }
         }
 
@@ -66,7 +92,17 @@ namespace Livrable1.ViewModel
 
                     if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                     {
-                        File.Copy(file.FilePath, destFile, true);
+                        // Vérifier si le fichier doit être crypté
+                        if (CryptoManager.ShouldEncrypt(file.FilePath))
+                        {
+                            MessageBox.Show($"Cryptage activé pour {file.FileName}");
+                            CryptoManager.EncryptFile(file.FilePath, destFile);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Pas de cryptage pour {file.FileName}");
+                            File.Copy(file.FilePath, destFile, true);
+                        }
                     }
                 }
 
