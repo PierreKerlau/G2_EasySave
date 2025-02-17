@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using Livrable1.Model;
-using Livrable1.Controller;
+using Livrable1.ViewModel;
 using System.Linq;
 
 namespace Livrable1.ViewModel

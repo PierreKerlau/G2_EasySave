@@ -1,4 +1,4 @@
-namespace Livrable1.Controller
+namespace Livrable1.ViewModel
 {
     public static class StateManager
     {

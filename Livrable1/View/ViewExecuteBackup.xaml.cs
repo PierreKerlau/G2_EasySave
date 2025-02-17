@@ -2,7 +2,7 @@
 using Livrable1.Model;
 using System.Linq;
 using System.Windows;
-using Livrable1.Controller;
+using Livrable1.ViewModel;
 using System.Windows.Controls;
 
 namespace Livrable1.View

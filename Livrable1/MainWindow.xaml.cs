@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Livrable1.View;
-using Livrable1.Controller;
+using Livrable1.ViewModel;
 
 namespace Livrable1
 {
