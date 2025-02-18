@@ -4,8 +4,8 @@ using System.IO;
 using Livrable1.Model;
 using Livrable1.ViewModel;
 using System.Linq;
-using EasySave.Cryptography;
 using System.Windows;
+using System.Diagnostics;
 
 namespace Livrable1.ViewModel
 {
@@ -44,36 +44,51 @@ namespace Livrable1.ViewModel
                     try
                     {
                         string destFile = Path.Combine(backup.CheminDestination, file.FileName);
-                        string extension = Path.GetExtension(file.FilePath);
-                        
-                        MessageBox.Show($"Traitement du fichier : {file.FileName}\n" +
-                                      $"Extension : {extension}\n" +
-                                      $"Chemin source : {file.FilePath}\n" +
-                                      $"Chemin destination : {destFile}");
+                        string extension = Path.GetExtension(file.FilePath).ToLower();
 
-                        if (CryptoManager.ShouldEncrypt(file.FilePath))
+                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
+                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
+                                           StateViewModel.IsPngEnabled && extension == ".png" ||
+                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
+                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
+                                           StateViewModel.IsDocxEnabled && extension == ".docx";
+
+                        if (shouldEncrypt)
                         {
-                            MessageBox.Show($"Tentative de cryptage pour {file.FileName}");
-                            CryptoManager.EncryptFile(file.FilePath, destFile);
-                            MessageBox.Show($"Cryptage terminé pour {file.FileName}");
+                            try
+                            {
+                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
+                                
+                                using (Process cryptoProcess = new Process())
+                                {
+                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
+                                    cryptoProcess.StartInfo.UseShellExecute = true;
+                                    cryptoProcess.StartInfo.RedirectStandardError = false;
+                                    
+                                    cryptoProcess.Start();
+                                    cryptoProcess.WaitForExit();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                            }
                         }
                         else
                         {
-                            MessageBox.Show($"Copie simple pour {file.FileName}");
                             File.Copy(file.FilePath, destFile, true);
                         }
                     }
                     catch (Exception fileEx)
                     {
-                        MessageBox.Show($"Erreur sur le fichier {file.FileName} : {fileEx.Message}\n" +
-                                      $"Stack trace : {fileEx.StackTrace}");
+                        MessageBox.Show($"Erreur sur le fichier {file.FileName} : {fileEx.Message}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur générale : {ex.Message}\n" +
-                               $"Stack trace : {ex.StackTrace}");
+                MessageBox.Show($"Erreur générale : {ex.Message}");
             }
         }
 
@@ -92,25 +107,46 @@ namespace Livrable1.ViewModel
 
                     if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                     {
-                        // Vérifier si le fichier doit être crypté
-                        if (CryptoManager.ShouldEncrypt(file.FilePath))
+                        string extension = Path.GetExtension(file.FilePath).ToLower();
+                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
+                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
+                                           StateViewModel.IsPngEnabled && extension == ".png" ||
+                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
+                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
+                                           StateViewModel.IsDocxEnabled && extension == ".docx";
+
+                        if (shouldEncrypt)
                         {
-                            MessageBox.Show($"Cryptage activé pour {file.FileName}");
-                            CryptoManager.EncryptFile(file.FilePath, destFile);
+                            try
+                            {
+                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
+                                
+                                using (Process cryptoProcess = new Process())
+                                {
+                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
+                                    cryptoProcess.StartInfo.UseShellExecute = true;
+                                    cryptoProcess.StartInfo.RedirectStandardError = false;
+                                    
+                                    cryptoProcess.Start();
+                                    cryptoProcess.WaitForExit();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                            }
                         }
                         else
                         {
-                            MessageBox.Show($"Pas de cryptage pour {file.FileName}");
                             File.Copy(file.FilePath, destFile, true);
                         }
                     }
                 }
-
-                Console.WriteLine($"Sauvegarde différentielle terminée pour {backup.NameSave}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erreur lors de la sauvegarde différentielle : {ex.Message}");
+                MessageBox.Show($"Erreur lors de la sauvegarde différentielle : {ex.Message}");
             }
         }
     }

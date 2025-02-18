@@ -21,8 +21,8 @@
         <!-- Section Logiciels métier -->
         <StackPanel Margin="100,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock x:Name="TextBlockSoftware" Text="Business Software" FontWeight="Bold" Margin="0,0,0,10"/>
-            <CheckBox x:Name="CheckBoxCalculator" Content="Calculator" Margin="0,5,0,5" Checked="CheckBox_Checked_Calculator"/>
-            <CheckBox x:Name="CheckBoxNotepad" Content="Notepad" Margin="0,5,0,5" Checked="CheckBox_Checked_Notepad"/>
+            <CheckBox x:Name="CheckBoxCalculator" Content="Calculator" Margin="0,5,0,5" Checked="CheckBox_Checked_Calculator" Unchecked="CheckBox_Unchecked_Calculator"/>
+            <CheckBox x:Name="CheckBoxNotepad" Content="Notepad" Margin="0,5,0,5" Checked="CheckBox_Checked_Notepad" Unchecked="CheckBox_Unchecked_Notepad"/>
         </StackPanel>
 
         <!-- Section Extensions -->
@@ -34,14 +34,14 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,0,50,0">
-                    <CheckBox x:Name="CheckBoxPDF" Content="PDF" Margin="0,5,0,5" Checked="CheckBox_Checked_PDF"/>
-                    <CheckBox x:Name="CheckBoxPNG" Content="PNG" Margin="0,5,0,5" Checked="CheckBox_Checked_PNG"/>
-                    <CheckBox x:Name="CheckBoxTXT" Content="TXT" Margin="0,5,0,5" Checked="CheckBox_Checked_TXT"/>
+                    <CheckBox x:Name="CheckBoxPDF" Content="PDF" Margin="0,5,0,5" Checked="CheckBox_Checked_PDF" Unchecked="CheckBox_Unchecked_PDF"/>
+                    <CheckBox x:Name="CheckBoxPNG" Content="PNG" Margin="0,5,0,5" Checked="CheckBox_Checked_PNG" Unchecked="CheckBox_Unchecked_PNG"/>
+                    <CheckBox x:Name="CheckBoxTXT" Content="TXT" Margin="0,5,0,5" Checked="CheckBox_Checked_TXT" Unchecked="CheckBox_Unchecked_TXT"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <CheckBox x:Name="CheckBoxJSON" Content="JSON" Margin="0,5,0,5" Checked="CheckBox_Checked_JSON"/>
-                    <CheckBox x:Name="CheckBoxXML" Content="XML" Margin="0,5,0,5" Checked="CheckBox_Checked_XML"/>
-                    <CheckBox x:Name="CheckBoxDOCX" Content="DOCX" Margin="0,5,0,5" Checked="CheckBox_Checked_DOCX"/>
+                    <CheckBox x:Name="CheckBoxJSON" Content="JSON" Margin="0,5,0,5" Checked="CheckBox_Checked_JSON" Unchecked="CheckBox_Unchecked_JSON"/>
+                    <CheckBox x:Name="CheckBoxXML" Content="XML" Margin="0,5,0,5" Checked="CheckBox_Checked_XML" Unchecked="CheckBox_Unchecked_XML"/>
+                    <CheckBox x:Name="CheckBoxDOCX" Content="DOCX" Margin="0,5,0,5" Checked="CheckBox_Checked_DOCX" Unchecked="CheckBox_Unchecked_DOCX"/>
                 </StackPanel>
             </Grid>
         </StackPanel>

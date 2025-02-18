@@ -175,6 +175,14 @@ namespace Livrable1.View
             }
         }
 
+        private void CheckBox_Unchecked_Calculator(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsCalculatorEnabled = false;
+            }
+        }
+
         private void CheckBox_Checked_Notepad(object sender, RoutedEventArgs e)
         {
             if (sender is CheckBox checkBox)
@@ -183,11 +191,29 @@ namespace Livrable1.View
             }
         }
 
+        private void CheckBox_Unchecked_Notepad(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsNotePadEnabled = false;
+            }
+        }
+
         private void CheckBox_Checked_PDF(object sender, RoutedEventArgs e)
         {
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsPdfEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.UpdateExtensionEncryption(".pdf", checkBox.IsChecked ?? false);
+            }
+        }
+
+        private void CheckBox_Unchecked_PDF(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsPdfEnabled = false;
+                StateViewModel.UpdateExtensionEncryption(".pdf", false);
             }
         }
 
@@ -196,6 +222,16 @@ namespace Livrable1.View
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsPngEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.UpdateExtensionEncryption(".png", checkBox.IsChecked ?? false);
+            }
+        }
+
+        private void CheckBox_Unchecked_PNG(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsPngEnabled = false;
+                StateViewModel.UpdateExtensionEncryption(".png", false);
             }
         }
 
@@ -204,6 +240,16 @@ namespace Livrable1.View
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsJsonEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.UpdateExtensionEncryption(".json", checkBox.IsChecked ?? false);
+            }
+        }
+
+        private void CheckBox_Unchecked_JSON(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsJsonEnabled = false;
+                StateViewModel.UpdateExtensionEncryption(".json", false);
             }
         }
 
@@ -212,6 +258,16 @@ namespace Livrable1.View
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsXmlEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.UpdateExtensionEncryption(".xml", checkBox.IsChecked ?? false);
+            }
+        }
+
+        private void CheckBox_Unchecked_XML(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsXmlEnabled = false;
+                StateViewModel.UpdateExtensionEncryption(".xml", false);
             }
         }
 
@@ -220,6 +276,16 @@ namespace Livrable1.View
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsDocxEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.UpdateExtensionEncryption(".docx", checkBox.IsChecked ?? false);
+            }
+        }
+
+        private void CheckBox_Unchecked_DOCX(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsDocxEnabled = false;
+                StateViewModel.UpdateExtensionEncryption(".docx", false);
             }
         }
 
@@ -229,9 +295,15 @@ namespace Livrable1.View
             {
                 StateViewModel.IsTxtEnabled = checkBox.IsChecked ?? false;
                 StateViewModel.UpdateExtensionEncryption(".txt", checkBox.IsChecked ?? false);
-                
-                // Forcer la checkbox à rester cochée
-                checkBox.IsChecked = StateViewModel.IsTxtEnabled;
+            }
+        }
+
+        private void CheckBox_Unchecked_TXT(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsTxtEnabled = false;
+                StateViewModel.UpdateExtensionEncryption(".txt", false);
             }
         }
     }

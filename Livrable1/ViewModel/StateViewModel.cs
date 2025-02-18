@@ -1,5 +1,4 @@
 using System.Windows;
-using EasySave.Cryptography;
 
 namespace Livrable1.ViewModel
 {
@@ -25,12 +24,10 @@ namespace Livrable1.ViewModel
         {
             if (isEnabled)
             {
-                ExtensionManager.AddExtension(extension);
                 MessageBox.Show($"Extension {extension} ajoutée pour le cryptage");
             }
             else
             {
-                ExtensionManager.RemoveExtension(extension);
                 MessageBox.Show($"Extension {extension} retirée du cryptage");
             }
         }
