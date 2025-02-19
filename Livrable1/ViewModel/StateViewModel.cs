@@ -15,9 +15,7 @@ namespace Livrable1.ViewModel
         public static bool IsXmlEnabled { get; set; } = false;
         public static bool IsDocxEnabled { get; set; } = false;
         public static bool IsTxtEnabled { get; set; } = false;
-
-        // États des formats de log
-        public static bool IsJsonOn { get; set; } = false;
+        public static bool IsJsonOn { get; set; } = true;
         public static bool IsXmlOn { get; set; } = false;
 
         public static void UpdateExtensionEncryption(string extension, bool isEnabled)

@@ -8,16 +8,18 @@ namespace Livrable1.logger
 {
     public class LogEntry
     {
-        public string Name { get; set; }
-        public string FileSource { get; set; }
-        public string FileTarget { get; set; }
-        public long FileSize { get; set; }
-        public double FileTransferTime { get; set; }
-        public string time { get; set; }
+        public required string Name { get; set; }
+        public required string FileSource { get; set; }
+        public required string FileTarget { get; set; }
+        public required long FileSize { get; set; }
+        public required double FileTransferTime { get; set; }
+        public required double CryptingTime { get; set; }
+        public required string time { get; set; }
 
         public LogEntry()
         {
             time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            CryptingTime = 0;
         }
     }
 
@@ -43,7 +45,7 @@ namespace Livrable1.logger
             _stateFilePath = Path.Combine(_logDirectory, "backup_state.json");
         }
 
-        public void LogBackupOperation(string jobName, string sourcePath, string destinationPath, long fileSize, long transferTime)
+        public void LogBackupOperation(string jobName, string sourcePath, string destinationPath, long fileSize, long transferTime, long cryptingTime, bool useJson)
         {
             if (string.IsNullOrEmpty(jobName)) return;
 
@@ -53,12 +55,27 @@ namespace Livrable1.logger
                 FileSource = sourcePath,
                 FileTarget = destinationPath,
                 FileSize = fileSize,
-                FileTransferTime = transferTime / 1000.0, // Conversion en secondes
+                FileTransferTime = transferTime / 1000.0,
+                CryptingTime = cryptingTime > 0 ? cryptingTime / 1000.0 : 0.0,
+                time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
             };
 
-            string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.json";
+            string extension = useJson ? "json" : "xml";
+            string logFileName = $"log_{DateTime.Now:yyyy-MM-dd}.{extension}";
             string logFilePath = Path.Combine(_logDirectory, logFileName);
 
+            if (useJson)
+            {
+                WriteJsonLog(logEntry, logFilePath);
+            }
+            else
+            {
+                WriteXmlLog(logEntry, logFilePath);
+            }
+        }
+
+        private void WriteJsonLog(LogEntry logEntry, string logFilePath)
+        {
             List<LogEntry> dailyLogs = new();
             if (File.Exists(logFilePath))
             {
@@ -66,7 +83,6 @@ namespace Livrable1.logger
                 dailyLogs = JsonSerializer.Deserialize<List<LogEntry>>(existingContent) ?? new List<LogEntry>();
             }
 
-            dailyLogs = dailyLogs.Where(log => log.Name != null).ToList();
             dailyLogs.Add(logEntry);
 
             string jsonContent = JsonSerializer.Serialize(dailyLogs, new JsonSerializerOptions
@@ -76,6 +92,34 @@ namespace Livrable1.logger
             });
 
             File.WriteAllText(logFilePath, jsonContent);
+        }
+
+        private void WriteXmlLog(LogEntry logEntry, string logFilePath)
+        {
+            var xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(List<LogEntry>));
+            List<LogEntry> dailyLogs = new();
+
+            if (File.Exists(logFilePath))
+            {
+                using (var reader = new StreamReader(logFilePath))
+                {
+                    try
+                    {
+                        dailyLogs = (List<LogEntry>)xmlSerializer.Deserialize(reader);
+                    }
+                    catch
+                    {
+                        dailyLogs = new List<LogEntry>();
+                    }
+                }
+            }
+
+            dailyLogs.Add(logEntry);
+
+            using (var writer = new StreamWriter(logFilePath))
+            {
+                xmlSerializer.Serialize(writer, dailyLogs);
+            }
         }
 
         public void UpdateState(string backupName, string currentAction)
