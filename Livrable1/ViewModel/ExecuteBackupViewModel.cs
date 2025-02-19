@@ -42,7 +42,7 @@ namespace Livrable1.ViewModel
                 {
                     try
                     {
-                        string destFile = Path.Combine(backup.CheminDestination, file.FileName);
+                        string destFile = Path.Combine(backupFolder, file.FileName);
                         string extension = Path.GetExtension(file.FilePath).ToLower();
                         var stopwatch = Stopwatch.StartNew();
                         long cryptingTime = 0;
