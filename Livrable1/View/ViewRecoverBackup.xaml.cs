@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Livrable1.ViewModel;
+using System.Diagnostics;
 
 namespace Livrable1.View
 {
@@ -27,8 +28,10 @@ namespace Livrable1.View
         {
             return new List<Backup>
             {
-                new Backup { Name = "test.docx", DestinationPath = "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\Livrable 1\\Destination", SourcePath = "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\Livrable 1\\Source" },
-                new Backup { Name = "test.xlsx", DestinationPath = "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\Livrable 1\\Destination", SourcePath = "D:\\CESI\\FISA A3 INFO\\Semestre 5\\Bloc 2 - Génie logiciel\\Livrables\\Livrable 1\\Source" }
+                new Backup { Name = "tteesstt.txt", DestinationPath = "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination", SourcePath = "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source" },
+                new Backup { Name = "PGE - Grille évaluation RE - 2024 V1.docx", DestinationPath = "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination", SourcePath = "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source" },
+                new Backup { Name = "Rapport_Etonnement_PICOUL_Nathan.pdf", DestinationPath = "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination", SourcePath = "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source" }
+
             };
         }
 
@@ -79,83 +82,62 @@ namespace Livrable1.View
         // Recover selected files (from destination folder to source folder)
         private void RecoverBackup(Backup selectedBackup, string backupType)
         {
-            string sourceDirectory = selectedBackup.SourcePath;   // Source folder where files can be recovered
-            string destinationFolder = selectedBackup.DestinationPath;  // Destination folder from which to retrieve files
-
             try
             {
-                if (Directory.Exists(destinationFolder))
+                string sourceDirectory = selectedBackup.SourcePath;
+                string destinationFolder = selectedBackup.DestinationPath;
+
+                // Select only files marked for recovery in the GUI
+                var selectedFiles = BackupCheckboxesPanel.Children.OfType<CheckBox>()
+                    .Where(cb => cb.IsChecked == true)
+                    .Select(cb => cb.Content.ToString()) // Assume that the file name is in the CheckBox content
+                    .ToList();
+
+                foreach (var fileName in selectedFiles)
                 {
-                    // Select only files marked for recovery in the GUI
-                    var selectedFiles = BackupCheckboxesPanel.Children.OfType<CheckBox>()
-                        .Where(cb => cb.IsChecked == true)
-                        .Select(cb => cb.Content.ToString()) // Assume that the file name is in the CheckBox content
-                        .ToList();
+                    string sourceFile = Path.Combine(sourceDirectory, fileName);
+                    string recoverPath = Path.Combine(destinationFolder, fileName);
+                    string extension = Path.GetExtension(fileName).ToLower();
 
-                    // Debug: Display files in the destination folder
-                    string[] filesInDestination = Directory.GetFiles(destinationFolder);
-                    MessageBox.Show(LanguageManager.GetText("destination_folder" + string.Join(", ", filesInDestination.Select(f => Path.GetFileName(f)))));
+                    bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
+                                       StateViewModel.IsTxtEnabled && extension == ".txt" ||
+                                       StateViewModel.IsPngEnabled && extension == ".png" ||
+                                       StateViewModel.IsJsonEnabled && extension == ".json" ||
+                                       StateViewModel.IsXmlEnabled && extension == ".xml" ||
+                                       StateViewModel.IsDocxEnabled && extension == ".docx";
 
-                    foreach (var fileName in selectedFiles)
+                    if (shouldEncrypt)
                     {
-                        // Search for the exact file in the destination folder
-                        string sourceFile = Path.Combine(sourceDirectory, fileName); // Full path to source file
-                        string recoverPath = Path.Combine(destinationFolder, fileName);  // Path of the file in the destination
-
-                        // Debug: Display files searched for
-                        MessageBox.Show($"{LanguageManager.GetText("file_search")} '{fileName}' {LanguageManager.GetText("in_destination_folder")} {recoverPath}");
-                        // Case-insensitive file name comparison
-                        bool fileExists = filesInDestination.Any(file => string.Equals(Path.GetFileName(file), fileName, StringComparison.OrdinalIgnoreCase));
-
-                        if (fileExists)
-                        {
-                            // Full backup: always copy the file from destination to source
-                            if (backupType == "full")
+                         try
                             {
-                                File.Copy(recoverPath, sourceFile, true); // Copies the file to the source folder
-                                MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("been_success_recover_complete")}");
-                            }
-                            // Differential backup: only copy if the file was modified after the last copy
-                            else if (backupType == "differential")
-                            {
-                                if (File.Exists(sourceFile))
+                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
+                                
+                                using (Process cryptoProcess = new Process())
                                 {
-                                    DateTime sourceLastModified = File.GetLastWriteTime(sourceFile);
-                                    DateTime destinationLastModified = File.GetLastWriteTime(recoverPath);
-
-                                    // Copy only if the destination file is newer
-                                    if (destinationLastModified > sourceLastModified)
-                                    {
-                                        File.Copy(recoverPath, sourceFile, true);
-                                        MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("been_success_recover_diff")}");
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("no_recover_required")}");
-                                    }
-                                }
-                                else
-                                {
-                                    // Source file does not exist, copy directly
-                                    File.Copy(recoverPath, sourceFile, true);
-                                    MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("sucessfully_recovered")}");
+                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                                    cryptoProcess.StartInfo.Arguments = $"\"{recoverPath}\" \"{sourceFile}\" \"{key}\"";
+                                    cryptoProcess.StartInfo.UseShellExecute = true;
+                                    cryptoProcess.StartInfo.RedirectStandardError = false;
+                                    
+                                    cryptoProcess.Start();
+                                    cryptoProcess.WaitForExit();
                                 }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show($"{LanguageManager.GetText("file_has")} '{fileName}' {LanguageManager.GetText("dont_exist_in_destination_folder")}");
-                        }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                            }
                     }
-                }
-                else
-                {
-                    MessageBox.Show($"{LanguageManager.GetText("destination_directory")} '{destinationFolder}' {LanguageManager.GetText("does_not_exist")}");
+                    else
+                    {
+                        File.Copy(recoverPath, sourceFile, true);
+                        MessageBox.Show($"Copie simple de {fileName}");
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{LanguageManager.GetText("error_during_recovery")} {ex.Message}");
+                MessageBox.Show($"Erreur : {ex.Message}");
             }
         }
 

@@ -4,6 +4,9 @@ using System.IO;
 using Livrable1.Model;
 using Livrable1.ViewModel;
 using System.Linq;
+using System.Windows;
+using System.Diagnostics;
+using Livrable1.logger;
 
 namespace Livrable1.ViewModel
 {
@@ -39,15 +42,64 @@ namespace Livrable1.ViewModel
 
                 foreach (var file in backup.Files)
                 {
-                    string destFile = Path.Combine(backup.CheminDestination, file.FileName);
-                    File.Copy(file.FilePath, destFile, true);
-                }
+                    try
+                    {
+                        string destFile = Path.Combine(backup.CheminDestination, file.FileName);
+                        string extension = Path.GetExtension(file.FilePath).ToLower();
+                        var stopwatch = Stopwatch.StartNew();
+                        long cryptingTime = 0;
 
-                Console.WriteLine($"Sauvegarde complète terminée pour {backup.NameSave}");
+                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
+                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
+                                           StateViewModel.IsPngEnabled && extension == ".png" ||
+                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
+                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
+                                           StateViewModel.IsDocxEnabled && extension == ".docx";
+
+                        if (shouldEncrypt)
+                        {
+                            try
+                            {
+                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
+
+                                using (Process cryptoProcess = new Process())
+                                {
+                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
+                                    cryptoProcess.StartInfo.UseShellExecute = true;
+                                    cryptoProcess.StartInfo.RedirectStandardError = false;
+
+                                    cryptoProcess.Start();
+                                    cryptoProcess.WaitForExit();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                            }
+                            cryptingTime = stopwatch.ElapsedMilliseconds;
+                        }
+                        else
+                        {
+                            File.Copy(file.FilePath, destFile, true);
+                        }
+                        
+                        stopwatch.Stop();
+                        long transferTime = stopwatch.ElapsedMilliseconds;
+
+                        Logger logger = new Logger();
+                        logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile, 
+                            new FileInfo(file.FilePath).Length, transferTime, cryptingTime, StateViewModel.IsJsonOn);
+                    }
+                    catch (Exception fileEx)
+                    {
+                        MessageBox.Show($"Erreur sur le fichier {file.FileName} : {fileEx.Message}");
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erreur lors de la sauvegarde complète : {ex.Message}");
+                MessageBox.Show($"Erreur générale : {ex.Message}");
             }
         }
 
@@ -66,15 +118,46 @@ namespace Livrable1.ViewModel
 
                     if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                     {
-                        File.Copy(file.FilePath, destFile, true);
+                        string extension = Path.GetExtension(file.FilePath).ToLower();
+                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
+                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
+                                           StateViewModel.IsPngEnabled && extension == ".png" ||
+                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
+                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
+                                           StateViewModel.IsDocxEnabled && extension == ".docx";
+
+                        if (shouldEncrypt)
+                        {
+                            try
+                            {
+                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
+                                
+                                using (Process cryptoProcess = new Process())
+                                {
+                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
+                                    cryptoProcess.StartInfo.UseShellExecute = true;
+                                    cryptoProcess.StartInfo.RedirectStandardError = false;
+                                    
+                                    cryptoProcess.Start();
+                                    cryptoProcess.WaitForExit();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                            }
+                        }
+                        else
+                        {
+                            File.Copy(file.FilePath, destFile, true);
+                        }
                     }
                 }
-
-                Console.WriteLine($"Sauvegarde différentielle terminée pour {backup.NameSave}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erreur lors de la sauvegarde différentielle : {ex.Message}");
+                MessageBox.Show($"Erreur lors de la sauvegarde différentielle : {ex.Message}");
             }
         }
     }
