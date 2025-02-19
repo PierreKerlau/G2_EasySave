@@ -9,20 +9,25 @@ using Livrable1.Model;
 using System.IO;
 using System.Windows;
 
+//---------------------Model---------------------//
 namespace Livrable1.Model
 {
-    //---------------------Model---------------------//
+    //------------Class SaveInformation------------//
     public class SaveInformation
     {
-        //---------Variable---------//
+        // Property to hold the name of the save
         public string NameSave { get; set; } = "";
+        // Property to hold the source path
         public string SourcePath { get; set; } = "";
+        // Property to hold the destination path
         public string DestinationPath { get; set; } = "";
+        // List to hold file information
         public List<FileInformation> Files { get; set; } = new List<FileInformation>();
-        //---------Variable---------//
 
+        // List to hold file information
+        public List<FileInformation> Files { get; set; } = new List<FileInformation>();
 
-        //---------Constructeur---------//
+        // Constructor to initialize the save information and load files
         public SaveInformation(string nameSave, string sourcePath, string destinationPath)
         {
             NameSave = nameSave;
@@ -30,27 +35,25 @@ namespace Livrable1.Model
             DestinationPath = destinationPath;
             LoadFiles();
         }
-        //---------Constructeur---------//
 
-
-        //---------Méthodes pour valider les chemins---------//
+        // Method to validate the source and destination paths
         public bool ValidatePaths()
         {
-            // Vérifier si le chemin source existe
+            // Check if the source directory exists
             if (!Directory.Exists(SourcePath))
             {
                 MessageBox.Show(LanguageManager.GetText("source_path_not_exists"));
                 return false;
             }
 
-            // Vérifier si le chemin de destination existe
+            // Check if the destination directory exists
             if (!Directory.Exists(DestinationPath))
             {
                 MessageBox.Show(LanguageManager.GetText("destination_path_not_exists"));
                 return false;
             }
 
-            // Vérifier que le chemin source contient des fichiers
+            // Get all files in the source directory
             string[] files = Directory.GetFiles(SourcePath);
             if (files == null || files.Length == 0)
             {
@@ -58,36 +61,29 @@ namespace Livrable1.Model
                 return false;
             }
 
-            return true;
+            return true; // Paths are valid
         }
-        //---------Méthodes pour valider les chemins---------//
 
-
-        //---------Méthodes pour charger les fichiers---------//
+        // Method to load files from the source directory
         public void LoadFiles()
         {
-            Files.Clear(); // Réinitialise la liste
+            Files.Clear(); // Resets the file list
             if (Directory.Exists(SourcePath))
             {
                 string[] filePaths = Directory.GetFiles(SourcePath);
                 foreach (string filePath in filePaths)
                 {
-                    Files.Add(new FileInformation(filePath));
+                    Files.Add(new FileInformation(filePath)); // Add each file to the list
                 }
             }
         }
-        //---------Méthodes pour charger les fichiers---------//
 
-
-        //---------Méthodes pour sélectionner les fichiers---------//
+        // Method to set selected files
         public void SetSelectedFiles(List<FileInformation> selectedFiles)
         {
-            Files = selectedFiles;
+            Files = selectedFiles; // Update the list of files with the selected files
         }
-        //---------Méthodes pour sélectionner les fichiers---------//
-
     }
-    //---------------------------//
-    
-    //---------------------Model---------------------//
+    //------------Class SaveInformation------------//
 }
+//---------------------Model---------------------//

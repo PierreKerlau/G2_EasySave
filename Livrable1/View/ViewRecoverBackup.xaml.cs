@@ -8,26 +8,30 @@ using Livrable1.ViewModel;
 using System.Diagnostics;
 using Livrable1.Model;
 
+//---------------------View---------------------//
 namespace Livrable1.View
 {
     /// <summary>
-    /// Logique d'interaction pour ViewRecoverBackup.xaml
+    /// Interaction logic for ViewRecoverBackup.xaml
     /// </summary>
+
+    //------------Class ViewRecoverBackup------------//
     public partial class ViewRecoverBackup : Window
     {
         private List<SaveInformation> backupJobs; // List of backup jobs
-        private RecoverBackupViewModel _viewModel;
+        private RecoverBackupViewModel _viewModel; // ViewModel for backup recovery
 
+        // Constructor for ViewRecoverBackup
         public ViewRecoverBackup()
         {
-            InitializeComponent();
-            _viewModel = new RecoverBackupViewModel();
-            this.DataContext = _viewModel;
+            InitializeComponent(); // Initialize UI components
+            _viewModel = new RecoverBackupViewModel(); // Create an instance of the ViewModel
+            this.DataContext = _viewModel; // Set the DataContext to the ViewModel
             DisplayBackupJobs(); // Display backup jobs in Checkboxes
             UpdateUILanguageRecoveryBackup(); // Update language
         }
 
-        // Display backup jobs in Checkboxes
+        // Method to display backup jobs in checkboxes
         private void DisplayBackupJobs()
         {
             // Add all backups to the FilesToRecover collection (used for displaying checkboxes)
@@ -37,15 +41,16 @@ namespace Livrable1.View
             }
         }
 
-        // Validation Button : run the recovery
+        // Event handler for the validate button click - runs the recovery process
         private void ButtonValidate_Click(object sender, RoutedEventArgs e)
         {
-            // Get selected files to recover
+            // Get selected files for recovery
             var selectedFiles = _viewModel.FilesToRecover
                 .Where(f => f.IsSelected)
                 .Select(f => f.FileName)
                 .ToList();
 
+            // Check if at least one file is selected
             if (selectedFiles.Count == 0)
             {
                 MessageBox.Show(LanguageManager.GetText("select_backup_type"));
@@ -65,7 +70,7 @@ namespace Livrable1.View
                 }
             }
 
-            MessageBox.Show(LanguageManager.GetText("recovery_completed"));
+            MessageBox.Show(LanguageManager.GetText("recovery_completed")); // Show success message
         }
 
         // Cancel Button : Reset the selections
@@ -85,9 +90,9 @@ namespace Livrable1.View
         // Leave Button : Open main window and close this one
         private void ButtonLeave_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow viewMain = new MainWindow();
-            viewMain.Show();
-            this.Close();
+            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
+            viewMain.Show(); // Show the MainWindow
+            this.Close(); // Close the current window
         }
 
         // Method to update UI elements with language-specific texts
@@ -103,4 +108,6 @@ namespace Livrable1.View
             ButtonLeave.Content = LanguageManager.GetText("menu_leave");
         }
     }
+    //------------Class ViewRecoverBackup------------//
 }
+//---------------------View---------------------//

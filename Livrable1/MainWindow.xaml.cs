@@ -13,29 +13,33 @@ using Livrable1.Model;
 using Livrable1.View;
 using Livrable1.ViewModel;
 
+//---------------------View---------------------//
 namespace Livrable1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+    //------------Class MainWindow------------//
     public partial class MainWindow : Window
     {
+        // Constructor for MainWindow
         public MainWindow()
         {
-            InitializeComponent();
-            UpdateUILanguageMainWindows();
+            InitializeComponent(); // Initialize UI components
+            UpdateUILanguageMainWindows(); // Update UI elements with language-specific texts
         }
 
-        //------------------------------------------------------------------------------------//
+        // Method to check if a process with the given name is running
         private bool IsProcessRunning(string processName)
         {
             return System.Diagnostics.Process.GetProcessesByName(processName).Any();
         }
-        //------------------------------------------------------------------------------------//
 
+        // Event handler for the "Add Backup" button click
         private void ButtonShowViewAddBackup_Click(object sender, RoutedEventArgs e)
         {
-            //--------------------------------------------------------------------------------//
+            // Check if any forbidden process is running based on settings in ProcessWatcher
             if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
                 ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
             {
@@ -49,18 +53,17 @@ namespace Livrable1
             }
             else
             {
-                //--------------------------------------------------------------------------------//
+                // Open the ViewAddBackup window and close the current window
                 ViewAddBackup viewAddBackup = new ViewAddBackup();
                 viewAddBackup.Show();
                 this.Close();
-                //--------------------------------------------------------------------------------//
             }
-            //--------------------------------------------------------------------------------//
         }
 
+        // Event handler for the "Execute Backup" button click
         private void ButtonShowViewExecuteBackup_Click(object sender, RoutedEventArgs e)
         {
-            //--------------------------------------------------------------------------------//
+            // Check if any forbidden process is running
             if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
                 ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
             {
@@ -74,19 +77,17 @@ namespace Livrable1
             }
             else
             {
-                //--------------------------------------------------------------------------------//
+                // Open the ViewExecuteBackup window and close the current window
                 ViewExecuteBackup viewExecuteBackup = new ViewExecuteBackup();
                 viewExecuteBackup.Show();
                 this.Close();
-                //--------------------------------------------------------------------------------//
-            }
-            //--------------------------------------------------------------------------------//
-            
+            } 
         }
 
+        // Event handler for the "Recover Backup" button click
         private void ButtonShowViewRecoverBackup_Click(object sender, RoutedEventArgs e)
         {
-            //--------------------------------------------------------------------------------//
+            // Check if any forbidden process is running
             if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
                 ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
             {
@@ -100,32 +101,33 @@ namespace Livrable1
             }
             else
             {
-                //--------------------------------------------------------------------------------//
+                // Open the ViewRecoverBackup window and close the current window
                 ViewRecoverBackup viewRecoverBackup = new ViewRecoverBackup();
                 viewRecoverBackup.Show();
                 this.Close();
-                //--------------------------------------------------------------------------------//
+                
             }
-            //--------------------------------------------------------------------------------//
-
         }
 
+        // Event handler for the "Logs" button click
         private void ButtonShowViewLogs_Click(object sender, RoutedEventArgs e)
         {
-            // Ouverture de la vue ViewLogs et fermeture de la vue principale
+            // Open the ViewLogs window and close the current window
             ViewLogs viewLogs = new ViewLogs();
             viewLogs.Show();
             this.Close();
         }
 
+        // Event handler for the "Parameters" button click
         private void ButtonShowViewParameter_Click(object sender, RoutedEventArgs e)
         {
-            // Ouverture de la vue ViewParameter et fermeture de la vue principale
+            // Open the ViewParameter window and close the current window
             ViewParameter viewParameter = new ViewParameter();
             viewParameter.Show();
             this.Close();
         }
 
+        // Method to update UI elements of the main window with language-specific texts
         private void UpdateUILanguageMainWindows()
         {
             ButtonShowViewAddBackup.Content = LanguageManager.GetText("button_add_backup");
@@ -134,4 +136,6 @@ namespace Livrable1
             ButtonShowViewRecoverBackup.Content = LanguageManager.GetText("button_recover_backup");
         }
     }
+    //------------Class MainWindow------------//
 }
+//---------------------View---------------------//

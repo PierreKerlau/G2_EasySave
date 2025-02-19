@@ -5,44 +5,54 @@ using System.Windows;
 using Livrable1.ViewModel;
 using System.Windows.Controls;
 
+//---------------------View---------------------//
 namespace Livrable1.View
 {
+    //------------Class ViewExecuteBackup------------//
     public partial class ViewExecuteBackup : Window
     {
-        private ExecuteBackupViewModel viewModel;
+        private ExecuteBackupViewModel viewModel; // ViewModel for executing backups
 
+        // Constructor for ViewExecuteBackup
         public ViewExecuteBackup()
         {
-            InitializeComponent();
+            InitializeComponent(); // Initialize UI components
             UpdateUILanguageExecuteBackup(); // Update language
-            viewModel = new ExecuteBackupViewModel();
-            this.DataContext = viewModel;
+            viewModel = new ExecuteBackupViewModel(); // Create a new instance of ExecuteBackupViewModel
+            this.DataContext = viewModel; // Set the DataContext to the ViewModel
         }
 
+        // Event handler for the leave button click
         private void ButtonLeave_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Close(); // Close the current window
         }
 
+        // Event handler for the execute button click
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
+            // Check if a backup is selected in the DataGrid and a backup type is selected
             if (DataGridBackups.SelectedItem is SaveInformation selectedBackup &&
                 BackupTypeSelector.SelectedItem is ComboBoxItem selectedType)
             {
+                // Execute the backup using the ViewModel
                 viewModel.ExecuteBackup(selectedBackup, selectedType.Content.ToString());
+                // Show success message
                 MessageBox.Show($"{LanguageManager.GetText("backup_execute")} '{selectedType.Content}' {LanguageManager.GetText("execute_for")} {selectedBackup.NameSave} !");
             }
             else
             {
+                // Show error message if selections are missing
                 MessageBox.Show(LanguageManager.GetText("please_select_backup_and_type"));
             }
         }
 
+        // Event handler for the leave button click (alternative button)
         private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
         {
-            MainWindow viewMain = new MainWindow();
-            viewMain.Show();
-            this.Close();
+            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
+            viewMain.Show(); // Show the MainWindow
+            this.Close(); // Close the current window
         }
 
         // Method to update UI elements with language-specific texts
@@ -73,4 +83,6 @@ namespace Livrable1.View
             }
         }
     }
+    //------------Class ViewExecuteBackup------------//
 }
+//---------------------View---------------------//
