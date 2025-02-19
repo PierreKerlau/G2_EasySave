@@ -41,7 +41,7 @@ namespace Livrable1.ViewModel
 
             Backups.Add(backup);
 
-            // ✅ Enregistrer la sauvegarde dans SaveManager pour qu'elle soit visible dans ExecuteBackup
+            // Enregistrer la sauvegarde dans SaveManager pour qu'elle soit visible dans ExecuteBackup
             SaveManager.Instance.AddBackup(backup);
 
             return true;

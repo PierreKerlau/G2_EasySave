@@ -22,11 +22,11 @@ namespace Livrable1.ViewModel
         {
             if (isEnabled)
             {
-                MessageBox.Show($"Extension {extension} ajoutée pour le cryptage");
+                MessageBox.Show($"{LanguageManager.GetText("extension_name")} '{extension}' {LanguageManager.GetText("add_for_encryption")}");
             }
             else
             {
-                MessageBox.Show($"Extension {extension} retirée du cryptage");
+                MessageBox.Show($"{LanguageManager.GetText("extension_name")} '{extension}' {LanguageManager.GetText("supp_for_encryption")}");
             }
         }
     }

@@ -30,12 +30,10 @@ namespace Livrable1.ViewModel
         // Recover selected files (from destination folder to source folder)
         public void RecoverBackup(SaveInformation selectedBackup, string backupType)
         {
-            string sourceDirectory = selectedBackup.CheminSource;   // Source folder where files can be recovered
-            string destinationFolder = selectedBackup.CheminDestination;  // Destination folder from which to retrieve files
+            string sourceDirectory = selectedBackup.SourcePath;   // Source folder where files can be recovered
+            string destinationFolder = selectedBackup.DestinationPath;  // Destination folder from which to retrieve files
 
             string backupFolder = Path.Combine(destinationFolder, selectedBackup.NameSave);
-
-            MessageBox.Show($"Recovering from Source: {sourceDirectory}, Destination: {destinationFolder}");
 
             try
             {
@@ -69,14 +67,10 @@ namespace Livrable1.ViewModel
             try
             {
                 // Select only files marked for recovery in the GUI
-                //var selectedFiles = BackupCheckboxesPanel.Children.OfType<CheckBox>()
                 var selectedFiles = FilesToRecover
                     .Where(f => f.IsSelected)
                     .Select(f => f.FileName) // Assume that the file name is in the CheckBox content
                     .ToList();
-                //.Where(cb => cb.IsChecked == true)
-                //.Select(cb => cb.Content.ToString()) // Assume that the file name is in the CheckBox content
-                //.ToList();
 
                 foreach (var fileName in selectedFiles)
                 {
@@ -110,22 +104,21 @@ namespace Livrable1.ViewModel
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                            MessageBox.Show($"{LanguageManager.GetText("error_during_encryption")}: {ex.Message}");
                         }
                     }
                     else
                     {
                         File.Copy(recoverPath, sourceFile, true);
-                        MessageBox.Show($"Copie simple de {fileName}");
+                        MessageBox.Show($"{LanguageManager.GetText("simple_copy_of")} '{fileName}'");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur : {ex.Message}");
+                MessageBox.Show($"{LanguageManager.GetText("error_encryption")}: {ex.Message}");
             }
         }
-
 
         // Function for copying the entire contents of one folder to another, with management of recent files for differential backup
         private void CopyDirectory(string sourceDir, string destDir, bool overwrite)

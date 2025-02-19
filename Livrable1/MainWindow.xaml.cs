@@ -39,8 +39,12 @@ namespace Livrable1
             if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
                 ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
             {
-                MessageBox.Show("Action bloquée : Un logiciel interdit est en cours d'exécution.",
-                                "Alerte", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    $"{LanguageManager.GetText("action_blocked_software")}",
+                    LanguageManager.GetText("alert_software"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
                 return;
             }
             else
@@ -60,8 +64,12 @@ namespace Livrable1
             if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
                 ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
             {
-                MessageBox.Show("Action bloquée : Un logiciel interdit est en cours d'exécution.",
-                                "Alerte", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    $"{LanguageManager.GetText("action_blocked_software")}",
+                    LanguageManager.GetText("alert_software"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
                 return;
             }
             else
@@ -82,8 +90,12 @@ namespace Livrable1
             if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
                 ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
             {
-                MessageBox.Show("Action bloquée : Un logiciel interdit est en cours d'exécution.",
-                                "Alerte", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    $"{LanguageManager.GetText("action_blocked_software")}",
+                    LanguageManager.GetText("alert_software"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
                 return;
             }
             else

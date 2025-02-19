@@ -16,18 +16,18 @@ namespace Livrable1.Model
     {
         //---------Variable---------//
         public string NameSave { get; set; } = "";
-        public string CheminSource { get; set; } = "";
-        public string CheminDestination { get; set; } = "";
+        public string SourcePath { get; set; } = "";
+        public string DestinationPath { get; set; } = "";
         public List<FileInformation> Files { get; set; } = new List<FileInformation>();
         //---------Variable---------//
 
 
         //---------Constructeur---------//
-        public SaveInformation(string nameSave, string cheminSource, string cheminDestination)
+        public SaveInformation(string nameSave, string sourcePath, string destinationPath)
         {
             NameSave = nameSave;
-            CheminSource = cheminSource;
-            CheminDestination = cheminDestination;
+            SourcePath = sourcePath;
+            DestinationPath = destinationPath;
             LoadFiles();
         }
         //---------Constructeur---------//
@@ -37,24 +37,24 @@ namespace Livrable1.Model
         public bool ValidatePaths()
         {
             // Vérifier si le chemin source existe
-            if (!Directory.Exists(CheminSource))
+            if (!Directory.Exists(SourcePath))
             {
-                MessageBox.Show("Le chemin source n'existe pas.");
+                MessageBox.Show(LanguageManager.GetText("source_path_not_exists"));
                 return false;
             }
 
             // Vérifier si le chemin de destination existe
-            if (!Directory.Exists(CheminDestination))
+            if (!Directory.Exists(DestinationPath))
             {
-                MessageBox.Show("Le chemin de destination n'existe pas.");
+                MessageBox.Show(LanguageManager.GetText("destination_path_not_exists"));
                 return false;
             }
 
             // Vérifier que le chemin source contient des fichiers
-            string[] files = Directory.GetFiles(CheminSource);
+            string[] files = Directory.GetFiles(SourcePath);
             if (files == null || files.Length == 0)
             {
-                MessageBox.Show("Le chemin source ne contient aucun fichier.");
+                MessageBox.Show(LanguageManager.GetText("source_path_contains_no_file"));
                 return false;
             }
 
@@ -67,9 +67,9 @@ namespace Livrable1.Model
         public void LoadFiles()
         {
             Files.Clear(); // Réinitialise la liste
-            if (Directory.Exists(CheminSource))
+            if (Directory.Exists(SourcePath))
             {
-                string[] filePaths = Directory.GetFiles(CheminSource);
+                string[] filePaths = Directory.GetFiles(SourcePath);
                 foreach (string filePath in filePaths)
                 {
                     Files.Add(new FileInformation(filePath));

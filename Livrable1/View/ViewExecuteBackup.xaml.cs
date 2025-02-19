@@ -14,6 +14,7 @@ namespace Livrable1.View
         public ViewExecuteBackup()
         {
             InitializeComponent();
+            UpdateUILanguageExecuteBackup(); // Update language
             viewModel = new ExecuteBackupViewModel();
             this.DataContext = viewModel;
         }
@@ -29,11 +30,11 @@ namespace Livrable1.View
                 BackupTypeSelector.SelectedItem is ComboBoxItem selectedType)
             {
                 viewModel.ExecuteBackup(selectedBackup, selectedType.Content.ToString());
-                MessageBox.Show($"Sauvegarde '{selectedType.Content}' exécutée pour {selectedBackup.NameSave} !");
+                MessageBox.Show($"{LanguageManager.GetText("backup_execute")} '{selectedType.Content}' {LanguageManager.GetText("execute_for")} {selectedBackup.NameSave} !");
             }
             else
             {
-                MessageBox.Show("Veuillez sélectionner une sauvegarde et un type.");
+                MessageBox.Show(LanguageManager.GetText("please_select_backup_and_type"));
             }
         }
 
@@ -42,6 +43,34 @@ namespace Livrable1.View
             MainWindow viewMain = new MainWindow();
             viewMain.Show();
             this.Close();
+        }
+
+        // Method to update UI elements with language-specific texts
+        private void UpdateUILanguageExecuteBackup()
+        {
+            LabelMainViewExecuteBackup.Content = LanguageManager.GetText("execute_backup_jobs");
+            NameColumn.Header = LanguageManager.GetText("column_name");
+            SourceColumn.Header = LanguageManager.GetText("column_source");
+            DestinationColumn.Header = LanguageManager.GetText("column_destination");
+            ButtonExecuteBackup.Content = LanguageManager.GetText("button_execute");
+            ButtonLeave.Content = LanguageManager.GetText("menu_leave");
+
+            var comboBoxItems = BackupTypeSelector.Items;
+            foreach (var item in comboBoxItems)
+            {
+                var comboBoxItem = item as ComboBoxItem;
+                if (comboBoxItem != null)
+                {
+                    if (comboBoxItem.Content.ToString() == "Full Backup")
+                    {
+                        comboBoxItem.Content = LanguageManager.GetText("combobox_full_backup");
+                    }
+                    else if (comboBoxItem.Content.ToString() == "Differential Backup")
+                    {
+                        comboBoxItem.Content = LanguageManager.GetText("combobox_differential_backup");
+                    }
+                }
+            }
         }
     }
 }
