@@ -15,8 +15,8 @@ using Livrable1.ViewModel;
 using Livrable1.Model;
 using System.Diagnostics;
 using System.ComponentModel;
-//using EasySave.Cryptography;
 
+//---------------------View---------------------//
 namespace Livrable1.View
 {
     /// <summary>
@@ -24,13 +24,12 @@ namespace Livrable1.View
     /// </summary>
     public partial class ViewParameter : Window
     {
-        //-----------------------------------------//
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CheckBoxCalculator.IsChecked = ProcessWatcher.Instance.BloquerCheatEngine;
             CheckBoxNotepad.IsChecked = ProcessWatcher.Instance.BloquerWireshark;
         }
-        //-----------------------------------------//
+        
         public ViewParameter()
         {
             InitializeComponent();
@@ -322,3 +321,4 @@ namespace Livrable1.View
         }
     }
 }
+//---------------------View---------------------//
