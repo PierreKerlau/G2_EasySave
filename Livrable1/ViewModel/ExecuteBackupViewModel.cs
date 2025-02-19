@@ -26,11 +26,11 @@ namespace Livrable1.ViewModel
         // Method to execute a backup based on the selected type
         public void ExecuteBackup(SaveInformation backup, string backupType)
         {
-            if (backupType == "Sauvegarde complète") // Full backup
+            if (backupType == "Full Backup") // Full backup
             {
                 ExecuteFullBackup(backup);
             }
-            else if (backupType == "Sauvegarde différentielle") // Differential backup
+            else if (backupType == "Differential Backup") // Differential backup
             {
                 ExecuteDifferentialBackup(backup);
             }
@@ -42,7 +42,7 @@ namespace Livrable1.ViewModel
             try
             {
                 // Create backup directory
-                string backupFolder = Path.Combine(backup.CheminDestination, backup.NameSave);
+                string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
                 Directory.CreateDirectory(backupFolder);
 
                 foreach (var file in backup.Files)
@@ -83,7 +83,7 @@ namespace Livrable1.ViewModel
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                                MessageBox.Show($"{LanguageManager.GetText("error_encryption")}: {ex.Message}");
                             }
                             cryptingTime = stopwatch.ElapsedMilliseconds;
                         }
@@ -103,13 +103,13 @@ namespace Livrable1.ViewModel
                     }
                     catch (Exception fileEx)
                     {
-                        MessageBox.Show($"Erreur sur le fichier {file.FileName} : {fileEx.Message}");
+                        MessageBox.Show($"{LanguageManager.GetText("error_on_file")} {file.FileName} : {fileEx.Message}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur générale : {ex.Message}");
+                MessageBox.Show($"{LanguageManager.GetText("error_general")}: {ex.Message}");
             }
         }
 
@@ -119,7 +119,8 @@ namespace Livrable1.ViewModel
             try
             {
                 // Create backup directory
-                string backupFolder = Path.Combine(backup.CheminDestination, backup.NameSave);
+                string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
+
                 Directory.CreateDirectory(backupFolder);
 
                 foreach (var file in backup.Files)
@@ -135,7 +136,7 @@ namespace Livrable1.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors de la sauvegarde différentielle : {ex.Message}");
+                MessageBox.Show($"{LanguageManager.GetText("error_during_diff_backup")}: {ex.Message}");
             }
         }
 
@@ -170,7 +171,7 @@ namespace Livrable1.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                    MessageBox.Show($"{LanguageManager.GetText("error_during_encryption")}: {ex.Message}");
                 }
             }
             else

@@ -34,6 +34,7 @@ namespace Livrable1.View
         public ViewAddBackup()
         {
             InitializeComponent(); // Initialize UI components
+            UpdateUILanguageAddBackup();
             this.DataContext = new AddSaveViewModel(); // Set the DataContext to a new instance of AddSaveViewModel
             ListFiles.Visibility = Visibility.Collapsed; // Initially hide the file list
         }
@@ -80,16 +81,16 @@ namespace Livrable1.View
                     ListFiles.Visibility = Visibility.Visible; // Show the list of files
                     viewModel.LoadFilesFromSource(sourcePath); // Load files from the source path
 
-                    MessageBox.Show("Sauvegarde ajoutée avec succès !"); // Show success message
+                    MessageBox.Show(LanguageManager.GetText("backup_added_success")); // Show success message
                 }
                 else
                 {
-                    MessageBox.Show("Erreur lors de l'ajout de la sauvegarde."); // Show error message
+                    MessageBox.Show(LanguageManager.GetText("error_during_addition_of_backup")); // Show error message
                 }
             }
             else
             {
-                MessageBox.Show("Echec du Valider !"); // Show validation failure message
+                MessageBox.Show(LanguageManager.GetText("fail_validate")); // Show validation failure message
             }
             
         }
@@ -113,16 +114,29 @@ namespace Livrable1.View
                     // Save the selected files for the backup
                     viewModel.SaveSelectedFiles(save);
                     
-                    MessageBox.Show("Fichiers sélectionnés enregistrés !"); // Show success message
+                    MessageBox.Show(LanguageManager.GetText("selected_files_saved")); // Show success message
 
                     // Clear the text boxes and hide the file list
                     txtNameSave.Clear();
-                    txtCheminSource.Clear();
-                    txtCheminDestination.Clear();
+                    txtSourcePath.Clear();
+                    txtDestinationPath.Clear();
+
                     ListFiles.Visibility = Visibility.Collapsed;
 
                 }
             }
+        }
+        //-------------------End Methods for Validate 2-------------------//
+
+        //-------------------------------------Second Part of Add Save-------------------------------------//
+        private void UpdateUILanguageAddBackup()
+        {
+            LabelTitleExecuteBackup.Content = LanguageManager.GetText("add_backup_jobs");
+            ButtonCancel.Content = LanguageManager.GetText("cancel");
+            ButtonValidate.Content = LanguageManager.GetText("validate");
+            ButtonCancel2.Content = LanguageManager.GetText("cancel");
+            ButtonValidate2.Content = LanguageManager.GetText("validate");
+            ButtonLeave.Content = LanguageManager.GetText("menu_leave");
         }
     }
     //------------Class ViewAddBackup------------//

@@ -17,22 +17,22 @@ namespace Livrable1.Model
     {
         // Property to hold the name of the save
         public string NameSave { get; set; } = "";
-
         // Property to hold the source path
-        public string CheminSource { get; set; } = "";
-
+        public string SourcePath { get; set; } = "";
         // Property to hold the destination path
-        public string CheminDestination { get; set; } = "";
+        public string DestinationPath { get; set; } = "";
+        // List to hold file information
+        public List<FileInformation> Files { get; set; } = new List<FileInformation>();
 
         // List to hold file information
         public List<FileInformation> Files { get; set; } = new List<FileInformation>();
 
         // Constructor to initialize the save information and load files
-        public SaveInformation(string nameSave, string cheminSource, string cheminDestination)
+        public SaveInformation(string nameSave, string sourcePath, string destinationPath)
         {
             NameSave = nameSave;
-            CheminSource = cheminSource;
-            CheminDestination = cheminDestination;
+            SourcePath = sourcePath;
+            DestinationPath = destinationPath;
             LoadFiles();
         }
 
@@ -40,24 +40,24 @@ namespace Livrable1.Model
         public bool ValidatePaths()
         {
             // Check if the source directory exists
-            if (!Directory.Exists(CheminSource))
+            if (!Directory.Exists(SourcePath))
             {
-                MessageBox.Show("Le chemin source n'existe pas.");
+                MessageBox.Show(LanguageManager.GetText("source_path_not_exists"));
                 return false;
             }
 
             // Check if the destination directory exists
-            if (!Directory.Exists(CheminDestination))
+            if (!Directory.Exists(DestinationPath))
             {
-                MessageBox.Show("Le chemin de destination n'existe pas.");
+                MessageBox.Show(LanguageManager.GetText("destination_path_not_exists"));
                 return false;
             }
 
             // Get all files in the source directory
-            string[] files = Directory.GetFiles(CheminSource);
+            string[] files = Directory.GetFiles(SourcePath);
             if (files == null || files.Length == 0)
             {
-                MessageBox.Show("Le chemin source ne contient aucun fichier.");
+                MessageBox.Show(LanguageManager.GetText("source_path_contains_no_file"));
                 return false;
             }
 
@@ -68,9 +68,9 @@ namespace Livrable1.Model
         public void LoadFiles()
         {
             Files.Clear(); // Resets the file list
-            if (Directory.Exists(CheminSource))
+            if (Directory.Exists(SourcePath))
             {
-                string[] filePaths = Directory.GetFiles(CheminSource);
+                string[] filePaths = Directory.GetFiles(SourcePath);
                 foreach (string filePath in filePaths)
                 {
                     Files.Add(new FileInformation(filePath)); // Add each file to the list

@@ -46,7 +46,12 @@ namespace Livrable1.ViewModel
             catch (Exception ex)
             {
                 // Display an error message if there was a problem loading translations.
-                MessageBox.Show($"Error loading translations: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"{LanguageManager.GetText("error_loading_translations")}: {ex.Message}",
+                    LanguageManager.GetText("error_title"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
         }
 

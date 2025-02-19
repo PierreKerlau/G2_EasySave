@@ -27,11 +27,11 @@ namespace Livrable1.ViewModel
         {
             if (isEnabled)
             {
-                MessageBox.Show($"Extension {extension} ajoutée pour le cryptage"); // Show message when the extension is enabled for encryption
+                MessageBox.Show($"{LanguageManager.GetText("extension_name")} '{extension}' {LanguageManager.GetText("add_for_encryption")}"); // Show message when the extension is enabled for encryption
             }
             else
             {
-                MessageBox.Show($"Extension {extension} retirée du cryptage"); // Show message when the extension is disabled for encryption
+                MessageBox.Show($"{LanguageManager.GetText("extension_name")} '{extension}' {LanguageManager.GetText("supp_for_encryption")}"); // Show message when the extension is disabled for encryption
             }
         }
     }

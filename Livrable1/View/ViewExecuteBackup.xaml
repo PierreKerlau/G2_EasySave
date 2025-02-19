@@ -6,24 +6,28 @@
     <Grid>
         <Label Content="EasySave" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36"/>
 
+        <Label x:Name="LabelMainViewExecuteBackup" Content="Execute backup jobs" 
+       HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"
+       Grid.Row="0" Margin="0,46,0,0" RenderTransformOrigin="0.183,0.614"/>
+
         <DataGrid x:Name="DataGridBackups"
                   ItemsSource="{Binding Backups}"
                   AutoGenerateColumns="False"
                   Margin="50,80,50,120">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="✓" Binding="{Binding IsSelected}"/>
-                <DataGridTextColumn Header="Nom" Binding="{Binding NameSave}" Width="120"/>
-                <DataGridTextColumn Header="Source" Binding="{Binding CheminSource}" Width="180"/>
-                <DataGridTextColumn Header="Destination" Binding="{Binding CheminDestination}" Width="180"/>
+                <DataGridCheckBoxColumn x:Name="CheckBoxColumn" Header="✓" Binding="{Binding IsSelected}"/>
+                <DataGridTextColumn x:Name="NameColumn" Header="Name" Binding="{Binding NameSave}" Width="120"/>
+                <DataGridTextColumn x:Name="SourceColumn" Header="Source" Binding="{Binding SourcePath}" Width="180"/>
+                <DataGridTextColumn x:Name="DestinationColumn" Header="Destination" Binding="{Binding DestinationPath}" Width="180"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <ComboBox x:Name="BackupTypeSelector" HorizontalAlignment="Left" Margin="50,350,0,0" VerticalAlignment="Top" Width="200">
-            <ComboBoxItem Content="Sauvegarde complète"/>
-            <ComboBoxItem Content="Sauvegarde différentielle"/>
+            <ComboBoxItem Content="Full Backup"/>
+            <ComboBoxItem Content="Differential Backup"/>
         </ComboBox>
 
-        <Button Content="Exécuter" HorizontalAlignment="Left" Margin="280,350,0,0" VerticalAlignment="Top" Click="ButtonExecute_Click" Height="20" />
-        <Button x:Name="ButtonLeave" Content="Leave" HorizontalAlignment="Left" Margin="342,350,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1" Height="20"/>
+        <Button x:Name="ButtonExecuteBackup" Content="Execute" HorizontalAlignment="Left" Margin="280,350,0,0" VerticalAlignment="Top" Click="ButtonExecute_Click" Height="20" />
+        <Button x:Name="ButtonLeave" Content="Exit" HorizontalAlignment="Left" Margin="342,350,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1" Height="20"/>
     </Grid>
 </Window>
