@@ -1,23 +1,25 @@
 ﻿using System;
 using Livrable1.ViewModel;
 
-
+//------------Model------------//
 namespace Livrable1.Model
 {
+    //------------Class ProcessWatcher------------//
     public class ProcessWatcher
     {
-        // Instance unique du Singleton
-        private static ProcessWatcher _instanceWatch;
-        private static readonly object _lock = new object();
+        private static ProcessWatcher _instanceWatch; // Singleton instance
+        private static readonly object _lock = new object(); // Lock object for thread safety
 
-        // Propriétés pour stocker l'état des CheckBox
+        // Indicates whether Cheat Engine should be blocked
         public bool BloquerCheatEngine { get; set; }
+
+        // Indicates whether Wireshark should be blocked
         public bool BloquerWireshark { get; set; }
 
-        // Constructeur privé pour empêcher l'instanciation directe
+        // Private constructor to prevent external instantiation
         private ProcessWatcher() { }
 
-        // Méthode pour récupérer l'instance unique
+        // Singleton instance accessor with thread safety
         public static ProcessWatcher Instance
         {
             get
@@ -31,5 +33,7 @@ namespace Livrable1.Model
             }
         }
     }
+    //------------Class ProcessWatcher------------//
 
 }
+//------------Model------------//

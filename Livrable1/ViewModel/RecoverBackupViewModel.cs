@@ -7,15 +7,18 @@ using Livrable1.ViewModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
+//---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
 {
+    //------------Class BackupFileViewModel------------//
     public class BackupFileViewModel
     {
         public string FileName { get; set; }
         public bool IsSelected { get; set; } // Property indicating whether the file is selected
     }
+    //------------Class BackupFileViewModel------------//
 
-
+    //------------Class RecoverBackupViewModel------------//
     internal class RecoverBackupViewModel
     {
         public ObservableCollection<SaveInformation> Backups { get; set; }
@@ -176,4 +179,6 @@ namespace Livrable1.ViewModel
             }
         }
     }
+    //------------Class RecoverBackupViewModel------------//
 }
+//---------------------ViewModel---------------------//

@@ -5,22 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+//------------Model------------//
 namespace Livrable1.Model
 {
+    //------------Class FileInformation------------//
     public class FileInformation
     {
-        //---------Variable---------//
-        public string FilePath { get; set; }
-        public string FileName => Path.GetFileName(FilePath);
-        public bool IsSelected { get; set; } // Pour suivre la sélection
-        //---------Variable---------//
+        public string FilePath { get; set; } // Full file path
+        public string FileName => Path.GetFileName(FilePath); // Extracts the file name from the file path
+        public bool IsSelected { get; set; } // Indicates whether the file is selected
 
-        //---------Constructeur---------//
+        // Constructor initializing the file path
         public FileInformation(string filePath)
         {
             FilePath = filePath;
         }
-        //---------Constructeur---------//
 
     }
+    //------------Class FileInformation------------//
 }
+//------------Model------------//

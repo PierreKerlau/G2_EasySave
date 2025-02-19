@@ -20,119 +20,112 @@ using System.Windows.Shapes;
 using static System.Net.WebRequestMethods;
 using IOPath = System.IO.Path;
 
+//---------------------View---------------------//
 namespace Livrable1.View
 {
     /// <summary>
-    /// Logique d'interaction pour ViewAddBackup.xaml
+    /// Interaction logic for ViewAddBackup.xaml
     /// </summary>
+
+    //------------Class ViewAddBackup------------//
     public partial class ViewAddBackup : Window
     {
+        // Constructor for ViewAddBackup
         public ViewAddBackup()
         {
-            InitializeComponent();
-            this.DataContext = new AddSaveViewModel();
-            ListFiles.Visibility = Visibility.Collapsed;
+            InitializeComponent(); // Initialize UI components
+            this.DataContext = new AddSaveViewModel(); // Set the DataContext to a new instance of AddSaveViewModel
+            ListFiles.Visibility = Visibility.Collapsed; // Initially hide the file list
         }
 
+        // Event handler for the leave button click
         private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
         {
-            // Ouverture de la fenêtre principale et fermeture de la fenêtre actuelle
-            MainWindow viewMain = new MainWindow();
-            viewMain.Show();
-            this.Close();
+            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
+            viewMain.Show(); // Show the MainWindow
+            this.Close(); // Close the current window
         }
 
-    //-------------------------------------First Part of Add Save-------------------------------------//
-
-        //------------------Start Methods for Cancel 1------------------//
+        // Event handler for the first cancel button click
         private void FirstCancelAddBackups_Click(object sender, RoutedEventArgs e)
         {
-            /*if (DataContext is TexteSaisie viewModel)
+            if (DataContext is SaveInformation viewModel)
             {
-                TexteSaisie TexteSaisiName = null;
-                TexteSaisie TexteSaisiSource = null;
-                TexteSaisie TexteSaisiDestination = null;
-            }*/
+                // Clear the text boxes for name, source path, and destination path
+                txtNameSave.Clear();
+                txtCheminSource.Clear();
+                txtCheminDestination.Clear();
+            }
         }
-        //-------------------End Methods for Cancel 1-------------------//
 
-
-
-        //------------------Start Methods for Validate 1------------------//
+        // Event handler for the first validate button click
         private void FirstValidateAddBackup(object sender, RoutedEventArgs e)
         {
            if (DataContext is AddSaveViewModel viewModel)
             {
-                // Récupère les informations depuis l'interface utilisateur (exemple)
-                string name = txtNameSave.Text; // Par exemple, un TextBox pour le nom
-                string sourcePath = txtCheminSource.Text; // Un TextBox pour le chemin source
-                string destinationPath = txtCheminDestination.Text; // Un TextBox pour le chemin destination
+                // Get the input values from the text boxes
+                string name = txtNameSave.Text; 
+                string sourcePath = txtCheminSource.Text; 
+                string destinationPath = txtCheminDestination.Text;
 
-                // Création de l'instance de SaveInformation avec les informations saisies
+                // Create a new SaveInformation object with the input values
                 var save = new SaveInformation(name, sourcePath, destinationPath);
 
-                // Appel de la méthode d'ajout
+                // Call the method to add the save and get the result
                 bool result = viewModel.AddSaveMethod(save);
 
+                // Check if the save was added successfully
                 if (result)
                 {
-                    ListFiles.Visibility = Visibility.Visible;
-                    viewModel.LoadFilesFromSource(sourcePath);
+                    ListFiles.Visibility = Visibility.Visible; // Show the list of files
+                    viewModel.LoadFilesFromSource(sourcePath); // Load files from the source path
 
-                    MessageBox.Show("Sauvegarde ajoutée avec succès !");
+                    MessageBox.Show("Sauvegarde ajoutée avec succès !"); // Show success message
                 }
                 else
                 {
-                    MessageBox.Show("Erreur lors de l'ajout de la sauvegarde.");
+                    MessageBox.Show("Erreur lors de l'ajout de la sauvegarde."); // Show error message
                 }
             }
             else
             {
-                MessageBox.Show("Echec du Valider !");
+                MessageBox.Show("Echec du Valider !"); // Show validation failure message
             }
             
         }
-        //-------------------End Methods for Validate 1-------------------//
 
-    //-------------------------------------First Part of Add Save-------------------------------------//
-
-    //-------------------------------------Second Part of Add Save-------------------------------------//
-
-        //------------------Start Methods for Cancel 2------------------//
+        // Event handler for the second cancel button click
         private void SecondCancelAddBackups(object sender, RoutedEventArgs e)
         {
             
         }
-        //-------------------End Methods for Cancel 2-------------------//
 
-
-
-        //------------------Start Methods for Validate 2------------------//
+        // Event handler for the second validate button click
         private void SecondValidateAddBackup(object sender, RoutedEventArgs e)
         {
             if (DataContext is AddSaveViewModel viewModel)
             {
-                // Supposons qu'on a une sauvegarde en cours
-                var save = viewModel.Backups.LastOrDefault(); // Prendre la dernière sauvegarde ajoutée
+                // Get the last saved backup
+                var save = viewModel.Backups.LastOrDefault();
 
                 if (save != null)
                 {
+                    // Save the selected files for the backup
                     viewModel.SaveSelectedFiles(save);
                     
-                    MessageBox.Show("Fichiers sélectionnés enregistrés !");
-                    
+                    MessageBox.Show("Fichiers sélectionnés enregistrés !"); // Show success message
+
+                    // Clear the text boxes and hide the file list
                     txtNameSave.Clear();
                     txtCheminSource.Clear();
                     txtCheminDestination.Clear();
-                    //ListFiles.ItemsSource = null;
                     ListFiles.Visibility = Visibility.Collapsed;
 
                 }
             }
         }
-        //-------------------End Methods for Validate 2-------------------//
-        
-    //-------------------------------------Second Part of Add Save-------------------------------------//
     }
+    //------------Class ViewAddBackup------------//
 
 }
+//---------------------View---------------------//
