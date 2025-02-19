@@ -38,8 +38,18 @@
                     Grid.Row="1" Grid.Column="0" 
                     HorizontalAlignment="Left" VerticalAlignment="Top" 
                     Margin="90,85,0,10">
-            <!-- CheckBoxes will be added here dynamically via C# -->
+        <!-- CheckBoxes will be added here dynamically via C# -->
+
+            <ItemsControl ItemsSource="{Binding FilesToRecover}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding FileName}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
+
+        
 
         <!-- Choice of backup type -->
         <Label x:Name="LabelMainBackupType" Content="Choose the backup type"

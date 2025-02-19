@@ -34,51 +34,15 @@ namespace Livrable1.ViewModel
         {
             try
             {
-                if (!Directory.Exists(backup.CheminDestination))
-                {
-                    Directory.CreateDirectory(backup.CheminDestination);
-                }
+                string backupFolder = Path.Combine(backup.CheminDestination, backup.NameSave);
+                Directory.CreateDirectory(backupFolder);
 
                 foreach (var file in backup.Files)
                 {
                     try
                     {
-                        string destFile = Path.Combine(backup.CheminDestination, file.FileName);
-                        string extension = Path.GetExtension(file.FilePath).ToLower();
-
-                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
-                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
-                                           StateViewModel.IsPngEnabled && extension == ".png" ||
-                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
-                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
-                                           StateViewModel.IsDocxEnabled && extension == ".docx";
-
-                        if (shouldEncrypt)
-                        {
-                            try
-                            {
-                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
-                                
-                                using (Process cryptoProcess = new Process())
-                                {
-                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
-                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
-                                    cryptoProcess.StartInfo.UseShellExecute = true;
-                                    cryptoProcess.StartInfo.RedirectStandardError = false;
-                                    
-                                    cryptoProcess.Start();
-                                    cryptoProcess.WaitForExit();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
-                            }
-                        }
-                        else
-                        {
-                            File.Copy(file.FilePath, destFile, true);
-                        }
+                        string destFile = Path.Combine(backupFolder, file.FileName);
+                        CopyOrEncryptFile(file.FilePath, destFile);
                     }
                     catch (Exception fileEx)
                     {
@@ -96,57 +60,57 @@ namespace Livrable1.ViewModel
         {
             try
             {
-                if (!Directory.Exists(backup.CheminDestination))
-                {
-                    Directory.CreateDirectory(backup.CheminDestination);
-                }
+                string backupFolder = Path.Combine(backup.CheminDestination, backup.NameSave);
+                Directory.CreateDirectory(backupFolder);
 
                 foreach (var file in backup.Files)
                 {
-                    string destFile = Path.Combine(backup.CheminDestination, file.FileName);
+                    string destFile = Path.Combine(backupFolder, file.FileName);
 
                     if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                     {
-                        string extension = Path.GetExtension(file.FilePath).ToLower();
-                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
-                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
-                                           StateViewModel.IsPngEnabled && extension == ".png" ||
-                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
-                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
-                                           StateViewModel.IsDocxEnabled && extension == ".docx";
-
-                        if (shouldEncrypt)
-                        {
-                            try
-                            {
-                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
-                                
-                                using (Process cryptoProcess = new Process())
-                                {
-                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
-                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
-                                    cryptoProcess.StartInfo.UseShellExecute = true;
-                                    cryptoProcess.StartInfo.RedirectStandardError = false;
-                                    
-                                    cryptoProcess.Start();
-                                    cryptoProcess.WaitForExit();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
-                            }
-                        }
-                        else
-                        {
-                            File.Copy(file.FilePath, destFile, true);
-                        }
+                        CopyOrEncryptFile(file.FilePath, destFile);
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Erreur lors de la sauvegarde différentielle : {ex.Message}");
+            }
+        }
+
+        private void CopyOrEncryptFile(string sourceFile, string destinationFile)
+        {
+            string extension = Path.GetExtension(sourceFile).ToLower();
+            bool shouldEncrypt = (StateViewModel.IsPdfEnabled && extension == ".pdf") ||
+                                 (StateViewModel.IsTxtEnabled && extension == ".txt") ||
+                                 (StateViewModel.IsPngEnabled && extension == ".png") ||
+                                 (StateViewModel.IsJsonEnabled && extension == ".json") ||
+                                 (StateViewModel.IsXmlEnabled && extension == ".xml") ||
+                                 (StateViewModel.IsDocxEnabled && extension == ".docx");
+
+            if (shouldEncrypt)
+            {
+                try
+                {
+                    string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
+                    using (Process cryptoProcess = new Process())
+                    {
+                        cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                        cryptoProcess.StartInfo.Arguments = $"\"{sourceFile}\" \"{destinationFile}\" \"{key}\"";
+                        cryptoProcess.StartInfo.UseShellExecute = true;
+                        cryptoProcess.Start();
+                        cryptoProcess.WaitForExit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                }
+            }
+            else
+            {
+                File.Copy(sourceFile, destinationFile, true);
             }
         }
     }
