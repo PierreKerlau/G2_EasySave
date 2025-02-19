@@ -37,6 +37,8 @@ namespace Livrable1.View
             UpdateUILanguageAddBackup();
             this.DataContext = new AddSaveViewModel(); // Set the DataContext to a new instance of AddSaveViewModel
             ListFiles.Visibility = Visibility.Collapsed; // Initially hide the file list
+            ButtonValidate2.Visibility = Visibility.Collapsed;
+            ButtonCancel2.Visibility = Visibility.Collapsed;
         }
 
         // Event handler for the leave button click
@@ -50,13 +52,10 @@ namespace Livrable1.View
         // Event handler for the first cancel button click
         private void FirstCancelAddBackups_Click(object sender, RoutedEventArgs e)
         {
-            if (DataContext is SaveInformation viewModel)
-            {
                 // Clear the text boxes for name, source path, and destination path
                 txtNameSave.Clear();
                 txtSourcePath.Clear();
                 txtDestinationPath.Clear();
-            }
         }
 
         // Event handler for the first validate button click
@@ -65,8 +64,8 @@ namespace Livrable1.View
            if (DataContext is AddSaveViewModel viewModel)
             {
                 // Get the input values from the text boxes
-                string name = txtNameSave.Text; 
-                string sourcePath = txtSourcePath.Text; 
+                string name = txtNameSave.Text;
+                string sourcePath = txtSourcePath.Text;
                 string destinationPath = txtDestinationPath.Text;
 
                 // Create a new SaveInformation object with the input values
@@ -78,7 +77,17 @@ namespace Livrable1.View
                 // Check if the save was added successfully
                 if (result)
                 {
+                    ButtonValidate2.Visibility = Visibility.Visible;
+                    ButtonCancel2.Visibility = Visibility.Visible;
                     ListFiles.Visibility = Visibility.Visible; // Show the list of files
+
+                    txtNameSave.IsReadOnly = true;
+                    txtSourcePath.IsReadOnly = true;
+                    txtDestinationPath.IsReadOnly = true;
+
+                    ButtonValidate.Visibility = Visibility.Collapsed;
+                    ButtonCancel.Visibility = Visibility.Collapsed;
+
                     viewModel.LoadFilesFromSource(sourcePath); // Load files from the source path
 
                     MessageBox.Show(LanguageManager.GetText("backup_added_success")); // Show success message
@@ -98,7 +107,18 @@ namespace Livrable1.View
         // Event handler for the second cancel button click
         private void SecondCancelAddBackups(object sender, RoutedEventArgs e)
         {
-            
+            foreach (var item in ListFiles.Items)
+            {
+                if (ListFiles.ItemContainerGenerator.ContainerFromItem(item) is ListViewItem listViewItem)
+                {
+                    if (listViewItem.Content is FileInformation model)
+                    {
+                        model.IsSelected = false;
+                    }
+                }
+            }
+            ListFiles.Items.Refresh();
+
         }
 
         // Event handler for the second validate button click
@@ -106,24 +126,40 @@ namespace Livrable1.View
         {
             if (DataContext is AddSaveViewModel viewModel)
             {
+                bool isAnyChecked = viewModel.Files.Any(file => file.IsSelected); 
+
+                if (!isAnyChecked) 
+                {
+                    MessageBox.Show("Erreur : Vous devez sélectionner au moins un élément.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return; 
+                }
                 // Get the last saved backup
                 var save = viewModel.Backups.LastOrDefault();
 
-                if (save != null)
-                {
-                    // Save the selected files for the backup
-                    viewModel.SaveSelectedFiles(save);
-                    
-                    MessageBox.Show(LanguageManager.GetText("selected_files_saved")); // Show success message
+                    if (save != null)
+                    {
+                        // Save the selected files for the backup
+                        viewModel.SaveSelectedFiles(save);
 
-                    // Clear the text boxes and hide the file list
-                    txtNameSave.Clear();
-                    txtSourcePath.Clear();
-                    txtDestinationPath.Clear();
+                        MessageBox.Show(LanguageManager.GetText("selected_files_saved")); // Show success message
 
-                    ListFiles.Visibility = Visibility.Collapsed;
+                        txtNameSave.IsReadOnly = false;
+                        txtSourcePath.IsReadOnly = false;
+                        txtDestinationPath.IsReadOnly = false;
 
-                }
+                        // Clear the text boxes and hide the file list
+                        txtNameSave.Clear();
+                        txtSourcePath.Clear();
+                        txtDestinationPath.Clear();
+
+                        ButtonValidate.Visibility = Visibility.Visible;
+                        ButtonCancel.Visibility = Visibility.Visible;
+
+                        ButtonValidate2.Visibility = Visibility.Collapsed;
+                        ButtonCancel2.Visibility = Visibility.Collapsed;
+                        ListFiles.Visibility = Visibility.Collapsed;
+
+                    }
             }
         }
         //-------------------End Methods for Validate 2-------------------//
