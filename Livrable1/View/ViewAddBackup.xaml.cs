@@ -54,8 +54,8 @@ namespace Livrable1.View
             {
                 // Clear the text boxes for name, source path, and destination path
                 txtNameSave.Clear();
-                txtCheminSource.Clear();
-                txtCheminDestination.Clear();
+                txtSourcePath.Clear();
+                txtDestinationPath.Clear();
             }
         }
 
@@ -66,8 +66,8 @@ namespace Livrable1.View
             {
                 // Get the input values from the text boxes
                 string name = txtNameSave.Text; 
-                string sourcePath = txtCheminSource.Text; 
-                string destinationPath = txtCheminDestination.Text;
+                string sourcePath = txtSourcePath.Text; 
+                string destinationPath = txtDestinationPath.Text;
 
                 // Create a new SaveInformation object with the input values
                 var save = new SaveInformation(name, sourcePath, destinationPath);
