@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.ComponentModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Livrable1.Model;
 using Livrable1.View;
 using Livrable1.ViewModel;
 
@@ -24,28 +26,76 @@ namespace Livrable1
             UpdateUILanguageMainWindows();
         }
 
+        //------------------------------------------------------------------------------------//
+        private bool IsProcessRunning(string processName)
+        {
+            return System.Diagnostics.Process.GetProcessesByName(processName).Any();
+        }
+        //------------------------------------------------------------------------------------//
+
         private void ButtonShowViewAddBackup_Click(object sender, RoutedEventArgs e)
         {
-            // Ouverture de la vue ViewAddBackup et fermeture de la vue principale
-            ViewAddBackup viewAddBackup = new ViewAddBackup();
-            viewAddBackup.Show();
-            this.Close();
+            //--------------------------------------------------------------------------------//
+            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            {
+                MessageBox.Show("Action bloquée : Un logiciel interdit est en cours d'exécution.",
+                                "Alerte", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            else
+            {
+                //--------------------------------------------------------------------------------//
+                ViewAddBackup viewAddBackup = new ViewAddBackup();
+                viewAddBackup.Show();
+                this.Close();
+                //--------------------------------------------------------------------------------//
+            }
+            //--------------------------------------------------------------------------------//
         }
 
         private void ButtonShowViewExecuteBackup_Click(object sender, RoutedEventArgs e)
         {
-            // Ouverture de la vue ViewExecuteBackup et fermeture de la vue principale
-            ViewExecuteBackup viewExecuteBackup = new ViewExecuteBackup();
-            viewExecuteBackup.Show();
-            this.Close();
+            //--------------------------------------------------------------------------------//
+            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            {
+                MessageBox.Show("Action bloquée : Un logiciel interdit est en cours d'exécution.",
+                                "Alerte", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            else
+            {
+                //--------------------------------------------------------------------------------//
+                ViewExecuteBackup viewExecuteBackup = new ViewExecuteBackup();
+                viewExecuteBackup.Show();
+                this.Close();
+                //--------------------------------------------------------------------------------//
+            }
+            //--------------------------------------------------------------------------------//
+            
         }
 
         private void ButtonShowViewRecoverBackup_Click(object sender, RoutedEventArgs e)
         {
-            // Ouverture de la vue ViewRecoverBackup et fermeture de la vue principale
-            ViewRecoverBackup viewRecoverBackup = new ViewRecoverBackup();
-            viewRecoverBackup.Show();
-            this.Close();
+            //--------------------------------------------------------------------------------//
+            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            {
+                MessageBox.Show("Action bloquée : Un logiciel interdit est en cours d'exécution.",
+                                "Alerte", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            else
+            {
+                //--------------------------------------------------------------------------------//
+                ViewRecoverBackup viewRecoverBackup = new ViewRecoverBackup();
+                viewRecoverBackup.Show();
+                this.Close();
+                //--------------------------------------------------------------------------------//
+            }
+            //--------------------------------------------------------------------------------//
+
         }
 
         private void ButtonShowViewLogs_Click(object sender, RoutedEventArgs e)

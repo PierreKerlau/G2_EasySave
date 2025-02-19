@@ -12,7 +12,7 @@
         </Grid>
         <Grid Margin="0,93,0,0">
 
-            <Button x:Name="ButtonShowViewAddBackup" Content="Add a backup job" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" Click="ButtonShowViewAddBackup_Click"/>
+            <Button x:Name="ButtonShowViewAddBackup" Content="Add a backup job" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" Click="ButtonShowViewAddBackup_Click" IsEnabled="{Binding IsButtonEnabled}"/>
             <Button x:Name="ButtonShowViewParameter" Content="Modify parameters" HorizontalAlignment="Left" Margin="648,276,0,0" VerticalAlignment="Top" Click="ButtonShowViewParameter_Click"/>
             <Button x:Name="ButtonShowViewExecuteBackup" Content="Execute a backup job" HorizontalAlignment="Center" Margin="0,113,0,0" VerticalAlignment="Top" Click="ButtonShowViewExecuteBackup_Click"/>
             <Button x:Name="ButtonShowViewRecoverBackup" Content="Recover a backup" HorizontalAlignment="Center" Margin="0,168,0,0" VerticalAlignment="Top" Click="ButtonShowViewRecoverBackup_Click"/>

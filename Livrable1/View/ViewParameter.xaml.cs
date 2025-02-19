@@ -12,8 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Livrable1.ViewModel;
+using Livrable1.Model;
 using System.Diagnostics;
-// using EasySave.Cryptography;
+using System.ComponentModel;
+//using EasySave.Cryptography;
 
 namespace Livrable1.View
 {
@@ -22,6 +24,13 @@ namespace Livrable1.View
     /// </summary>
     public partial class ViewParameter : Window
     {
+        //-----------------------------------------//
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            CheckBoxCalculator.IsChecked = ProcessWatcher.Instance.BloquerCheatEngine;
+            CheckBoxNotepad.IsChecked = ProcessWatcher.Instance.BloquerWireshark;
+        }
+        //-----------------------------------------//
         public ViewParameter()
         {
             InitializeComponent();
@@ -66,6 +75,7 @@ namespace Livrable1.View
 
             // Mettre à jour l'interface avec la langue actuelle
             UpdateUILanguage();
+
         }
 
         private void InitializeCheckBoxStates()
@@ -169,6 +179,7 @@ namespace Livrable1.View
 
         private void CheckBox_Checked_Calculator(object sender, RoutedEventArgs e)
         {
+            ProcessWatcher.Instance.BloquerCheatEngine = CheckBoxCalculator.IsChecked == true;
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsCalculatorEnabled = checkBox.IsChecked ?? false;
@@ -177,6 +188,7 @@ namespace Livrable1.View
 
         private void CheckBox_Unchecked_Calculator(object sender, RoutedEventArgs e)
         {
+            ProcessWatcher.Instance.BloquerCheatEngine = CheckBoxCalculator.IsChecked == false;
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsCalculatorEnabled = false;
@@ -185,6 +197,7 @@ namespace Livrable1.View
 
         private void CheckBox_Checked_Notepad(object sender, RoutedEventArgs e)
         {
+            ProcessWatcher.Instance.BloquerWireshark = CheckBoxNotepad.IsChecked == true;
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsNotePadEnabled = checkBox.IsChecked ?? false;
@@ -193,6 +206,7 @@ namespace Livrable1.View
 
         private void CheckBox_Unchecked_Notepad(object sender, RoutedEventArgs e)
         {
+            ProcessWatcher.Instance.BloquerWireshark = CheckBoxNotepad.IsChecked == false;
             if (sender is CheckBox checkBox)
             {
                 StateViewModel.IsNotePadEnabled = false;
