@@ -24,9 +24,6 @@ namespace Livrable1.Model
         // List to hold file information
         public List<FileInformation> Files { get; set; } = new List<FileInformation>();
 
-        // List to hold file information
-        public List<FileInformation> Files { get; set; } = new List<FileInformation>();
-
         // Constructor to initialize the save information and load files
         public SaveInformation(string nameSave, string sourcePath, string destinationPath)
         {
