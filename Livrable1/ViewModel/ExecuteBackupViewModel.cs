@@ -6,6 +6,7 @@ using Livrable1.ViewModel;
 using System.Linq;
 using System.Windows;
 using System.Diagnostics;
+using Livrable1.logger;
 
 namespace Livrable1.ViewModel
 {
@@ -41,8 +42,52 @@ namespace Livrable1.ViewModel
                 {
                     try
                     {
-                        string destFile = Path.Combine(backupFolder, file.FileName);
-                        CopyOrEncryptFile(file.FilePath, destFile);
+                        string destFile = Path.Combine(backup.CheminDestination, file.FileName);
+                        string extension = Path.GetExtension(file.FilePath).ToLower();
+                        var stopwatch = Stopwatch.StartNew();
+                        long cryptingTime = 0;
+
+                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
+                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
+                                           StateViewModel.IsPngEnabled && extension == ".png" ||
+                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
+                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
+                                           StateViewModel.IsDocxEnabled && extension == ".docx";
+
+                        if (shouldEncrypt)
+                        {
+                            try
+                            {
+                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
+
+                                using (Process cryptoProcess = new Process())
+                                {
+                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
+                                    cryptoProcess.StartInfo.UseShellExecute = true;
+                                    cryptoProcess.StartInfo.RedirectStandardError = false;
+
+                                    cryptoProcess.Start();
+                                    cryptoProcess.WaitForExit();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                            }
+                            cryptingTime = stopwatch.ElapsedMilliseconds;
+                        }
+                        else
+                        {
+                            File.Copy(file.FilePath, destFile, true);
+                        }
+                        
+                        stopwatch.Stop();
+                        long transferTime = stopwatch.ElapsedMilliseconds;
+
+                        Logger logger = new Logger();
+                        logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile, 
+                            new FileInfo(file.FilePath).Length, transferTime, cryptingTime, StateViewModel.IsJsonOn);
                     }
                     catch (Exception fileEx)
                     {
