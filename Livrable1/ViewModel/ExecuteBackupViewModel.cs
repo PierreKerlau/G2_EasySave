@@ -11,10 +11,12 @@ using System.Windows;
 using System.Windows.Controls;
 using Livrable1.Model;
 
+//---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
 {
     public class ExecuteBackupViewModel : INotifyPropertyChanged
     {
+        // Collection of saved backups
         public ObservableCollection<SaveInformation> Backups { get; set; }
         private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
         private readonly Dictionary<string, ManualResetEventSlim> _pauseEvents = new();
@@ -26,6 +28,7 @@ namespace Livrable1.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        // Constructor: initializes the backup list from SaveManager
         public ExecuteBackupViewModel()
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
@@ -40,7 +43,7 @@ namespace Livrable1.ViewModel
                 ExecuteBackup(backup, backupType);
             }
         }
-
+        
         public void ExecuteBackup(SaveInformation backup, string backupType)
         {
             if (!_pauseEvents.ContainsKey(backup.NameSave))
@@ -99,8 +102,6 @@ namespace Livrable1.ViewModel
                 backup.Progression = (int)((double)filesCopied / totalFiles * 100);
             }
         }
-
-        private void ExecuteDifferentialBackup(SaveInformation backup, CancellationToken token)
         {
             string backupFolder = Path.Combine(backup.CheminDestination, backup.NameSave);
             Directory.CreateDirectory(backupFolder);
@@ -154,10 +155,11 @@ namespace Livrable1.ViewModel
             SaveManager.Instance.DeleteBackup(backup);
             Backups.Remove(backup);
         }
-
         private void CopyOrEncryptFile(string sourceFile, string destinationFile)
         {
             string extension = Path.GetExtension(sourceFile).ToLower();
+
+            // Determine if encryption is required
             bool shouldEncrypt = (StateViewModel.IsPdfEnabled && extension == ".pdf") ||
                                 (StateViewModel.IsTxtEnabled && extension == ".txt") ||
                                 (StateViewModel.IsPngEnabled && extension == ".png") ||
@@ -169,9 +171,11 @@ namespace Livrable1.ViewModel
             {
                 try
                 {
+                    // Retrieve encryption key
                     string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
                     using (Process cryptoProcess = new Process())
                     {
+                        // Encrypt file using external software
                         cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
                         cryptoProcess.StartInfo.Arguments = $"\"{sourceFile}\" \"{destinationFile}\" \"{key}\"";
                         cryptoProcess.StartInfo.UseShellExecute = true;
@@ -181,11 +185,12 @@ namespace Livrable1.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
+                    MessageBox.Show($"{LanguageManager.GetText("error_during_encryption")}: {ex.Message}");
                 }
             }
             else
             {
+                // Copy file without encryption
                 File.Copy(sourceFile, destinationFile, true);
             }
         }

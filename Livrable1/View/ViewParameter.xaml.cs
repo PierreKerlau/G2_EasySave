@@ -15,8 +15,8 @@ using Livrable1.ViewModel;
 using Livrable1.Model;
 using System.Diagnostics;
 using System.ComponentModel;
-//using EasySave.Cryptography;
 
+//---------------------View---------------------//
 namespace Livrable1.View
 {
     /// <summary>
@@ -24,16 +24,16 @@ namespace Livrable1.View
     /// </summary>
     public partial class ViewParameter : Window
     {
-        //-----------------------------------------//
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CheckBoxCalculator.IsChecked = ProcessWatcher.Instance.BloquerCheatEngine;
             CheckBoxNotepad.IsChecked = ProcessWatcher.Instance.BloquerWireshark;
         }
-        //-----------------------------------------//
+        
         public ViewParameter()
         {
             InitializeComponent();
+            UpdateUILanguageParameter(); // Update language
 
             // Lire la clé depuis le fichier .env
             try
@@ -54,7 +54,7 @@ namespace Livrable1.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erreur lors de la lecture du fichier .env : " + ex.Message);
+                MessageBox.Show($"{LanguageManager.GetText("error_reading_env")} {ex.Message}");
             }
 
             // Initialiser l'état des CheckBox
@@ -320,5 +320,17 @@ namespace Livrable1.View
                 StateViewModel.UpdateExtensionEncryption(".txt", false);
             }
         }
+
+        // Method to update UI elements with language-specific texts
+        private void UpdateUILanguageParameter()
+        {
+            TextBlockLanguage.Text = LanguageManager.GetText("text_block_choose_language");
+            TextBlockSoftware.Text = LanguageManager.GetText("text_block_choose_software");
+            CheckBoxCalculator.Content = LanguageManager.GetText("checkbox_calculator");
+            TextBlockExtensions.Text = LanguageManager.GetText("text_block_choose_extension");
+            TextBlockLogFormat.Text = LanguageManager.GetText("text_block_choose_format_log");
+            ButtonLeave.Content = LanguageManager.GetText("menu_leave");
+        }
     }
 }
+//---------------------View---------------------//

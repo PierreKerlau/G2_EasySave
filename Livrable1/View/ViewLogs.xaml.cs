@@ -12,24 +12,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+//---------------------View---------------------//
 namespace Livrable1.View
 {
     /// <summary>
-    /// Logique d'interaction pour ViewLogs.xaml
+    /// Interaction logic for ViewLogs.xaml
     /// </summary>
+
+    //------------Class ViewLogs------------//
     public partial class ViewLogs : Window
     {
+        // Constructor for ViewLogs
         public ViewLogs()
         {
-            InitializeComponent();
+            InitializeComponent(); // Initialize UI components
         }
 
+        // Event handler for the leave button click
         private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
         {
-            // Ouverture de la fenêtre principale et fermeture de la fenêtre actuelle
-            MainWindow viewMain = new MainWindow();
-            viewMain.Show();
-            this.Close();
+            // Open the main window and close the current window
+            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
+            viewMain.Show(); // Show the MainWindow
+            this.Close(); // Close the current window
         }
     }
+    //------------Class ViewLogs------------//
 }
+//---------------------View---------------------//

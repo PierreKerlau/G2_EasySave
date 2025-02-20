@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
+//---------------------Model---------------------//
 namespace Livrable1.Model
 {
     public class SaveInformation : INotifyPropertyChanged
     {
         public string NameSave { get; set; } = "";
-        public string CheminSource { get; set; } = "";
-        public string CheminDestination { get; set; } = "";
+        // Property to hold the source path
+        public string SourcePath { get; set; } = "";
+        // Property to hold the destination path
+        public string DestinationPath { get; set; } = "";
+        // List to hold file information
         public List<FileInformation> Files { get; set; } = new List<FileInformation>();
         public bool IsSelected { get; set; }
 
@@ -35,10 +39,9 @@ namespace Livrable1.Model
         }
 
         public SaveInformation(string nameSave, string cheminSource, string cheminDestination)
-        {
             NameSave = nameSave;
-            CheminSource = cheminSource;
-            CheminDestination = cheminDestination;
+            SourcePath = sourcePath;
+            DestinationPath = destinationPath;
             LoadFiles();
         }
 
@@ -46,24 +49,24 @@ namespace Livrable1.Model
         {
             if (!Directory.Exists(CheminSource))
             {
-                MessageBox.Show("Le chemin source n'existe pas.");
+                MessageBox.Show(LanguageManager.GetText("source_path_not_exists"));
                 return false;
             }
 
             if (!Directory.Exists(CheminDestination))
             {
-                MessageBox.Show("Le chemin de destination n'existe pas.");
+                MessageBox.Show(LanguageManager.GetText("destination_path_not_exists"));
                 return false;
             }
 
             string[] files = Directory.GetFiles(CheminSource);
             if (files == null || files.Length == 0)
             {
-                MessageBox.Show("Le chemin source ne contient aucun fichier.");
+                MessageBox.Show(LanguageManager.GetText("source_path_contains_no_file"));
                 return false;
             }
 
-            return true;
+            return true; 
         }
 
         public void LoadFiles()
@@ -71,17 +74,17 @@ namespace Livrable1.Model
             Files.Clear();
             if (Directory.Exists(CheminSource))
             {
-                string[] filePaths = Directory.GetFiles(CheminSource);
+                string[] filePaths = Directory.GetFiles(SourcePath);
                 foreach (string filePath in filePaths)
                 {
-                    Files.Add(new FileInformation(filePath));
+                    Files.Add(new FileInformation(filePath)); 
                 }
             }
         }
-
+  
         public void SetSelectedFiles(List<FileInformation> selectedFiles)
         {
-            Files = selectedFiles;
+            Files = selectedFiles; 
         }
     }
 }

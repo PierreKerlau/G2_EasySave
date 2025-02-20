@@ -117,8 +117,58 @@
     "button_add_backup": "Add a backup job",
     "button_parameter": "Modify parameters",
     "button_execute_backup": "Execute a backup job",
-    "button_recover_backup": "Recover a backup"
+    "button_recover_backup": "Recover a backup",
 
+    "error_during_encryption": "Error during encryption: ",
+    "simple_copy_of": "Simple copy of: ",
+    "error_encryption": "Error: ",
+
+    "error_during_diff_backup": "Error during differential backup",
+    "error_general": "General error",
+    "error_on_file": "Error on file ",
+
+    "error_loading_translations": "Error loading translations:",
+    "error_title": "Error",
+
+    "extension_name": "Extension",
+    "add_for_encryption": "added for encryption",
+    "supp_for_encryption": "removed from encryption",
+
+    "action_blocked_software": "Action blocked: Prohibited software is running.",
+    "alert_software": "Alert",
+
+    "error_reading_env": "Error reading .env file: ",
+
+    "please_select_backup_and_type": "Please select a backup and a type.",
+
+    "backup_execute": "Backup",
+    "executed_for": "executed for",
+
+    "backup_added_success": "Backup successfully added!",
+    "error_during_addition_of_backup": "Error when adding the backup.",
+    "fail_validate": "Validation failure",
+    "selected_files_saved": "Selected files saved!",
+    "select_at_least_one_element": "Error: You must select at least one element.",
+
+    "source_path_not_exists": "The source path does not exist.",
+    "destination_path_not_exists": "The destination path does not exist.",
+    "source_path_contains_no_file": "The source path does not contain any.",
+
+    "text_block_choose_language": "Choose Language",
+    "text_block_choose_software": "Business Software",
+    "checkbox_calculator": "Calculator",
+    "text_block_choose_extension": "Extensions to encrypt",
+    "text_block_choose_format_log": "Log Format",
+
+    "add_backup_jobs": "Add Backup Jobs",
+
+    "execute_backup_jobs": "Execute backup jobs",
+    "button_execute": "Execute",
+    "combobox_full_backup": "Full backup",
+    "combobox_differential_backup": "Differential backup",
+    "column_name": "Name",
+    "column_source": "Source",
+    "column_destination": "Destination"
 
   },
   "fr": {
@@ -239,8 +289,58 @@
     "button_add_backup": "Ajouter une sauvegarde",
     "button_parameter": "Modifier les paramètres",
     "button_execute_backup": "Exécuter une sauvegarde",
-    "button_recover_backup": "Récupérer une sauvegarde"
+    "button_recover_backup": "Récupérer une sauvegarde",
 
+    "error_during_encryption": "Erreur lors du chiffrement : ",
+    "simple_copy_of": "Copie simple de : ",
+    "error_encryption": "Erreur : ",
+
+    "error_during_diff_backup": "Erreur lors de la sauvegarde différenrielle",
+    "error_general": "Erreur générale",
+    "error_on_file": "Erreur sur le fichier ",
+
+    "error_loading_translations": "Erreur lors du chargement des traductions :",
+    "error_title": "Erreur",
+
+    "extension_name": "Extension",
+    "add_for_encryption": "ajoutée pour le chiffrement",
+    "supp_for_encryption": "retirée pour le chiffrement",
+
+    "action_blocked_software": "Action bloquée : Un logiciel interdit est en cours d'exécution.",
+    "alert_software": "Alerte",
+
+    "error_reading_env": "Erreur lors de la lecture du fichier .env : ",
+
+    "please_select_backup_and_type": "Veuillez sélectionner une sauvegarde et un type.",
+
+    "backup_execute": "Sauvegarde",
+    "executed_for": "exécutée pour",
+
+    "backup_added_success": "Sauvegarde ajoutée avec succès !",
+    "error_during_addition_of_backup": "Erreur lors de l'ajout de la sauvegarde.",
+    "fail_validate": "Echec de la validation",
+    "selected_files_saved": "Fichiers sélectionnés enregistrés !",
+    "select_at_least_one_element": "Erreur : Vous devez sélectionner au moins un élément.",
+
+    "source_path_not_exists": "Le chemin source n'existe pas.",
+    "destination_path_not_exists": "Le chemin de destination n'existe pas.",
+    "source_path_contains_no_file": "Le chemin source ne contient aucun fichier.",
+
+    "text_block_choose_language": "Choisir une langue",
+    "text_block_choose_software": "Logiciel métier",
+    "checkbox_calculator": "Calculatrice",
+    "text_block_choose_extension": "Extensions à chiffrer",
+    "text_block_choose_format_log": "Format des logs",
+
+    "add_backup_jobs": "Création de sauvegardes",
+
+    "execute_backup_jobs": "Execution de sauvegardes",
+    "button_execute": "Exécuter",
+    "combobox_full_backup": "Sauvegarde complète",
+    "combobox_differential_backup": "Sauvegarde différentielle",
+    "column_name": "Nom",
+    "column_source": "Source",
+    "column_destination": "Destination"
   }
 }
 

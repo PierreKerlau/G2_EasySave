@@ -6,6 +6,10 @@
     <Grid>
         <Label Content="EasySave" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36"/>
 
+        <Label x:Name="LabelMainViewExecuteBackup" Content="Execute backup jobs" 
+       HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"
+       Grid.Row="0" Margin="0,46,0,0" RenderTransformOrigin="0.183,0.614"/>
+
         <DataGrid x:Name="DataGridBackups"
                   ItemsSource="{Binding Backups}"
                   AutoGenerateColumns="False"
@@ -74,11 +78,11 @@
         </DataGrid>
 
         <ComboBox x:Name="BackupTypeSelector" HorizontalAlignment="Left" Margin="50,350,0,0" VerticalAlignment="Top" Width="200">
-            <ComboBoxItem Content="Sauvegarde complète"/>
-            <ComboBoxItem Content="Sauvegarde différentielle"/>
+            <ComboBoxItem Content="Full Backup"/>
+            <ComboBoxItem Content="Differential Backup"/>
         </ComboBox>
 
-        <Button Content="Exécuter" HorizontalAlignment="Left" Margin="280,350,0,0" VerticalAlignment="Top" Click="ButtonExecute_Click" Height="20" />
-        <Button x:Name="ButtonLeave" Content="Leave" HorizontalAlignment="Left" Margin="342,350,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1" Height="20"/>
+        <Button x:Name="ButtonExecuteBackup" Content="Execute" HorizontalAlignment="Left" Margin="280,350,0,0" VerticalAlignment="Top" Click="ButtonExecute_Click" Height="20" />
+        <Button x:Name="ButtonLeave" Content="Exit" HorizontalAlignment="Left" Margin="342,350,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1" Height="20"/>
     </Grid>
 </Window>

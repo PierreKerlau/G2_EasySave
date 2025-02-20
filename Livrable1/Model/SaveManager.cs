@@ -3,8 +3,10 @@ using System.Threading;
 using System.Windows;
 using Livrable1.Model;
 
+//---------------------Model---------------------//
 namespace Livrable1.ViewModel
 {
+    //------------Class SaveManager------------//
     public class SaveManager
     {
         private static SaveManager instance;
@@ -12,6 +14,7 @@ namespace Livrable1.ViewModel
         private Dictionary<string, ManualResetEventSlim> _pauseEvents;
         private Dictionary<string, CancellationTokenSource> _cancellationTokens;
 
+        // Private constructor to prevent instantiation from outside
         private SaveManager()
         {
             backups = new List<SaveInformation>();
@@ -19,21 +22,23 @@ namespace Livrable1.ViewModel
             _cancellationTokens = new Dictionary<string, CancellationTokenSource>();
         }
 
+        // Public property to access the singleton instance of SaveManager
         public static SaveManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new SaveManager();
+                    instance = new SaveManager(); // Create a new instance if it doesn't exist
                 }
-                return instance;
+                return instance; // Return the singleton instance
             }
         }
 
+        // Method to add a backup to the list
         public void AddBackup(SaveInformation backup)
         {
-            backups.Add(backup);
+            backups.Add(backup); // Add the provided backup to the backups list
         }
 
         public void PauseBackup(SaveInformation backup)
@@ -71,10 +76,9 @@ namespace Livrable1.ViewModel
         {
             backups.Remove(backup);
         }
-
         public List<SaveInformation> GetBackups()
         {
-            return backups;
+            return backups; // Return the list of backups
         }
     }
 }
