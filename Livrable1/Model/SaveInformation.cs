@@ -1,21 +1,13 @@
-﻿using System;
+﻿using System.ComponentModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Livrable1.ViewModel;
-using Livrable1.View;
-using Livrable1.Model;
 using System.IO;
 using System.Windows;
 
 //---------------------Model---------------------//
 namespace Livrable1.Model
 {
-    //------------Class SaveInformation------------//
-    public class SaveInformation
+    public class SaveInformation : INotifyPropertyChanged
     {
-        // Property to hold the name of the save
         public string NameSave { get; set; } = "";
         // Property to hold the source path
         public string SourcePath { get; set; } = "";
@@ -23,64 +15,76 @@ namespace Livrable1.Model
         public string DestinationPath { get; set; } = "";
         // List to hold file information
         public List<FileInformation> Files { get; set; } = new List<FileInformation>();
+        public bool IsSelected { get; set; }
 
-        // Constructor to initialize the save information and load files
-        public SaveInformation(string nameSave, string sourcePath, string destinationPath)
+        private int _progression;
+        public int Progression
         {
+            get => _progression;
+            set
+            {
+                if (_progression != value)
+                {
+                    _progression = value;
+                    OnPropertyChanged(nameof(Progression));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public SaveInformation(string nameSave, string cheminSource, string cheminDestination)
             NameSave = nameSave;
             SourcePath = sourcePath;
             DestinationPath = destinationPath;
             LoadFiles();
         }
 
-        // Method to validate the source and destination paths
         public bool ValidatePaths()
         {
-            // Check if the source directory exists
-            if (!Directory.Exists(SourcePath))
+            if (!Directory.Exists(CheminSource))
             {
                 MessageBox.Show(LanguageManager.GetText("source_path_not_exists"));
                 return false;
             }
 
-            // Check if the destination directory exists
-            if (!Directory.Exists(DestinationPath))
+            if (!Directory.Exists(CheminDestination))
             {
                 MessageBox.Show(LanguageManager.GetText("destination_path_not_exists"));
                 return false;
             }
 
-            // Get all files in the source directory
-            string[] files = Directory.GetFiles(SourcePath);
+            string[] files = Directory.GetFiles(CheminSource);
             if (files == null || files.Length == 0)
             {
                 MessageBox.Show(LanguageManager.GetText("source_path_contains_no_file"));
                 return false;
             }
 
-            return true; // Paths are valid
+            return true; 
         }
 
-        // Method to load files from the source directory
         public void LoadFiles()
         {
-            Files.Clear(); // Resets the file list
-            if (Directory.Exists(SourcePath))
+            Files.Clear();
+            if (Directory.Exists(CheminSource))
             {
                 string[] filePaths = Directory.GetFiles(SourcePath);
                 foreach (string filePath in filePaths)
                 {
-                    Files.Add(new FileInformation(filePath)); // Add each file to the list
+                    Files.Add(new FileInformation(filePath)); 
                 }
             }
         }
-
-        // Method to set selected files
+  
         public void SetSelectedFiles(List<FileInformation> selectedFiles)
         {
-            Files = selectedFiles; // Update the list of files with the selected files
+            Files = selectedFiles; 
         }
     }
-    //------------Class SaveInformation------------//
 }
-//---------------------Model---------------------//

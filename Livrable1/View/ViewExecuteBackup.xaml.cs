@@ -2,7 +2,6 @@
 using Livrable1.Model;
 using System.Linq;
 using System.Windows;
-using Livrable1.ViewModel;
 using System.Windows.Controls;
 
 //---------------------View---------------------//
@@ -22,10 +21,11 @@ namespace Livrable1.View
             this.DataContext = viewModel; // Set the DataContext to the ViewModel
         }
 
-        // Event handler for the leave button click
-        private void ButtonLeave_Click(object sender, RoutedEventArgs e)
+        private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
         {
-            this.Close(); // Close the current window
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
 
         // Event handler for the execute button click
@@ -37,8 +37,6 @@ namespace Livrable1.View
             {
                 // Execute the backup using the ViewModel
                 viewModel.ExecuteBackup(selectedBackup, selectedType.Content.ToString());
-                // Show success message
-                MessageBox.Show($"{LanguageManager.GetText("backup_execute")} '{selectedType.Content}' {LanguageManager.GetText("execute_for")} {selectedBackup.NameSave} !");
             }
             else
             {
@@ -46,43 +44,36 @@ namespace Livrable1.View
                 MessageBox.Show(LanguageManager.GetText("please_select_backup_and_type"));
             }
         }
-
-        // Event handler for the leave button click (alternative button)
-        private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
+        
+        private void PauseBackup_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
-            viewMain.Show(); // Show the MainWindow
-            this.Close(); // Close the current window
+            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+            {
+                viewModel.PauseBackup(selectedBackup);
+            }
         }
 
-        // Method to update UI elements with language-specific texts
-        private void UpdateUILanguageExecuteBackup()
+        private void ResumeBackup_Click(object sender, RoutedEventArgs e)
         {
-            LabelMainViewExecuteBackup.Content = LanguageManager.GetText("execute_backup_jobs");
-            NameColumn.Header = LanguageManager.GetText("column_name");
-            SourceColumn.Header = LanguageManager.GetText("column_source");
-            DestinationColumn.Header = LanguageManager.GetText("column_destination");
-            ButtonExecuteBackup.Content = LanguageManager.GetText("button_execute");
-            ButtonLeave.Content = LanguageManager.GetText("menu_leave");
-
-            var comboBoxItems = BackupTypeSelector.Items;
-            foreach (var item in comboBoxItems)
+            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
             {
-                var comboBoxItem = item as ComboBoxItem;
-                if (comboBoxItem != null)
-                {
-                    if (comboBoxItem.Content.ToString() == "Full Backup")
-                    {
-                        comboBoxItem.Content = LanguageManager.GetText("combobox_full_backup");
-                    }
-                    else if (comboBoxItem.Content.ToString() == "Differential Backup")
-                    {
-                        comboBoxItem.Content = LanguageManager.GetText("combobox_differential_backup");
-                    }
-                }
+                viewModel.ResumeBackup(selectedBackup);
+            }
+        }
+
+        private void StopBackup_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+            {
+                viewModel.StopBackup(selectedBackup);
+            }
+        }
+        private void DeleteBackup_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+            {
+                viewModel.DeleteBackup(selectedBackup);
             }
         }
     }
-    //------------Class ViewExecuteBackup------------//
 }
-//---------------------View---------------------//

@@ -1,21 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using Livrable1.Model;
-using Livrable1.ViewModel;
-using System.Linq;
-using System.Windows;
+using System.ComponentModel;
 using System.Diagnostics;
-using Livrable1.logger;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using Livrable1.Model;
 
 //---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
 {
-    //------------Class ExecuteBackupViewModel------------//
-    public class ExecuteBackupViewModel
+    public class ExecuteBackupViewModel : INotifyPropertyChanged
     {
         // Collection of saved backups
         public ObservableCollection<SaveInformation> Backups { get; set; }
+        private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
+        private readonly Dictionary<string, ManualResetEventSlim> _pauseEvents = new();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         // Constructor: initializes the backup list from SaveManager
         public ExecuteBackupViewModel()
@@ -23,135 +34,138 @@ namespace Livrable1.ViewModel
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
         }
 
-        // Method to execute a backup based on the selected type
+        public void ExecuteSelectedBackups(string backupType)
+        {
+            var selectedBackups = Backups.Where(b => b.IsSelected).ToList();
+
+            foreach (var backup in selectedBackups)
+            {
+                ExecuteBackup(backup, backupType);
+            }
+        }
+        
         public void ExecuteBackup(SaveInformation backup, string backupType)
         {
-            if (backupType == "Full Backup") // Full backup
-            {
-                ExecuteFullBackup(backup);
-            }
-            else if (backupType == "Differential Backup") // Differential backup
-            {
-                ExecuteDifferentialBackup(backup);
-            }
-        }
+            if (!_pauseEvents.ContainsKey(backup.NameSave))
+                _pauseEvents[backup.NameSave] = new ManualResetEventSlim(true);
 
-        // Method to execute a full backup
-        private void ExecuteFullBackup(SaveInformation backup)
-        {
-            try
-            {
-                // Create backup directory
-                string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
-                Directory.CreateDirectory(backupFolder);
+            var cts = new CancellationTokenSource();
+            _cancellationTokens[backup.NameSave] = cts;
 
-                foreach (var file in backup.Files)
+            Task.Run(() =>
+            {
+                try
                 {
-                    try
+                    if (backupType == "Sauvegarde complète")
                     {
-                        string destFile = Path.Combine(backupFolder, file.FileName);
-                        string extension = Path.GetExtension(file.FilePath).ToLower();
-                        var stopwatch = Stopwatch.StartNew();
-                        long cryptingTime = 0;
-
-                        // Check if the file should be encrypted based on its extension
-                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
-                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
-                                           StateViewModel.IsPngEnabled && extension == ".png" ||
-                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
-                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
-                                           StateViewModel.IsDocxEnabled && extension == ".docx";
-
-                        if (shouldEncrypt)
-                        {
-                            try
-                            {
-                                // Retrieve encryption key from environment variables
-                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
-
-                                // Call external encryption software
-                                using (Process cryptoProcess = new Process())
-                                {
-                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
-                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
-                                    cryptoProcess.StartInfo.UseShellExecute = true;
-                                    cryptoProcess.StartInfo.RedirectStandardError = false;
-
-                                    cryptoProcess.Start();
-                                    cryptoProcess.WaitForExit();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show($"{LanguageManager.GetText("error_encryption")}: {ex.Message}");
-                            }
-                            cryptingTime = stopwatch.ElapsedMilliseconds;
-                        }
-                        else
-                        {
-                            // Copy file without encryption
-                            File.Copy(file.FilePath, destFile, true);
-                        }
-                        
-                        stopwatch.Stop();
-                        long transferTime = stopwatch.ElapsedMilliseconds;
-
-                        // Log the backup operation
-                        Logger logger = new Logger();
-                        logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile, 
-                            new FileInfo(file.FilePath).Length, transferTime, cryptingTime, StateViewModel.IsJsonOn);
+                        ExecuteFullBackup(backup, cts.Token);
                     }
-                    catch (Exception fileEx)
+                    else if (backupType == "Sauvegarde différentielle")
                     {
-                        MessageBox.Show($"{LanguageManager.GetText("error_on_file")} {file.FileName} : {fileEx.Message}");
+                        ExecuteDifferentialBackup(backup, cts.Token);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{LanguageManager.GetText("error_general")}: {ex.Message}");
-            }
+                catch (OperationCanceledException)
+                {
+                    MessageBox.Show($"Sauvegarde annulée pour {backup.NameSave}.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de la sauvegarde : {ex.Message}");
+                }
+                finally
+                {
+                    _cancellationTokens.Remove(backup.NameSave);
+                    _pauseEvents.Remove(backup.NameSave);
+                    cts.Dispose();
+                }
+            }, cts.Token);
         }
 
-        // Method to execute a differential backup (only modified files)
-        private void ExecuteDifferentialBackup(SaveInformation backup)
+        private void ExecuteFullBackup(SaveInformation backup, CancellationToken token)
         {
-            try
+            string backupFolder = Path.Combine(backup.CheminDestination, backup.NameSave);
+            Directory.CreateDirectory(backupFolder);
+
+            int totalFiles = backup.Files.Count;
+            int filesCopied = 0;
+
+            foreach (var file in backup.Files)
             {
-                // Create backup directory
-                string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
+                token.ThrowIfCancellationRequested();
+                _pauseEvents[backup.NameSave].Wait(token);
 
-                Directory.CreateDirectory(backupFolder);
+                string destFile = Path.Combine(backupFolder, file.FileName);
+                CopyOrEncryptFile(file.FilePath, destFile);
 
-                foreach (var file in backup.Files)
+                filesCopied++;
+                backup.Progression = (int)((double)filesCopied / totalFiles * 100);
+            }
+        }
+        {
+            string backupFolder = Path.Combine(backup.CheminDestination, backup.NameSave);
+            Directory.CreateDirectory(backupFolder);
+
+            int totalFiles = backup.Files.Count;
+            int filesCopied = 0;
+
+            foreach (var file in backup.Files)
+            {
+                token.ThrowIfCancellationRequested();
+                _pauseEvents[backup.NameSave].Wait(token);
+
+                string destFile = Path.Combine(backupFolder, file.FileName);
+
+                if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                 {
-                    string destFile = Path.Combine(backupFolder, file.FileName);
-
-                    // Only copy if the file does not exist or has been modified
-                    if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
-                    {
-                        CopyOrEncryptFile(file.FilePath, destFile);
-                    }
+                    CopyOrEncryptFile(file.FilePath, destFile);
+                    filesCopied++;
+                    backup.Progression = (int)((double)filesCopied / totalFiles * 100);
                 }
             }
-            catch (Exception ex)
+        }
+
+        public void PauseBackup(SaveInformation backup)
+        {
+            if (_pauseEvents.ContainsKey(backup.NameSave))
             {
-                MessageBox.Show($"{LanguageManager.GetText("error_during_diff_backup")}: {ex.Message}");
+                _pauseEvents[backup.NameSave].Reset();
             }
         }
 
-        // Method to copy or encrypt files based on their type
+        public void ResumeBackup(SaveInformation backup)
+        {
+            if (_pauseEvents.ContainsKey(backup.NameSave))
+            {
+                _pauseEvents[backup.NameSave].Set();
+            }
+        }
+
+        public void StopBackup(SaveInformation backup)
+        {
+            SaveManager.Instance.StopBackup(backup);
+            if (_cancellationTokens.ContainsKey(backup.NameSave))
+            {
+                _cancellationTokens[backup.NameSave].Cancel();
+            }
+        }
+
+        public void DeleteBackup(SaveInformation backup)
+        {
+            SaveManager.Instance.DeleteBackup(backup);
+            Backups.Remove(backup);
+        }
         private void CopyOrEncryptFile(string sourceFile, string destinationFile)
         {
             string extension = Path.GetExtension(sourceFile).ToLower();
 
             // Determine if encryption is required
             bool shouldEncrypt = (StateViewModel.IsPdfEnabled && extension == ".pdf") ||
-                                 (StateViewModel.IsTxtEnabled && extension == ".txt") ||
-                                 (StateViewModel.IsPngEnabled && extension == ".png") ||
-                                 (StateViewModel.IsJsonEnabled && extension == ".json") ||
-                                 (StateViewModel.IsXmlEnabled && extension == ".xml") ||
-                                 (StateViewModel.IsDocxEnabled && extension == ".docx");
+                                (StateViewModel.IsTxtEnabled && extension == ".txt") ||
+                                (StateViewModel.IsPngEnabled && extension == ".png") ||
+                                (StateViewModel.IsJsonEnabled && extension == ".json") ||
+                                (StateViewModel.IsXmlEnabled && extension == ".xml") ||
+                                (StateViewModel.IsDocxEnabled && extension == ".docx");
 
             if (shouldEncrypt)
             {
@@ -181,6 +195,4 @@ namespace Livrable1.ViewModel
             }
         }
     }
-    //------------Class ExecuteBackupViewModel------------//
 }
-//---------------------ViewModel---------------------//
