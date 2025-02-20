@@ -148,6 +148,7 @@
     "error_during_addition_of_backup": "Error when adding the backup.",
     "fail_validate": "Validation failure",
     "selected_files_saved": "Selected files saved!",
+    "select_at_least_one_element": "Error: You must select at least one element.",
 
     "source_path_not_exists": "The source path does not exist.",
     "destination_path_not_exists": "The destination path does not exist.",
@@ -319,6 +320,7 @@
     "error_during_addition_of_backup": "Erreur lors de l'ajout de la sauvegarde.",
     "fail_validate": "Echec de la validation",
     "selected_files_saved": "Fichiers sélectionnés enregistrés !",
+    "select_at_least_one_element": "Erreur : Vous devez sélectionner au moins un élément.",
 
     "source_path_not_exists": "Le chemin source n'existe pas.",
     "destination_path_not_exists": "Le chemin de destination n'existe pas.",

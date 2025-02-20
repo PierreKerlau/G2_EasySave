@@ -130,7 +130,7 @@ namespace Livrable1.View
 
                 if (!isAnyChecked) 
                 {
-                    MessageBox.Show("Erreur : Vous devez sélectionner au moins un élément.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"{LanguageManager.GetText("select_at_least_one_element")}", $"{LanguageManager.GetText("error_title")}", MessageBoxButton.OK, MessageBoxImage.Error);
                     return; 
                 }
                 // Get the last saved backup
