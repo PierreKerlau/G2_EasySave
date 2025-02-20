@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pierr\\Source\\Repos\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
+      "projectUniqueName": "C:\\Users\\pierr\\source\\repos\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
       "projectName": "Livrable1.logger",
-      "projectPath": "C:\\Users\\pierr\\Source\\Repos\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
+      "projectPath": "C:\\Users\\pierr\\source\\repos\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
       "packagesPath": "C:\\Users\\pierr\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\pierr\\Source\\Repos\\G2_EasySave\\Livrable1.logger\\obj\\",
       "projectStyle": "PackageReference",
@@ -75,13 +75,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problème de lecture du fichier cache C:\\Users\\pierr\\Source\\Repos\\G2_EasySave\\Livrable1.logger\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }

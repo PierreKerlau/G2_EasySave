@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Livrable1.logger")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+edd3a1dc33e4e92b3fb61910aae2387a67bf2135")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac32163df076850f370eeb4f2e41979be3637a80")]
 [assembly: System.Reflection.AssemblyProductAttribute("Livrable1.logger")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Livrable1.logger")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

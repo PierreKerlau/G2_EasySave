@@ -12,9 +12,64 @@
                   Margin="50,80,50,120">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Header="✓" Binding="{Binding IsSelected}"/>
-                <DataGridTextColumn Header="Nom" Binding="{Binding NameSave}" Width="120"/>
-                <DataGridTextColumn Header="Source" Binding="{Binding CheminSource}" Width="180"/>
-                <DataGridTextColumn Header="Destination" Binding="{Binding CheminDestination}" Width="180"/>
+                <DataGridTextColumn Header="Nom" Binding="{Binding NameSave}" Width="*"/>
+                <DataGridTextColumn Header="Source" Binding="{Binding CheminSource}" Width="*"/>
+                <DataGridTextColumn Header="Destination" Binding="{Binding CheminDestination}" Width="*"/>
+                <DataGridTemplateColumn Header="Progression" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ProgressBar Value="{Binding Progression}" Minimum="0" Maximum="100" Height="20"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Actions" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Click="PauseBackup_Click" Margin="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="16" Height="16">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="M6,4 H10 V20 H6 Z M14,4 H18 V20 H14 Z" Fill="Black"/>
+                                            </Canvas>
+                                        </Viewbox>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="ResumeBackup_Click" Margin="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="16" Height="16">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="M8,5 L19,12 L8,19 Z" Fill="Black"/>
+                                            </Canvas>
+                                        </Viewbox>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="StopBackup_Click" Margin="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="16" Height="16">
+                                            <Canvas Width="24" Height="24">
+                                                <Rectangle Width="16" Height="16" Fill="Black"/>
+                                            </Canvas>
+                                        </Viewbox>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="DeleteBackup_Click" Margin="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Viewbox Width="16" Height="16">
+                                            <Canvas Width="24" Height="24">
+                                                <Path Data="M6,6 L18,18 M18,6 L6,18" Stroke="Black" StrokeThickness="2"/>
+                                            </Canvas>
+                                        </Viewbox>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

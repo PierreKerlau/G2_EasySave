@@ -2,7 +2,6 @@
 using Livrable1.Model;
 using System.Linq;
 using System.Windows;
-using Livrable1.ViewModel;
 using System.Windows.Controls;
 
 namespace Livrable1.View
@@ -18,8 +17,10 @@ namespace Livrable1.View
             this.DataContext = viewModel;
         }
 
-        private void ButtonLeave_Click(object sender, RoutedEventArgs e)
+        private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
         }
 
@@ -29,7 +30,6 @@ namespace Livrable1.View
                 BackupTypeSelector.SelectedItem is ComboBoxItem selectedType)
             {
                 viewModel.ExecuteBackup(selectedBackup, selectedType.Content.ToString());
-                MessageBox.Show($"Sauvegarde '{selectedType.Content}' exécutée pour {selectedBackup.NameSave} !");
             }
             else
             {
@@ -37,11 +37,35 @@ namespace Livrable1.View
             }
         }
 
-        private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
+        private void PauseBackup_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow viewMain = new MainWindow();
-            viewMain.Show();
-            this.Close();
+            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+            {
+                viewModel.PauseBackup(selectedBackup);
+            }
+        }
+
+        private void ResumeBackup_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+            {
+                viewModel.ResumeBackup(selectedBackup);
+            }
+        }
+
+        private void StopBackup_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+            {
+                viewModel.StopBackup(selectedBackup);
+            }
+        }
+        private void DeleteBackup_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+            {
+                viewModel.DeleteBackup(selectedBackup);
+            }
         }
     }
 }

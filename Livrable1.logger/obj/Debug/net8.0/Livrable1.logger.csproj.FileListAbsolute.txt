@@ -22,3 +22,15 @@ C:\Users\pierr\source\repos\G2_EasySave_Copy\Livrable1.logger\obj\Debug\net8.0\L
 C:\Users\pierr\source\repos\G2_EasySave_Copy\Livrable1.logger\obj\Debug\net8.0\refint\Livrable1.logger.dll
 C:\Users\pierr\source\repos\G2_EasySave_Copy\Livrable1.logger\obj\Debug\net8.0\Livrable1.logger.pdb
 C:\Users\pierr\source\repos\G2_EasySave_Copy\Livrable1.logger\obj\Debug\net8.0\ref\Livrable1.logger.dll
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\bin\Debug\net8.0\Livrable1.logger.deps.json
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\bin\Debug\net8.0\Livrable1.logger.dll
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\bin\Debug\net8.0\Livrable1.logger.pdb
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\Livrable1.logger.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\Livrable1.logger.AssemblyInfoInputs.cache
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\Livrable1.logger.AssemblyInfo.cs
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\Livrable1.logger.csproj.CoreCompileInputs.cache
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\Livrable1.logger.sourcelink.json
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\Livrable1.logger.dll
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\refint\Livrable1.logger.dll
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\Livrable1.logger.pdb
+C:\Users\pierr\Source\Repos\G2_EasySave\Livrable1.logger\obj\Debug\net8.0\ref\Livrable1.logger.dll
