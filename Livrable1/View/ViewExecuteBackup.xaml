@@ -1,0 +1,33 @@
+﻿<Window x:Class="Livrable1.View.ViewExecuteBackup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Exécuter une sauvegarde" Height="450" Width="800">
+
+    <Grid>
+        <Label Content="EasySave" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36"/>
+
+        <Label x:Name="LabelMainViewExecuteBackup" Content="Execute backup jobs" 
+       HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"
+       Grid.Row="0" Margin="0,46,0,0" RenderTransformOrigin="0.183,0.614"/>
+
+        <DataGrid x:Name="DataGridBackups"
+                  ItemsSource="{Binding Backups}"
+                  AutoGenerateColumns="False"
+                  Margin="50,80,50,120">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn x:Name="CheckBoxColumn" Header="✓" Binding="{Binding IsSelected}"/>
+                <DataGridTextColumn x:Name="NameColumn" Header="Name" Binding="{Binding NameSave}" Width="120"/>
+                <DataGridTextColumn x:Name="SourceColumn" Header="Source" Binding="{Binding SourcePath}" Width="180"/>
+                <DataGridTextColumn x:Name="DestinationColumn" Header="Destination" Binding="{Binding DestinationPath}" Width="180"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <ComboBox x:Name="BackupTypeSelector" HorizontalAlignment="Left" Margin="50,350,0,0" VerticalAlignment="Top" Width="200">
+            <ComboBoxItem Content="Full Backup"/>
+            <ComboBoxItem Content="Differential Backup"/>
+        </ComboBox>
+
+        <Button x:Name="ButtonExecuteBackup" Content="Execute" HorizontalAlignment="Left" Margin="280,350,0,0" VerticalAlignment="Top" Click="ButtonExecute_Click" Height="20" />
+        <Button x:Name="ButtonLeave" Content="Exit" HorizontalAlignment="Left" Margin="342,350,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1" Height="20"/>
+    </Grid>
+</Window>

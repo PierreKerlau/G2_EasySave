@@ -8,23 +8,23 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\picou\\.nuget\\packages\\": {},
+    "C:\\Users\\Pierre\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
+      "projectUniqueName": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1.logger\\Livrable1.logger.csproj",
       "projectName": "Livrable1.logger",
-      "projectPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\Livrable1.logger.csproj",
-      "packagesPath": "C:\\Users\\picou\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1.logger\\obj\\",
+      "projectPath": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1.logger\\Livrable1.logger.csproj",
+      "packagesPath": "C:\\Users\\Pierre\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1.logger\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\picou\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Pierre\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -75,5 +75,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problème de lecture du fichier cache C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1.logger\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

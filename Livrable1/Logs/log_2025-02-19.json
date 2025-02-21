@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "Save1",
+    "FileSource": "C:\\ProjetEasySave\\path\\source\\Dear Hiring Manager,.txt",
+    "FileTarget": "C:\\ProjetEasySave\\path\\destination\\Save1\\Dear Hiring Manager,.txt",
+    "FileSize": 1918,
+    "FileTransferTime": 0.002,
+    "CryptingTime": 0,
+    "time": "19/02/2025 13:52:46"
+  },
+  {
+    "Name": "Save1",
+    "FileSource": "C:\\ProjetEasySave\\path\\source\\SI R\u00E9seau et Administration VUE Logique notes.txt",
+    "FileTarget": "C:\\ProjetEasySave\\path\\destination\\Save1\\SI R\u00E9seau et Administration VUE Logique notes.txt",
+    "FileSize": 1339,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 13:52:46"
+  }
+]

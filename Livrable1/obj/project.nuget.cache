@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "4NGS4frUyz4=",
+  "dgSpecHash": "p8XZPgfQnv4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\Livrable1\\Livrable1.csproj",
+  "projectFilePath": "C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1\\Livrable1.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problème de lecture du fichier cache C:\\Users\\Pierre\\Source\\Repos\\G2_EasySave2\\Livrable1\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
