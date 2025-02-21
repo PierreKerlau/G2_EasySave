@@ -21,15 +21,40 @@ namespace Livrable1.Model
         public string SourcePath { get; set; } = "";
         // Property to hold the destination path
         public string DestinationPath { get; set; } = "";
+
+        //---
+
+        public int NumberFile { get; set; } = 0;
+
+        public DateTime Date {get; set; } = DateTime.Now;
+
+        public bool IsActive { get; set; } = false;
+
+        public long TotalSize { get; set; } = 0;
+
+        public int RemainingFiles { get; set; } = 0;
+
+        public long RemainingSize { get; set; } = 0;
+        //---
+
+
         // List to hold file information
         public List<FileInformation> Files { get; set; } = new List<FileInformation>();
 
         // Constructor to initialize the save information and load files
-        public SaveInformation(string nameSave, string sourcePath, string destinationPath)
+        public SaveInformation(string nameSave, string sourcePath, string destinationPath, int numberFile, DateTime date, bool isActive, long totalSize, int remainingFiles, long remainingSize)
         {
             NameSave = nameSave;
             SourcePath = sourcePath;
             DestinationPath = destinationPath;
+            //---
+            NumberFile = numberFile;
+            Date = date;
+            IsActive = isActive;
+            TotalSize = totalSize;
+            RemainingFiles = remainingFiles;
+            RemainingSize = remainingSize;
+            //---
             LoadFiles();
         }
 

@@ -69,13 +69,10 @@ namespace Livrable1.View
                 string destinationPath = txtDestinationPath.Text;
 
                 // Create a new SaveInformation object with the input values
-                var save = new SaveInformation(name, sourcePath, destinationPath);
-
-                // Call the method to add the save and get the result
-                bool result = viewModel.AddSaveMethod(save);
+                
 
                 // Check if the save was added successfully
-                if (result)
+                if (viewModel != null)
                 {
                     ButtonValidate2.Visibility = Visibility.Visible;
                     ButtonCancel2.Visibility = Visibility.Visible;
@@ -136,11 +133,31 @@ namespace Livrable1.View
                 // Get the last saved backup
                 var save = viewModel.Backups.LastOrDefault();
 
-                    if (save != null)
+                // Get the input values from the text boxes
+                string name = txtNameSave.Text;
+                string sourcePath = txtSourcePath.Text;
+                string destinationPath = txtDestinationPath.Text;
+                int numberFile = viewModel.Files.Count(file => file.IsSelected);
+                DateTime date = DateTime.Now;
+                //---
+                bool isActive = false;
+                long totalSize = viewModel.Files.Where(file => file.IsSelected).Sum(file => file.Size);
+                int remainingFiles = viewModel.Files.Count(file => file.IsSelected);
+                long remainingSize = viewModel.Files.Count(file => file.IsSelected);
+
+                save = new SaveInformation(name, sourcePath, destinationPath, numberFile, date, isActive, totalSize, remainingFiles, remainingSize);
+
+
+                if (save != null)
                     {
                         // Save the selected files for the backup
                         viewModel.SaveSelectedFiles(save);
 
+                        
+                        // Call the method to add the save and get the result
+                        bool result = viewModel.AddSaveMethod(save);
+                        
+                        
                         MessageBox.Show(LanguageManager.GetText("selected_files_saved")); // Show success message
 
                         txtNameSave.IsReadOnly = false;
@@ -160,6 +177,7 @@ namespace Livrable1.View
                         ListFiles.Visibility = Visibility.Collapsed;
 
                     }
+                
             }
         }
         //-------------------End Methods for Validate 2-------------------//

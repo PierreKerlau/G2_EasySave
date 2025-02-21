@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "Save1",
+    "FileSource": "C:\\ProjetEasySave\\path\\source\\Anglais.txt",
+    "FileTarget": "C:\\ProjetEasySave\\path\\destination\\Save1\\Anglais.txt",
+    "FileSize": 53,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "21/02/2025 15:01:00"
+  },
+  {
+    "Name": "Save1",
+    "FileSource": "C:\\ProjetEasySave\\path\\source\\Anglais.txt",
+    "FileTarget": "C:\\ProjetEasySave\\path\\destination\\Save1\\Anglais.txt",
+    "FileSize": 53,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "21/02/2025 15:01:20"
+  }
+]

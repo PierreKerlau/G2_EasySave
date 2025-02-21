@@ -21,16 +21,16 @@
             <Button x:Name="ButtonValidate2" Content="Validate" HorizontalAlignment="Left" Margin="265,370,0,0" VerticalAlignment="Top" Click="SecondValidateAddBackup" Background="#FF0FB700" Foreground="White" Width="60"/>
             <!-- Cancel Second Condition -->
             <Button x:Name="ButtonCancel2" Content="Cancel" HorizontalAlignment="Left" Margin="475,370,0,0" VerticalAlignment="Top" Click="SecondCancelAddBackups" Background="#FFBD0000" Foreground="White" Width="60"/>
-            
-            
+
+
             <!-- TextBlock Name -->
             <TextBox x:Name="txtNameSave" Text="{Binding NameSave, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="100,120,0,0"/>
             <!-- TextBlock SourcePath -->
             <TextBox x:Name="txtSourcePath" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="310,120,0,0"/>
             <!-- TextBlock DestinationPath -->
             <TextBox x:Name="txtDestinationPath" Text="{Binding DestinationPath, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="520,120,0,0"/>
-            
-            
+
+
             <!-- List Files -->
             <Grid Margin="100,200,100,80">
                 <ListView x:Name="ListFiles" ItemsSource="{Binding Files}" SelectionMode="Multiple" MaxHeight="300">
@@ -45,6 +45,9 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
+            <Label Content="Backup name" HorizontalAlignment="Left" Margin="100,94,0,0" VerticalAlignment="Top" Width="180"/>
+            <Label Content="Source path" HorizontalAlignment="Center" Margin="0,94,0,0" VerticalAlignment="Top" Width="180"/>
+            <Label Content="Destination path" HorizontalAlignment="Left" Margin="520,94,0,0" VerticalAlignment="Top" Width="180"/>
 
 
         </Grid>
