@@ -26,11 +26,21 @@ namespace Livrable1.ViewModel
         // Method to execute a backup based on the selected type
         public void ExecuteBackup(SaveInformation backup, string backupType)
         {
-            if (backupType == "Full Backup") // Full backup
+            string englishBackupType = backupType;
+            if (backupType == LanguageManager.GetText("combobox_full_backup"))
+            {
+                englishBackupType = "Full Backup";
+            }
+            else if (backupType == LanguageManager.GetText("combobox_differential_backup"))
+            {
+                englishBackupType = "Differential Backup";
+            }
+
+            if (englishBackupType == "Full Backup")
             {
                 ExecuteFullBackup(backup);
             }
-            else if (backupType == "Differential Backup") // Differential backup
+            else if (englishBackupType == "Differential Backup")
             {
                 ExecuteDifferentialBackup(backup);
             }
@@ -92,13 +102,13 @@ namespace Livrable1.ViewModel
                             // Copy file without encryption
                             File.Copy(file.FilePath, destFile, true);
                         }
-                        
+
                         stopwatch.Stop();
                         long transferTime = stopwatch.ElapsedMilliseconds;
 
                         // Log the backup operation
                         Logger logger = new Logger();
-                        logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile, 
+                        logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
                             new FileInfo(file.FilePath).Length, transferTime, cryptingTime, StateViewModel.IsJsonOn);
                     }
                     catch (Exception fileEx)

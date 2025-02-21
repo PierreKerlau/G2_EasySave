@@ -15,6 +15,8 @@ namespace Livrable1.Model
         public string FileName => Path.GetFileName(FilePath); // Extracts the file name from the file path
         public bool IsSelected { get; set; } // Indicates whether the file is selected
 
+        public long Size => (FilePath).Length;
+
         // Constructor initializing the file path
         public FileInformation(string filePath)
         {

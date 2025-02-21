@@ -1,12 +1,12 @@
 ﻿using Livrable1.Model;
+using Livrable1.ViewModel;
+using Livrable1.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Livrable1.ViewModel;
-using Livrable1.View;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -26,6 +26,8 @@ namespace Livrable1.ViewModel
         // List to store backups
         public List<SaveInformation> Backups { get; set; } = new List<SaveInformation>();
 
+        public EtatSauvegarde CreationLogsSave { get; set; } = new EtatSauvegarde();
+
         // Method to add a new backup
         public bool AddSaveMethod(SaveInformation backup)
         {
@@ -36,7 +38,7 @@ namespace Livrable1.ViewModel
             }
 
             Backups.Add(backup); // Add backup to the list
-
+            CreationLogsSave.WriteState(Backups);
             // Save the backup in SaveManager to make it visible in ExecuteBackup
             SaveManager.Instance.AddBackup(backup);
 
