@@ -45,9 +45,9 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-            <Label x:Name="LabelBackupName"Content="Backup name" HorizontalAlignment="Left" Margin="100,94,0,0" VerticalAlignment="Top" Width="180"/>
+            <Label x:Name="LabelBackupName" Content="Backup name" HorizontalAlignment="Left" Margin="100,94,0,0" VerticalAlignment="Top" Width="180"/>
             <Label x:Name="LabelSourcePath" Content="Source path" HorizontalAlignment="Center" Margin="0,94,0,0" VerticalAlignment="Top" Width="180"/>
-            <Label x:Name="LabelDestinationPath"Content="Destination path" HorizontalAlignment="Left" Margin="520,94,0,0" VerticalAlignment="Top" Width="180"/>
+            <Label x:Name="LabelDestinationPath" Content="Destination path" HorizontalAlignment="Left" Margin="520,94,0,0" VerticalAlignment="Top" Width="180"/>
 
 
         </Grid>
