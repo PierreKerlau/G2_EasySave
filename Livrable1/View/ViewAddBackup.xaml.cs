@@ -185,12 +185,15 @@ namespace Livrable1.View
         //-------------------------------------Second Part of Add Save-------------------------------------//
         private void UpdateUILanguageAddBackup()
         {
-            LabelTitleExecuteBackup.Content = LanguageManager.GetText("add_backup_jobs");
+            LabelTitleAddBackup.Content = LanguageManager.GetText("add_backup_jobs");
             ButtonCancel.Content = LanguageManager.GetText("cancel");
             ButtonValidate.Content = LanguageManager.GetText("validate");
             ButtonCancel2.Content = LanguageManager.GetText("cancel");
             ButtonValidate2.Content = LanguageManager.GetText("validate");
             ButtonLeave.Content = LanguageManager.GetText("menu_leave");
+            LabelBackupName.Content = LanguageManager.GetText("label_backup_name");
+            LabelSourcePath.Content = LanguageManager.GetText("label_source_name");
+            LabelDestinationPath.Content = LanguageManager.GetText("label_destination_path");
         }
     }
     //------------Class ViewAddBackup------------//

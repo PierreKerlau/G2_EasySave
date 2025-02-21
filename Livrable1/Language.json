@@ -161,6 +161,9 @@
     "text_block_choose_format_log": "Log Format",
 
     "add_backup_jobs": "Add Backup Jobs",
+    "label_backup_name": "Backup name",
+    "label_source_name": "Source path",
+    "label_destination_path": "Destination path",
 
     "execute_backup_jobs": "Execute backup jobs",
     "button_execute": "Execute",
@@ -333,6 +336,9 @@
     "text_block_choose_format_log": "Format des logs",
 
     "add_backup_jobs": "Création de sauvegardes",
+    "label_backup_name": "Nom",
+    "label_source_name": "Chemin source",
+    "label_destination_path": "Chemin destination",
 
     "execute_backup_jobs": "Execution de sauvegardes",
     "button_execute": "Exécuter",
