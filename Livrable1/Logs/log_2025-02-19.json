@@ -1,0 +1,353 @@
+[
+  {
+    "Name": "ADZFESG",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 2.326,
+    "CryptingTime": 2326,
+    "time": "19/02/2025 09:34:20"
+  },
+  {
+    "Name": "TEST",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 0,
+    "CryptingTime": 1397,
+    "time": "19/02/2025 09:36:07"
+  },
+  {
+    "Name": "dq",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 1.41,
+    "CryptingTime": 1410,
+    "time": "19/02/2025 09:41:32"
+  },
+  {
+    "Name": "stp",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 1.426,
+    "CryptingTime": 1426,
+    "time": "19/02/2025 09:48:40"
+  },
+  {
+    "Name": "stp",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 0.589,
+    "CryptingTime": 589,
+    "time": "19/02/2025 09:48:51"
+  },
+  {
+    "Name": "1112",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 1.682,
+    "CryptingTime": 1682,
+    "time": "19/02/2025 10:01:50"
+  },
+  {
+    "Name": "seconde",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 1.041,
+    "CryptingTime": 1.041,
+    "time": "19/02/2025 10:20:38"
+  },
+  {
+    "Name": "seconde",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 0.002,
+    "CryptingTime": 0,
+    "time": "19/02/2025 10:21:40"
+  },
+  {
+    "Name": "TestPardef",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Sequence diagram.PNG",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\Sequence diagram.PNG",
+    "FileSize": 152299,
+    "FileTransferTime": 0.004,
+    "CryptingTime": 0,
+    "time": "19/02/2025 10:50:16"
+  },
+  {
+    "Name": "TestPardef",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 10:50:16"
+  },
+  {
+    "Name": "ezf",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 1.597,
+    "CryptingTime": 1.597,
+    "time": "19/02/2025 11:42:43"
+  },
+  {
+    "Name": "dzdz",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 0.002,
+    "CryptingTime": 0,
+    "time": "19/02/2025 12:16:50"
+  },
+  {
+    "Name": "dzdz",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 1.449,
+    "CryptingTime": 1.449,
+    "time": "19/02/2025 12:17:09"
+  },
+  {
+    "Name": "dz",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\dz\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 0.002,
+    "CryptingTime": 0,
+    "time": "19/02/2025 12:21:25"
+  },
+  {
+    "Name": "zd",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\tteesstt.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\zd\\tteesstt.txt",
+    "FileSize": 82404,
+    "FileTransferTime": 0.002,
+    "CryptingTime": 0,
+    "time": "19/02/2025 13:52:35"
+  },
+  {
+    "Name": "Serge",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\CRYP.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\Serge\\CRYP.txt",
+    "FileSize": 2622,
+    "FileTransferTime": 0.943,
+    "CryptingTime": 0.943,
+    "time": "19/02/2025 13:54:40"
+  },
+  {
+    "Name": "Serge",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\Serge\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileSize": 65643,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 13:54:40"
+  },
+  {
+    "Name": "Serge",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\Serge\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileSize": 365352,
+    "FileTransferTime": 0.002,
+    "CryptingTime": 0,
+    "time": "19/02/2025 13:54:40"
+  },
+  {
+    "Name": "Serge",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Sequence diagram.PNG",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\Serge\\Sequence diagram.PNG",
+    "FileSize": 152299,
+    "FileTransferTime": 0.54,
+    "CryptingTime": 0.54,
+    "time": "19/02/2025 13:54:41"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\0602.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\0602.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0.002,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:32:57"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\CRYP.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\CRYP.txt",
+    "FileSize": 2622,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:32:57"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileSize": 65643,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:32:57"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileSize": 365352,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:32:57"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Sequence diagram.PNG",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\Sequence diagram.PNG",
+    "FileSize": 152299,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:32:57"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\0602.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\0602.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:02"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\CRYP.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\CRYP.txt",
+    "FileSize": 2622,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:02"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileSize": 65643,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:02"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileSize": 365352,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:02"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Sequence diagram.PNG",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\Sequence diagram.PNG",
+    "FileSize": 152299,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:02"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\0602.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\0602.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:10"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\CRYP.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\CRYP.txt",
+    "FileSize": 2622,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:10"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileSize": 65643,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:10"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileSize": 365352,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:10"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Sequence diagram.PNG",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\Sequence diagram.PNG",
+    "FileSize": 152299,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:10"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\0602.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\0602.txt",
+    "FileSize": 0,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:42"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\CRYP.txt",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\CRYP.txt",
+    "FileSize": 2622,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:42"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\PGE - Grille \u00E9valuation RE - 2024 V1.docx",
+    "FileSize": 65643,
+    "FileTransferTime": 0,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:42"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\Rapport_Etonnement_PICOUL_Nathan.pdf",
+    "FileSize": 365352,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:42"
+  },
+  {
+    "Name": "1",
+    "FileSource": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Source\\Sequence diagram.PNG",
+    "FileTarget": "C:\\Users\\picou\\Documents\\FISA-INFO-A3\\GENIE_LOGICIEL\\ProjetV2\\G2_EasySave\\clonage\\Destination\\1\\Sequence diagram.PNG",
+    "FileSize": 152299,
+    "FileTransferTime": 0.001,
+    "CryptingTime": 0,
+    "time": "19/02/2025 14:34:42"
+  }
+]

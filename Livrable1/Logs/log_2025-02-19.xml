@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLogEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LogEntry>
+    <Name>crypt</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>0</FileTransferTime>
+    <CryptingTime>1269</CryptingTime>
+    <time>19/02/2025 09:44:37</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>stp</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>0.002</FileTransferTime>
+    <CryptingTime>0</CryptingTime>
+    <time>19/02/2025 09:46:26</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>stp</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>1.939</FileTransferTime>
+    <CryptingTime>1939</CryptingTime>
+    <time>19/02/2025 09:51:14</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>stp</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>2.398</FileTransferTime>
+    <CryptingTime>2398</CryptingTime>
+    <time>19/02/2025 09:53:34</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>stp</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>0.614</FileTransferTime>
+    <CryptingTime>613</CryptingTime>
+    <time>19/02/2025 09:53:35</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>1112</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>1.496</FileTransferTime>
+    <CryptingTime>1496</CryptingTime>
+    <time>19/02/2025 10:05:04</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>seconde</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>1.458</FileTransferTime>
+    <CryptingTime>1.458</CryptingTime>
+    <time>19/02/2025 10:19:48</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>seconde</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>0.002</FileTransferTime>
+    <CryptingTime>0</CryptingTime>
+    <time>19/02/2025 10:22:33</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>TestPardef</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\Sequence diagram.PNG</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\Sequence diagram.PNG</FileTarget>
+    <FileSize>152299</FileSize>
+    <FileTransferTime>0.004</FileTransferTime>
+    <CryptingTime>0</CryptingTime>
+    <time>19/02/2025 10:49:35</time>
+  </LogEntry>
+  <LogEntry>
+    <Name>TestPardef</Name>
+    <FileSource>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Source\tteesstt.txt</FileSource>
+    <FileTarget>C:\Users\picou\Documents\FISA-INFO-A3\GENIE_LOGICIEL\ProjetV2\G2_EasySave\clonage\Destination\tteesstt.txt</FileTarget>
+    <FileSize>82404</FileSize>
+    <FileTransferTime>0.001</FileTransferTime>
+    <CryptingTime>0</CryptingTime>
+    <time>19/02/2025 10:49:35</time>
+  </LogEntry>
+</ArrayOfLogEntry>
