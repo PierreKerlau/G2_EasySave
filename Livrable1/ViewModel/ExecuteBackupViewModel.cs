@@ -159,12 +159,12 @@ namespace Livrable1.ViewModel
         // Methods for pause, resume, and stop functionality
         public void PauseBackup(SaveInformation backup)
         {
-            SaveManager.Instance.PauseBackup(backup);
+            _pauseEvents[backup.NameSave].Reset();
         }
 
         public void ResumeBackup(SaveInformation backup)
         {
-            SaveManager.Instance.ResumeBackup(backup);
+            _pauseEvents[backup.NameSave].Set();
         }
 
         public void StopBackup(SaveInformation backup)
