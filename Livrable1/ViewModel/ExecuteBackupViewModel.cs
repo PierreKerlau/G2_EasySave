@@ -19,6 +19,7 @@ namespace Livrable1.ViewModel
         public ObservableCollection<SaveInformation> Backups { get; set; }
         private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
         private readonly Dictionary<string, ManualResetEventSlim> _pauseEvents = new();
+        EtatSauvegarde StateSave { get; set; } = new EtatSauvegarde();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,6 +27,12 @@ namespace Livrable1.ViewModel
         public ExecuteBackupViewModel()
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
+            LoadData();
+        }
+
+        public void LoadData()
+        {
+            StateSave LoadSaves();
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -71,6 +78,8 @@ namespace Livrable1.ViewModel
                 }
             }, cts.Token);
         }
+
+        
 
         // Method to execute a full backup
         private void ExecuteFullBackup(SaveInformation backup, CancellationToken token)

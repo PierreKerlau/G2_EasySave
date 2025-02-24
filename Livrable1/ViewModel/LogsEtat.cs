@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Livrable1.ViewModel
 {
@@ -24,84 +25,113 @@ namespace Livrable1.ViewModel
                 File.WriteAllText(STATE_FILE_PATH, "[]");
             }
         }
-        
-        public List<SaveInformation> ReadState()
+
+        public static List<SaveInformation> ReadState(string stateFilePath)
         {
-            
-            using (var stream = stateFile.OpenRead())
-            using (var reader = new StreamReader(stream))
+            var states = new List<SaveInformation>();
+
+            // Vérifier si le fichier d'état existe
+            if (!File.Exists(stateFilePath))
             {
-                string json = reader.ReadToEnd(); 
+                Console.WriteLine("Le fichier d'état n'existe pas.");
+                return states; // Retourner une liste vide si le fichier n'existe pas
+            }
 
-                if (string.IsNullOrEmpty(json))
+            try
+            {
+
+                using (var stream = /*stateFile.OpenRead()*/ File.OpenRead(stateFilePath))
+                using (var reader = new StreamReader(stream))
                 {
-                    return new List<SaveInformation>(); 
-                }
+                    string json = reader.ReadToEnd();
 
-                
-                using (var jsonDocument = JsonDocument.Parse(json))
-                {
-                    var root = jsonDocument.RootElement; 
-
-                    if (root.ValueKind == JsonValueKind.Array)
+                    if (string.IsNullOrEmpty(json))
                     {
-                        var states = new List<SaveInformation>();
+                        return new List<SaveInformation>();
+                    }
 
-                        foreach (var element in root.EnumerateArray())
+
+                    using (var jsonDocument = JsonDocument.Parse(json))
+                    {
+                        var root = jsonDocument.RootElement;
+
+                        if (root.ValueKind == JsonValueKind.Array)
                         {
-                            try
+
+                            foreach (var element in root.EnumerateArray())
                             {
-                                string? saveName = element.GetProperty("name").GetString();
-                                string? sourcePath = element.GetProperty("realDirectoryPath").GetString();
-                                string? destinationPath = element.GetProperty("copyDirectoryPath").GetString();
-                                int numberFile = element.GetProperty("numberFile").GetInt32();
-                                //----------------------------------------------------------------------------------------//
-                                DateTime lastTimeStamp = element.GetProperty("dernierHorodatage").GetDateTime();
-                                bool isActive = element.GetProperty("actif").GetBoolean();
-                                long totalSize = element.GetProperty("tailleTotale").GetInt64();
-                                int remainingFiles = element.GetProperty("fichiersRestants").GetInt32();
-                                long remainingSize = element.GetProperty("tailleRestante").GetInt64();
-                                //----------------------------------------------------------------------------------------//
-
-                                if (saveName != null && !string.IsNullOrEmpty(sourcePath) && !string.IsNullOrEmpty(destinationPath))
+                                try
                                 {
-                                    SaveInformation save = new(
-                                        saveName,
-                                        sourcePath,
-                                        destinationPath,
-                                        numberFile,
-                                        lastTimeStamp,
-                                        isActive,
-                                        totalSize,
-                                        remainingFiles,
-                                        remainingSize
-                                        );
+                                    string? saveName = element.GetProperty("name").GetString();
+                                    string? sourcePath = element.GetProperty("realDirectoryPath").GetString();
+                                    string? destinationPath = element.GetProperty("copyDirectoryPath").GetString();
+                                    int numberFile = element.GetProperty("numberFile").GetInt32();
+                                    //----------------------------------------------------------------------------------------//
+                                    DateTime lastTimeStamp = element.GetProperty("lastTimeStamp").GetDateTime();
+                                    //DateTime lastTimeStamp = element.TryGetProperty("date", out var dateProp) ? dateProp.GetDateTime() : DateTime.MinValue;
+                                    bool isActive = element.GetProperty("Active").GetBoolean();
+                                    long totalSize = element.GetProperty("totalSize").GetInt64();
+                                    int remainingFiles = element.GetProperty("remainingFiles").GetInt32();
+                                    long remainingSize = element.GetProperty("remainingSize").GetInt64();
+                                    //----------------------------------------------------------------------------------------//
 
-                                    states.Add(save);
+                                    if (saveName != null && !string.IsNullOrEmpty(sourcePath) && !string.IsNullOrEmpty(destinationPath))
+                                    {
+                                        SaveInformation save = new(
+                                            saveName,
+                                            sourcePath,
+                                            destinationPath,
+                                            numberFile,
+                                            lastTimeStamp,
+                                            isActive,
+                                            totalSize,
+                                            remainingFiles,
+                                            remainingSize
+                                            );
+
+                                        states.Add(save);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show(e.Message);
                                 }
                             }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
+                            return states;
                         }
-                        return states;
                     }
+                    return new List<SaveInformation>();
                 }
+            }
+            catch
+            {
                 return new List<SaveInformation>();
             }
         }
 
         public void WriteState(List<SaveInformation> saves)
         {
-            var savesToStore = saves.Select(save => new
+            // Charger les sauvegardes existantes
+            List<SaveInformation> existingSaves = ReadState(STATE_FILE_PATH);
+
+            // Ajouter les nouvelles sauvegardes sans dupliquer
+            foreach (var newSave in saves)
+            {
+                if (!existingSaves.Any(s => s.NameSave == newSave.NameSave))
+                {
+                    existingSaves.Add(newSave);
+                }
+            }
+
+            // Convertir en JSON et sauvegarder
+            var savesToStore = existingSaves.Select(save => new
             {
                 name = save.NameSave,
                 realDirectoryPath = save.SourcePath,
                 copyDirectoryPath = save.DestinationPath,
-                numberfile = save.NumberFile,
-                date = save.Date,
-                isActive = save.IsActive,
+                numberFile = save.NumberFile,
+                lastTimeStamp = save.Date,
+                Active = save.IsActive,
                 totalSize = save.TotalSize,
                 remainingFiles = save.RemainingFiles,
                 remainingSize = save.RemainingSize
@@ -112,5 +142,33 @@ namespace Livrable1.ViewModel
             File.WriteAllText(STATE_FILE_PATH, json);
 
         }
+
+
+        public static void LoadSaves()
+        {
+            // Vérifier si le chemin source existe
+            try
+            {
+                string jsonFilePath = "../../../Logs/state.json"; // Remplace par le chemin de ton fichier JSON
+
+                if (System.IO.File.Exists(jsonFilePath))
+                {
+                    var saveList = EtatSauvegarde.ReadState(jsonFilePath);
+                    foreach (var save in saveList)
+                    {
+                        // Vérifier si la sauvegarde existe déjà dans la collection
+                        if (!Backups.Any(b => b.NameSave == save.NameSave))
+                        {
+                            Backups.Add(save); // Ajouter seulement si elle n'existe pas déjà
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement de la liste : {ex.Message}");
+            }
+        }
+
     }
 }
