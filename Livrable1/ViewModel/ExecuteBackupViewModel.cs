@@ -6,16 +6,21 @@ using Livrable1.ViewModel;
 using System.Linq;
 using System.Windows;
 using System.Diagnostics;
-using Livrable1.logger;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
-//---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
 {
-    //------------Class ExecuteBackupViewModel------------//
-    public class ExecuteBackupViewModel
+    public class ExecuteBackupViewModel : INotifyPropertyChanged
     {
         // Collection of saved backups
         public ObservableCollection<SaveInformation> Backups { get; set; }
+        private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
+        private readonly Dictionary<string, ManualResetEventSlim> _pauseEvents = new();
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         // Constructor: initializes the backup list from SaveManager
         public ExecuteBackupViewModel()
@@ -23,130 +28,95 @@ namespace Livrable1.ViewModel
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
         }
 
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         // Method to execute a backup based on the selected type
         public void ExecuteBackup(SaveInformation backup, string backupType)
         {
-            string englishBackupType = backupType;
-            if (backupType == LanguageManager.GetText("combobox_full_backup"))
-            {
-                englishBackupType = "Full Backup";
-            }
-            else if (backupType == LanguageManager.GetText("combobox_differential_backup"))
-            {
-                englishBackupType = "Differential Backup";
-            }
+            if (!_pauseEvents.ContainsKey(backup.NameSave))
+                _pauseEvents[backup.NameSave] = new ManualResetEventSlim(true);
 
-            if (englishBackupType == "Full Backup")
+            var cts = new CancellationTokenSource();
+            _cancellationTokens[backup.NameSave] = cts;
+
+            Task.Run(() =>
             {
-                ExecuteFullBackup(backup);
-            }
-            else if (englishBackupType == "Differential Backup")
-            {
-                ExecuteDifferentialBackup(backup);
-            }
+                try
+                {
+                    if (backupType == "Sauvegarde complète" || backupType == LanguageManager.GetText("combobox_full_backup"))
+                    {
+                        ExecuteFullBackup(backup, cts.Token);
+                    }
+                    else if (backupType == "Sauvegarde différentielle" || backupType == LanguageManager.GetText("combobox_differential_backup"))
+                    {
+                        ExecuteDifferentialBackup(backup, cts.Token);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    MessageBox.Show($"Sauvegarde annulée pour {backup.NameSave}.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de la sauvegarde : {ex.Message}");
+                }
+                finally
+                {
+                    _cancellationTokens.Remove(backup.NameSave);
+                    _pauseEvents.Remove(backup.NameSave);
+                    cts.Dispose();
+                }
+            }, cts.Token);
         }
 
         // Method to execute a full backup
-        private void ExecuteFullBackup(SaveInformation backup)
+        private void ExecuteFullBackup(SaveInformation backup, CancellationToken token)
         {
-            try
+            string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
+            Directory.CreateDirectory(backupFolder);
+            long totalSize = backup.Files.Sum(f => new FileInfo(f.FilePath).Length);
+            long copiedSize = 0;
+
+            foreach (var file in backup.Files)
             {
-                // Create backup directory
-                string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
-                Directory.CreateDirectory(backupFolder);
+                token.ThrowIfCancellationRequested();
+                _pauseEvents[backup.NameSave].Wait(token);
 
-                foreach (var file in backup.Files)
-                {
-                    try
-                    {
-                        string destFile = Path.Combine(backupFolder, file.FileName);
-                        string extension = Path.GetExtension(file.FilePath).ToLower();
-                        var stopwatch = Stopwatch.StartNew();
-                        long cryptingTime = 0;
+                string destFile = Path.Combine(backupFolder, file.FileName);
+                CopyOrEncryptFile(file.FilePath, destFile);
 
-                        // Check if the file should be encrypted based on its extension
-                        bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
-                                           StateViewModel.IsTxtEnabled && extension == ".txt" ||
-                                           StateViewModel.IsPngEnabled && extension == ".png" ||
-                                           StateViewModel.IsJsonEnabled && extension == ".json" ||
-                                           StateViewModel.IsXmlEnabled && extension == ".xml" ||
-                                           StateViewModel.IsDocxEnabled && extension == ".docx";
-
-                        if (shouldEncrypt)
-                        {
-                            try
-                            {
-                                // Retrieve encryption key from environment variables
-                                string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
-
-                                // Call external encryption software
-                                using (Process cryptoProcess = new Process())
-                                {
-                                    cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
-                                    cryptoProcess.StartInfo.Arguments = $"\"{file.FilePath}\" \"{destFile}\" \"{key}\"";
-                                    cryptoProcess.StartInfo.UseShellExecute = true;
-                                    cryptoProcess.StartInfo.RedirectStandardError = false;
-
-                                    cryptoProcess.Start();
-                                    cryptoProcess.WaitForExit();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show($"{LanguageManager.GetText("error_encryption")}: {ex.Message}");
-                            }
-                            cryptingTime = stopwatch.ElapsedMilliseconds;
-                        }
-                        else
-                        {
-                            // Copy file without encryption
-                            File.Copy(file.FilePath, destFile, true);
-                        }
-
-                        stopwatch.Stop();
-                        long transferTime = stopwatch.ElapsedMilliseconds;
-
-                        // Log the backup operation
-                        Logger logger = new Logger();
-                        logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
-                            new FileInfo(file.FilePath).Length, transferTime, cryptingTime, StateViewModel.IsJsonOn);
-                    }
-                    catch (Exception fileEx)
-                    {
-                        MessageBox.Show($"{LanguageManager.GetText("error_on_file")} {file.FileName} : {fileEx.Message}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{LanguageManager.GetText("error_general")}: {ex.Message}");
+                copiedSize += new FileInfo(file.FilePath).Length;
+                backup.Progression = (int)((double)copiedSize / totalSize * 100);
+                OnPropertyChanged(nameof(backup.Progression));
             }
         }
 
         // Method to execute a differential backup (only modified files)
-        private void ExecuteDifferentialBackup(SaveInformation backup)
+        private void ExecuteDifferentialBackup(SaveInformation backup, CancellationToken token)
         {
-            try
+            string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
+            Directory.CreateDirectory(backupFolder);
+            long totalSize = backup.Files.Sum(f => new FileInfo(f.FilePath).Length);
+            long copiedSize = 0;
+
+            foreach (var file in backup.Files)
             {
-                // Create backup directory
-                string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
+                token.ThrowIfCancellationRequested();
+                _pauseEvents[backup.NameSave].Wait(token);
 
-                Directory.CreateDirectory(backupFolder);
+                string destFile = Path.Combine(backupFolder, file.FileName);
 
-                foreach (var file in backup.Files)
+                if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                 {
-                    string destFile = Path.Combine(backupFolder, file.FileName);
-
-                    // Only copy if the file does not exist or has been modified
-                    if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
-                    {
-                        CopyOrEncryptFile(file.FilePath, destFile);
-                    }
+                    CopyOrEncryptFile(file.FilePath, destFile);
+                    copiedSize += new FileInfo(file.FilePath).Length;
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{LanguageManager.GetText("error_during_diff_backup")}: {ex.Message}");
+
+                backup.Progression = (int)((double)copiedSize / totalSize * 100);
+                OnPropertyChanged(nameof(backup.Progression));
             }
         }
 
@@ -154,8 +124,6 @@ namespace Livrable1.ViewModel
         private void CopyOrEncryptFile(string sourceFile, string destinationFile)
         {
             string extension = Path.GetExtension(sourceFile).ToLower();
-
-            // Determine if encryption is required
             bool shouldEncrypt = (StateViewModel.IsPdfEnabled && extension == ".pdf") ||
                                  (StateViewModel.IsTxtEnabled && extension == ".txt") ||
                                  (StateViewModel.IsPngEnabled && extension == ".png") ||
@@ -167,11 +135,9 @@ namespace Livrable1.ViewModel
             {
                 try
                 {
-                    // Retrieve encryption key
                     string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
                     using (Process cryptoProcess = new Process())
                     {
-                        // Encrypt file using external software
                         cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
                         cryptoProcess.StartInfo.Arguments = $"\"{sourceFile}\" \"{destinationFile}\" \"{key}\"";
                         cryptoProcess.StartInfo.UseShellExecute = true;
@@ -181,16 +147,39 @@ namespace Livrable1.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"{LanguageManager.GetText("error_during_encryption")}: {ex.Message}");
+                    MessageBox.Show($"Erreur lors du cryptage : {ex.Message}");
                 }
             }
             else
             {
-                // Copy file without encryption
                 File.Copy(sourceFile, destinationFile, true);
             }
         }
+
+        // Methods for pause, resume, and stop functionality
+        public void PauseBackup(SaveInformation backup)
+        {
+            SaveManager.Instance.PauseBackup(backup);
+        }
+
+        public void ResumeBackup(SaveInformation backup)
+        {
+            SaveManager.Instance.ResumeBackup(backup);
+        }
+
+        public void StopBackup(SaveInformation backup)
+        {
+            SaveManager.Instance.StopBackup(backup);
+            if (_cancellationTokens.ContainsKey(backup.NameSave))
+            {
+                _cancellationTokens[backup.NameSave].Cancel();
+            }
+        }
+
+        public void DeleteBackup(SaveInformation backup)
+        {
+            SaveManager.Instance.DeleteBackup(backup);
+            Backups.Remove(backup);
+        }
     }
-    //------------Class ExecuteBackupViewModel------------//
 }
-//---------------------ViewModel---------------------//
