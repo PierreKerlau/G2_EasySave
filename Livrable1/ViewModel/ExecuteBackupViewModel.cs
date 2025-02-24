@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using Livrable1.Model;
@@ -15,14 +15,15 @@ namespace Livrable1.ViewModel
 {
     public class ExecuteBackupViewModel : INotifyPropertyChanged
     {
-        // Collection of saved backups
+        public int TailleLimiteKo { get; set; } = 1024;
+
         public ObservableCollection<SaveInformation> Backups { get; set; }
         private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
         private readonly Dictionary<string, ManualResetEventSlim> _pauseEvents = new();
+        private readonly SemaphoreSlim _largeFileSemaphore = new(1, 1); 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // Constructor: initializes the backup list from SaveManager
         public ExecuteBackupViewModel()
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
@@ -86,15 +87,31 @@ namespace Livrable1.ViewModel
                 _pauseEvents[backup.NameSave].Wait(token);
 
                 string destFile = Path.Combine(backupFolder, file.FileName);
-                CopyOrEncryptFile(file.FilePath, destFile);
+                long fileSize = new FileInfo(file.FilePath).Length;
 
-                copiedSize += new FileInfo(file.FilePath).Length;
+                if (fileSize > TailleLimiteKo)
+                {
+                    _largeFileSemaphore.Wait(token);
+                }
+
+                try
+                {
+                    CopyOrEncryptFile(file.FilePath, destFile);
+                }
+                finally
+                {
+                    if (fileSize > TailleLimiteKo)
+                    {
+                        _largeFileSemaphore.Release();
+                    }
+                }
+
+                copiedSize += fileSize;
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
             }
         }
 
-        // Method to execute a differential backup (only modified files)
         private void ExecuteDifferentialBackup(SaveInformation backup, CancellationToken token)
         {
             string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
@@ -108,11 +125,28 @@ namespace Livrable1.ViewModel
                 _pauseEvents[backup.NameSave].Wait(token);
 
                 string destFile = Path.Combine(backupFolder, file.FileName);
+                long fileSize = new FileInfo(file.FilePath).Length;
 
                 if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                 {
-                    CopyOrEncryptFile(file.FilePath, destFile);
-                    copiedSize += new FileInfo(file.FilePath).Length;
+                    if (fileSize > TailleLimiteKo)
+                    {
+                        _largeFileSemaphore.Wait(token);
+                    }
+
+                    try
+                    {
+                        CopyOrEncryptFile(file.FilePath, destFile);
+                    }
+                    finally
+                    {
+                        if (fileSize > TailleLimiteKo)
+                        {
+                            _largeFileSemaphore.Release();
+                        }
+                    }
+
+                    copiedSize += fileSize;
                 }
 
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
@@ -156,7 +190,7 @@ namespace Livrable1.ViewModel
             }
         }
 
-        // Methods for pause, resume, and stop functionality
+        // Methods for pause, resume, stop and delete functionality
         public void PauseBackup(SaveInformation backup)
         {
             _pauseEvents[backup.NameSave].Reset();
