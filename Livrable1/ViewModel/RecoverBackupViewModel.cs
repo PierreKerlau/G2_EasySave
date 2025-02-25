@@ -81,12 +81,14 @@ namespace Livrable1.ViewModel
                     string recoverPath = Path.Combine(destinationFolder, fileName);
                     string extension = Path.GetExtension(fileName).ToLower();
 
-                    bool shouldEncrypt = StateViewModel.IsPdfEnabled && extension == ".pdf" ||
-                                        StateViewModel.IsTxtEnabled && extension == ".txt" ||
-                                        StateViewModel.IsPngEnabled && extension == ".png" ||
-                                        StateViewModel.IsJsonEnabled && extension == ".json" ||
-                                        StateViewModel.IsXmlEnabled && extension == ".xml" ||
-                                        StateViewModel.IsDocxEnabled && extension == ".docx";
+                    bool shouldEncrypt = (StateViewModel.IsPdfEnabled && extension == ".pdf") ||
+                                        (StateViewModel.IsTxtEnabled && extension == ".txt") ||
+                                        (StateViewModel.IsPngEnabled && extension == ".png") ||
+                                        (StateViewModel.IsJsonEnabled && extension == ".json") ||
+                                        (StateViewModel.IsXmlEnabled && extension == ".xml") ||
+                                        (StateViewModel.IsDocxEnabled && extension == ".docx") ||
+                                        (StateViewModel.IsMkvEnabled && extension == ".mkv") ||
+                                        (StateViewModel.IsJpgEnabled && extension == ".jpg");
 
                     if (shouldEncrypt)
                     {

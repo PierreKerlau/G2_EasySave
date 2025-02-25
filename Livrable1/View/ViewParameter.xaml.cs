@@ -35,7 +35,6 @@ namespace Livrable1.View
             InitializeComponent();
             UpdateUILanguageParameter(); // Update language
 
-            // Lire la clé depuis le fichier .env
             try
             {
                 string projectRoot = System.IO.Path.GetFullPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\.."));
@@ -57,10 +56,8 @@ namespace Livrable1.View
                 MessageBox.Show($"{LanguageManager.GetText("error_reading_env")} {ex.Message}");
             }
 
-            // Initialiser l'état des CheckBox
             InitializeCheckBoxStates();
 
-            // Définir l'état initial des boutons radio selon la langue actuelle
             if (LanguageManager.CurrentLanguage == "fr")
             {
                 RadioButtonFrench.IsChecked = true;
@@ -70,12 +67,9 @@ namespace Livrable1.View
                 RadioButtonEnglish.IsChecked = true;
             }
 
-            // S'abonner à l'événement de changement de langue
             LanguageManager.LanguageChanged += OnLanguageChanged;
-
-            // Mettre à jour l'interface avec la langue actuelle
             UpdateUILanguage();
-
+            InitializePriorityExtensionsState();
         }
 
         private void InitializeCheckBoxStates()
@@ -88,6 +82,17 @@ namespace Livrable1.View
             var checkBoxXML = this.FindName("CheckBoxXML") as CheckBox;
             var checkBoxDOCX = this.FindName("CheckBoxDOCX") as CheckBox;
             var checkBoxTXT = this.FindName("CheckBoxTXT") as CheckBox;
+            var checkBoxMKV = this.FindName("CheckBoxMKV") as CheckBox;
+            var checkBoxJPG = this.FindName("CheckBoxJPG") as CheckBox;
+
+            var checkBoxPrioPDF = this.FindName("CheckBoxPrioPDF") as CheckBox;
+            var checkBoxPrioPNG = this.FindName("CheckBoxPrioPNG") as CheckBox;
+            var checkBoxPrioTXT = this.FindName("CheckBoxPrioTXT") as CheckBox;
+            var checkBoxPrioJSON = this.FindName("CheckBoxPrioJSON") as CheckBox;
+            var checkBoxPrioXML = this.FindName("CheckBoxPrioXML") as CheckBox;
+            var checkBoxPrioDOCX = this.FindName("CheckBoxPrioDOCX") as CheckBox;
+            var checkBoxPrioMKV = this.FindName("CheckBoxPrioMKV") as CheckBox;
+            var checkBoxPrioJPG = this.FindName("CheckBoxPrioJPG") as CheckBox;
 
             if (checkBoxCalculator != null) checkBoxCalculator.IsChecked = StateViewModel.IsCalculatorEnabled;
             if (checkBoxNotepad != null) checkBoxNotepad.IsChecked = StateViewModel.IsNotePadEnabled;
@@ -97,7 +102,18 @@ namespace Livrable1.View
             if (checkBoxXML != null) checkBoxXML.IsChecked = StateViewModel.IsXmlEnabled;
             if (checkBoxDOCX != null) checkBoxDOCX.IsChecked = StateViewModel.IsDocxEnabled;
             if (checkBoxTXT != null) checkBoxTXT.IsChecked = StateViewModel.IsTxtEnabled;
-            // Initialiser l'état des RadioButtons pour le format de log
+            if (checkBoxMKV != null) checkBoxMKV.IsChecked = StateViewModel.IsMkvEnabled;
+            if (checkBoxJPG != null) checkBoxJPG.IsChecked = StateViewModel.IsJpgEnabled;
+
+            if (checkBoxPrioPDF != null) checkBoxPrioPDF.IsChecked = StateViewModel.IsPdfEnabled;
+            if (checkBoxPrioPNG != null) checkBoxPrioPNG.IsChecked = StateViewModel.IsPngEnabled;
+            if (checkBoxPrioTXT != null) checkBoxPrioTXT.IsChecked = StateViewModel.IsTxtEnabled;
+            if (checkBoxPrioJSON != null) checkBoxPrioJSON.IsChecked = StateViewModel.IsJsonEnabled;
+            if (checkBoxPrioXML != null) checkBoxPrioXML.IsChecked = StateViewModel.IsXmlEnabled;
+            if (checkBoxPrioDOCX != null) checkBoxPrioDOCX.IsChecked = StateViewModel.IsDocxEnabled;
+            if (checkBoxPrioMKV != null) checkBoxPrioMKV.IsChecked = StateViewModel.IsMkvEnabled;
+            if (checkBoxPrioJPG != null) checkBoxPrioJPG.IsChecked = StateViewModel.IsJpgEnabled;
+
             var radioButtonJSON = this.FindName("RadioButtonLogJSON") as RadioButton;
             var radioButtonXML = this.FindName("RadioButtonLogXML") as RadioButton;
 
@@ -126,12 +142,14 @@ namespace Livrable1.View
             RadioButtonLogJSON.Content = LanguageManager.GetText("format_json");
             RadioButtonLogXML.Content = LanguageManager.GetText("format_xml");
 
+            TextBlockPriorityExtension.Text = LanguageManager.GetText("Priority_Extension");
+
             ButtonLeave.Content = LanguageManager.GetText("menu_leave");
         }
 
         private void RadioButton_Language_Checked(object sender, RoutedEventArgs e)
         {
-            if (!IsLoaded) return; // Éviter l'exécution pendant l'initialisation
+            if (!IsLoaded) return;
 
             if (sender is RadioButton radioButton)
             {
@@ -321,6 +339,122 @@ namespace Livrable1.View
             }
         }
 
+        private void CheckBox_Checked_MKV(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsMkvEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.UpdateExtensionEncryption(".mkv", checkBox.IsChecked ?? false);
+            }
+        }
+
+        private void CheckBox_Unchecked_MKV(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsMkvEnabled = false;
+                StateViewModel.UpdateExtensionEncryption(".mkv", false);
+            }
+        }
+
+        private void CheckBox_Checked_JPG(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsJpgEnabled = checkBox.IsChecked ?? false;
+                StateViewModel.UpdateExtensionEncryption(".jpg", checkBox.IsChecked ?? false);
+            }
+        }
+
+        private void CheckBox_Unchecked_JPG(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox)
+            {
+                StateViewModel.IsJpgEnabled = false;
+                StateViewModel.UpdateExtensionEncryption(".jpg", false);
+            }
+        }
+
+        private void CheckBox_Checked_Prio_PDF(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".pdf", true);
+        }
+
+        private void CheckBox_Unchecked_Prio_PDF(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".pdf", false);
+        }
+
+        private void CheckBox_Checked_Prio_PNG(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".png", true);
+        }
+
+        private void CheckBox_Unchecked_Prio_PNG(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".png", false);
+        }
+
+        private void CheckBox_Checked_Prio_TXT(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".txt", true);
+        }
+
+        private void CheckBox_Unchecked_Prio_TXT(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".txt", false);
+        }
+
+        private void CheckBox_Checked_Prio_JSON(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".json", true);
+        }
+
+        private void CheckBox_Unchecked_Prio_JSON(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".json", false);
+        }
+
+        private void CheckBox_Checked_Prio_XML(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".xml", true);
+        }
+
+        private void CheckBox_Unchecked_Prio_XML(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".xml", false);
+        }
+
+        private void CheckBox_Checked_Prio_DOCX(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".docx", true);
+        }
+
+        private void CheckBox_Unchecked_Prio_DOCX(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".docx", false);
+        }
+
+        private void CheckBox_Checked_Prio_MKV(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".mkv", true);
+        }
+
+        private void CheckBox_Unchecked_Prio_MKV(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".mkv", false);
+        }
+
+        private void CheckBox_Checked_Prio_JPG(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".jpg", true);
+        }
+
+        private void CheckBox_Unchecked_Prio_JPG(object sender, RoutedEventArgs e)
+        {
+            StateViewModel.UpdatePriorityExtension(".jpg", false);
+        }
+
         // Method to update UI elements with language-specific texts
         private void UpdateUILanguageParameter()
         {
@@ -330,6 +464,33 @@ namespace Livrable1.View
             TextBlockExtensions.Text = LanguageManager.GetText("text_block_choose_extension");
             TextBlockLogFormat.Text = LanguageManager.GetText("text_block_choose_format_log");
             ButtonLeave.Content = LanguageManager.GetText("menu_leave");
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_Checked_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void InitializePriorityExtensionsState()
+        {
+            CheckBoxPrioPDF.IsChecked = StateViewModel.IsPriorityExtension(".pdf");
+            CheckBoxPrioPNG.IsChecked = StateViewModel.IsPriorityExtension(".png");
+            CheckBoxPrioTXT.IsChecked = StateViewModel.IsPriorityExtension(".txt");
+            CheckBoxPrioJSON.IsChecked = StateViewModel.IsPriorityExtension(".json");
+            CheckBoxPrioXML.IsChecked = StateViewModel.IsPriorityExtension(".xml");
+            CheckBoxPrioDOCX.IsChecked = StateViewModel.IsPriorityExtension(".docx");
+            CheckBoxPrioMKV.IsChecked = StateViewModel.IsPriorityExtension(".mkv");
+            CheckBoxPrioJPG.IsChecked = StateViewModel.IsPriorityExtension(".jpg");
         }
     }
 }
