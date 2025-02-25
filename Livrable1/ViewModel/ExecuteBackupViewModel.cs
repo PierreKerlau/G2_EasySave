@@ -279,7 +279,7 @@ namespace Livrable1.ViewModel
 
                 if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                 {
-                long fileSize = new FileInfo(file.FilePath).Length;
+                // long fileSize = new FileInfo(file.FilePath).Length;
                 
                 if (fileSize > TailleLimiteKo)
                 {
