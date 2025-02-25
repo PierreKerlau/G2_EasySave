@@ -55,8 +55,11 @@ namespace Livrable1
             {
                 // Open the ViewAddBackup window and close the current window
                 ViewAddBackup viewAddBackup = new ViewAddBackup();
+                viewAddBackup.WindowStartupLocation = WindowStartupLocation.Manual;
+                viewAddBackup.Left = this.Left;
+                viewAddBackup.Top = this.Top;
                 viewAddBackup.Show();
-                this.Close();
+                this.Hide();
             }
         }
 
@@ -77,10 +80,13 @@ namespace Livrable1
             }
             else
             {
-                // Open the ViewExecuteBackup window and close the current window
+                // Ouvrir la fenêtre ViewExecuteBackup à la position de la fenêtre actuelle
                 ViewExecuteBackup viewExecuteBackup = new ViewExecuteBackup();
+                viewExecuteBackup.WindowStartupLocation = WindowStartupLocation.Manual;
+                viewExecuteBackup.Left = this.Left;
+                viewExecuteBackup.Top = this.Top;
                 viewExecuteBackup.Show();
-                this.Close();
+                this.Hide();
             } 
         }
 
@@ -101,11 +107,13 @@ namespace Livrable1
             }
             else
             {
-                // Open the ViewRecoverBackup window and close the current window
                 ViewRecoverBackup viewRecoverBackup = new ViewRecoverBackup();
+                viewRecoverBackup.WindowStartupLocation = WindowStartupLocation.Manual;
+                viewRecoverBackup.Left = this.Left;
+                viewRecoverBackup.Top = this.Top;
                 viewRecoverBackup.Show();
-                this.Close();
-                
+                this.Hide();
+
             }
         }
 
@@ -114,8 +122,11 @@ namespace Livrable1
         {
             // Open the ViewParameter window and close the current window
             ViewParameter viewParameter = new ViewParameter();
+            viewParameter.WindowStartupLocation = WindowStartupLocation.Manual;
+            viewParameter.Left = this.Left;
+            viewParameter.Top = this.Top;
             viewParameter.Show();
-            this.Close();
+            this.Hide();
         }
 
         // Method to update UI elements of the main window with language-specific texts

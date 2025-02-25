@@ -90,9 +90,11 @@ namespace Livrable1.View
         // Leave Button : Open main window and close this one
         private void ButtonLeave_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
-            viewMain.Show(); // Show the MainWindow
-            this.Close(); // Close the current window
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+            mainWindow.Left = this.Left;
+            mainWindow.Top = this.Top;
+            mainWindow.Show();
         }
 
         // Method to update UI elements with language-specific texts

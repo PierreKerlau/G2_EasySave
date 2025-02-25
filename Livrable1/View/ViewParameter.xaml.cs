@@ -149,8 +149,10 @@ namespace Livrable1.View
         private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
+            mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+            mainWindow.Left = this.Left;
+            mainWindow.Top = this.Top;
             mainWindow.Show();
-            this.Close();
         }
 
         private void RadioButton_LogFormat_Checked(object sender, RoutedEventArgs e)
