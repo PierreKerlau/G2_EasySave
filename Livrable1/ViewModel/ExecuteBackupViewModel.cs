@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using Livrable1.Model;
@@ -15,9 +15,11 @@ namespace Livrable1.ViewModel
 {
     public class ExecuteBackupViewModel : INotifyPropertyChanged
     {
+        public int TailleLimiteKo { get; set; } = 1024;
         public ObservableCollection<SaveInformation> Backups { get; set; }
         private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
         private readonly Dictionary<string, ManualResetEventSlim> _pauseEvents = new();
+        private readonly SemaphoreSlim _largeFileSemaphore = new(1, 1); 
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -223,14 +225,33 @@ namespace Livrable1.ViewModel
                 _pauseEvents[backup.NameSave].Wait(token);
 
                 string destFile = Path.Combine(backupFolder, file.FileName);
+                long fileSize = new FileInfo(file.FilePath).Length;
+                if (fileSize > TailleLimiteKo)
+                {
+                    _largeFileSemaphore.Wait(token);
+                }
                 var stopwatch = Stopwatch.StartNew();
-                
                 CopyOrEncryptFile(file.FilePath, destFile);
-                
                 stopwatch.Stop();
                 long transferTime = stopwatch.ElapsedMilliseconds;
+                if (fileSize > TailleLimiteKo)
+                {
+                    _largeFileSemaphore.Release();
+                }
 
-                copiedSize += new FileInfo(file.FilePath).Length;
+                try
+                {
+                    CopyOrEncryptFile(file.FilePath, destFile);
+                }
+                finally
+                {
+                    if (fileSize > TailleLimiteKo)
+                    {
+                        _largeFileSemaphore.Release();
+                    }
+                }
+
+                copiedSize += fileSize;
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
 
@@ -254,22 +275,40 @@ namespace Livrable1.ViewModel
                 _pauseEvents[backup.NameSave].Wait(token);
 
                 string destFile = Path.Combine(backupFolder, file.FileName);
+                long fileSize = new FileInfo(file.FilePath).Length;
 
                 if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                 {
-                    var stopwatch = Stopwatch.StartNew();
-                    
+                long fileSize = new FileInfo(file.FilePath).Length;
+                
+                if (fileSize > TailleLimiteKo)
+                {
+                    _largeFileSemaphore.Wait(token);
+                }
+                
+                var stopwatch = Stopwatch.StartNew();
+                
+                try
+                {
                     CopyOrEncryptFile(file.FilePath, destFile);
-                    
-                    stopwatch.Stop();
-                    long transferTime = stopwatch.ElapsedMilliseconds;
-
-                    copiedSize += new FileInfo(file.FilePath).Length;
-                    
-                    // Log the backup operation
-                    Logger logger = new Logger();
-                    logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
-                        new FileInfo(file.FilePath).Length, transferTime, 0, StateViewModel.IsJsonOn);
+                }
+                finally
+                {
+                    if (fileSize > TailleLimiteKo)
+                    {
+                        _largeFileSemaphore.Release();
+                    }
+                }
+                
+                stopwatch.Stop();
+                long transferTime = stopwatch.ElapsedMilliseconds;
+                
+                copiedSize += fileSize;
+                
+                // Log the backup operation
+                Logger logger = new Logger();
+                logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
+                    fileSize, transferTime, 0, StateViewModel.IsJsonOn);
                 }
 
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
@@ -314,6 +353,7 @@ namespace Livrable1.ViewModel
             }
         }
 
+        // Methods for pause, resume, stop and delete functionality
         public void PauseBackup(SaveInformation backup)
         {
             if (_pauseEvents.ContainsKey(backup.NameSave))
