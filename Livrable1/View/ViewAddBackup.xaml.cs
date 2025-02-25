@@ -68,7 +68,13 @@ namespace Livrable1.View
                 string sourcePath = txtSourcePath.Text;
                 string destinationPath = txtDestinationPath.Text;
 
-                    // Check if the save was added successfully
+                if (viewModel.VerifAddName(name))
+                {
+                    MessageBox.Show("Ce nom de sauvegarde existe déjà !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return; // Arrêter l'exécution pour éviter la duplication
+                }
+
+                // Check if the save was added successfully
                 if (viewModel != null)
                 {
                     ButtonValidate2.Visibility = Visibility.Visible;
