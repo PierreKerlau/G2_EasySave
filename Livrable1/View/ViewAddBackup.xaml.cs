@@ -49,6 +49,7 @@ namespace Livrable1.View
             mainWindow.Left = this.Left;
             mainWindow.Top = this.Top;
             mainWindow.Show();
+            this.Close();
         }
 
         // Event handler for the first cancel button click

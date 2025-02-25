@@ -59,7 +59,7 @@ namespace Livrable1
                 viewAddBackup.Left = this.Left;
                 viewAddBackup.Top = this.Top;
                 viewAddBackup.Show();
-                this.Hide();
+                this.Close();
             }
         }
 
@@ -86,7 +86,7 @@ namespace Livrable1
                 viewExecuteBackup.Left = this.Left;
                 viewExecuteBackup.Top = this.Top;
                 viewExecuteBackup.Show();
-                this.Hide();
+                this.Close();
             } 
         }
 
@@ -112,7 +112,7 @@ namespace Livrable1
                 viewRecoverBackup.Left = this.Left;
                 viewRecoverBackup.Top = this.Top;
                 viewRecoverBackup.Show();
-                this.Hide();
+                this.Close();
 
             }
         }
@@ -126,7 +126,7 @@ namespace Livrable1
             viewParameter.Left = this.Left;
             viewParameter.Top = this.Top;
             viewParameter.Show();
-            this.Hide();
+            this.Close();
         }
 
         // Method to update UI elements of the main window with language-specific texts

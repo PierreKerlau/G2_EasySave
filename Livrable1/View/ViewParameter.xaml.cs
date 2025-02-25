@@ -153,6 +153,7 @@ namespace Livrable1.View
             mainWindow.Left = this.Left;
             mainWindow.Top = this.Top;
             mainWindow.Show();
+            this.Close();
         }
 
         private void RadioButton_LogFormat_Checked(object sender, RoutedEventArgs e)

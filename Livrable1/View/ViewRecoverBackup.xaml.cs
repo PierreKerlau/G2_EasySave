@@ -95,6 +95,7 @@ namespace Livrable1.View
             mainWindow.Left = this.Left;
             mainWindow.Top = this.Top;
             mainWindow.Show();
+            this.Close();
         }
 
         // Method to update UI elements with language-specific texts
