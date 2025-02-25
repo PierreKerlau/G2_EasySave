@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.Xml;
 
 namespace Livrable1.ViewModel
 {
@@ -19,7 +21,6 @@ namespace Livrable1.ViewModel
         public ObservableCollection<SaveInformation> Backups { get; set; }
         private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
         private readonly Dictionary<string, ManualResetEventSlim> _pauseEvents = new();
-        EtatSauvegarde StateSave { get; set; } = new EtatSauvegarde();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -27,12 +28,32 @@ namespace Livrable1.ViewModel
         public ExecuteBackupViewModel()
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
-            LoadData();
+            LoadSaves();
         }
-
-        public void LoadData()
+        public void LoadSaves()
         {
-            StateSave LoadSaves();
+            // Vérifier si le chemin source existe
+            try
+            {
+                string jsonFilePath = "../../../Logs/state.json"; // Remplace par le chemin de ton fichier JSON
+
+                if (System.IO.File.Exists(jsonFilePath))
+                {
+                    var saveList = EtatSauvegarde.ReadState(jsonFilePath);
+                    foreach (var save in saveList)
+                    {
+                        // Vérifier si la sauvegarde existe déjà dans la collection
+                        if (!Backups.Any(b => b.NameSave == save.NameSave))
+                        {
+                            Backups.Add(save); // Ajouter seulement si elle n'existe pas déjà
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement de la liste : {ex.Message}");
+            }
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -79,12 +100,7 @@ namespace Livrable1.ViewModel
             }, cts.Token);
         }
 
-        
-
-        // Method to execute a full backup
-        private void ExecuteFullBackup(SaveInformation backup, CancellationToken token)
-        {
-            string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
+        /*string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
             Directory.CreateDirectory(backupFolder);
             long totalSize = backup.Files.Sum(f => new FileInfo(f.FilePath).Length);
             long copiedSize = 0;
@@ -100,14 +116,105 @@ namespace Livrable1.ViewModel
                 copiedSize += new FileInfo(file.FilePath).Length;
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
+            }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Method to execute a full backup
+        private void ExecuteFullBackup(SaveInformation backup, CancellationToken token)
+        {
+            string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
+            Directory.CreateDirectory(backupFolder);
+
+            // Lire l'état à partir du JSON
+            var savedState = EtatSauvegarde.ReadState("../../../Logs/state.json"); // Appel statique
+
+            // Trouver le bon enregistrement basé sur le nom de sauvegarde
+            var savedBackup = savedState.FirstOrDefault(s => s.NameSave == backup.NameSave);
+
+            // Vérifier si un enregistrement a été trouvé
+            if (savedBackup == null)
+            {
+                MessageBox.Show("Aucun enregistrement de sauvegarde trouvé.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+
+            // 4 fichiers
+            var selectedFiles = savedBackup.Files;
+
+            // 0 fichiers
+            //var selectedFiles = savedBackup.Files.Where(f => f.);
+
+            // Vérifier si des fichiers sont sélectionnés
+            if (selectedFiles.Count == 0)
+            {
+                MessageBox.Show("Aucun fichier sélectionné pour la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; // Quitter la méthode si aucun fichier n'est sélectionné
+            }
+
+            long totalSize = selectedFiles.Sum(f => new FileInfo(f.FilePath).Length);
+            long copiedSize = 0;
+
+            foreach (var file in selectedFiles)
+            {
+                token.ThrowIfCancellationRequested();
+                _pauseEvents[backup.NameSave].Wait(token);
+
+                string destFile = Path.Combine(backupFolder, Path.GetFileName(file.FilePath)); // Utilisez Path.GetFileName pour le nom de fichier
+                CopyOrEncryptFile(file.FilePath, destFile);
+
+                copiedSize += new FileInfo(file.FilePath).Length;
+                backup.Progression = (int)((double)copiedSize / totalSize * 100);
+                OnPropertyChanged(nameof(backup.Progression));
+            }
+
         }
+
 
         // Method to execute a differential backup (only modified files)
         private void ExecuteDifferentialBackup(SaveInformation backup, CancellationToken token)
         {
             string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
             Directory.CreateDirectory(backupFolder);
+
+            // Lire l'état à partir du JSON
+            var savedState = EtatSauvegarde.ReadState("../../../Logs/state.json"); // Appel statique
+
+            // Trouver le bon enregistrement basé sur le nom de sauvegarde
+            var savedBackup = savedState.FirstOrDefault(s => s.NameSave == backup.NameSave);
+
+            // Vérifier si un enregistrement a été trouvé
+            if (savedBackup == null)
+            {
+                MessageBox.Show("Aucun enregistrement de sauvegarde trouvé.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // 4 fichiers
+            var selectedFiles = savedBackup.Files;
+
+            // 0 fichiers
+            //var selectedFiles = savedBackup.Files.Where(f => f.);
+
+            // Vérifier si des fichiers sont sélectionnés
+            if (selectedFiles.Count == 0)
+            {
+                MessageBox.Show("Aucun fichier sélectionné pour la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; // Quitter la méthode si aucun fichier n'est sélectionné
+            }
+
             long totalSize = backup.Files.Sum(f => new FileInfo(f.FilePath).Length);
             long copiedSize = 0;
 

@@ -1,6 +1,7 @@
 ﻿using Livrable1.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,9 @@ namespace Livrable1.ViewModel
     public class EtatSauvegarde
     {
         private string STATE_FILE_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../Logs", "state.json").ToString();
-
         private FileInfo stateFile;
+
+        public ObservableCollection<SaveInformation> Backups { get; set; }
 
         public EtatSauvegarde()
         {
@@ -30,17 +32,14 @@ namespace Livrable1.ViewModel
         {
             var states = new List<SaveInformation>();
 
-            // Vérifier si le fichier d'état existe
             if (!File.Exists(stateFilePath))
             {
-                Console.WriteLine("Le fichier d'état n'existe pas.");
                 return states; // Retourner une liste vide si le fichier n'existe pas
             }
 
             try
             {
-
-                using (var stream = /*stateFile.OpenRead()*/ File.OpenRead(stateFilePath))
+                using (var stream = File.OpenRead(stateFilePath))
                 using (var reader = new StreamReader(stream))
                 {
                     string json = reader.ReadToEnd();
@@ -50,14 +49,12 @@ namespace Livrable1.ViewModel
                         return new List<SaveInformation>();
                     }
 
-
                     using (var jsonDocument = JsonDocument.Parse(json))
                     {
                         var root = jsonDocument.RootElement;
 
                         if (root.ValueKind == JsonValueKind.Array)
                         {
-
                             foreach (var element in root.EnumerateArray())
                             {
                                 try
@@ -66,17 +63,23 @@ namespace Livrable1.ViewModel
                                     string? sourcePath = element.GetProperty("realDirectoryPath").GetString();
                                     string? destinationPath = element.GetProperty("copyDirectoryPath").GetString();
                                     int numberFile = element.GetProperty("numberFile").GetInt32();
-                                    //----------------------------------------------------------------------------------------//
                                     DateTime lastTimeStamp = element.GetProperty("lastTimeStamp").GetDateTime();
-                                    //DateTime lastTimeStamp = element.TryGetProperty("date", out var dateProp) ? dateProp.GetDateTime() : DateTime.MinValue;
                                     bool isActive = element.GetProperty("Active").GetBoolean();
                                     long totalSize = element.GetProperty("totalSize").GetInt64();
                                     int remainingFiles = element.GetProperty("remainingFiles").GetInt32();
                                     long remainingSize = element.GetProperty("remainingSize").GetInt64();
-                                    //----------------------------------------------------------------------------------------//
 
-                                    if (saveName != null && !string.IsNullOrEmpty(sourcePath) && !string.IsNullOrEmpty(destinationPath))
+                                    if (!string.IsNullOrEmpty(saveName) && !string.IsNullOrEmpty(sourcePath) && !string.IsNullOrEmpty(destinationPath))
                                     {
+                                        var files = new List<FileInformation>(); // Initialize the list of FileInformation
+                                        var filesArray = element.GetProperty("files").EnumerateArray(); // Assuming you have a "files" array in your JSON
+
+                                        foreach (var fileElement in filesArray)
+                                        {
+                                            string filePath = fileElement.GetString();
+                                            files.Add(new FileInformation(filePath)); // Create FileInformation object for each file
+                                        }
+
                                         SaveInformation save = new(
                                             saveName,
                                             sourcePath,
@@ -86,9 +89,10 @@ namespace Livrable1.ViewModel
                                             isActive,
                                             totalSize,
                                             remainingFiles,
-                                            remainingSize
-                                            );
-
+                                            remainingSize,
+                                            files // Pass the list of files
+                                        );
+                                        
                                         states.Add(save);
                                     }
                                 }
@@ -134,41 +138,13 @@ namespace Livrable1.ViewModel
                 Active = save.IsActive,
                 totalSize = save.TotalSize,
                 remainingFiles = save.RemainingFiles,
-                remainingSize = save.RemainingSize
+                remainingSize = save.RemainingSize,
+                files = save.Files.Select(f => f.FilePath) // Serialize the list of files
             }).ToList();
 
             string json = JsonSerializer.Serialize(savesToStore, new JsonSerializerOptions { WriteIndented = true });
 
             File.WriteAllText(STATE_FILE_PATH, json);
-
         }
-
-
-        public static void LoadSaves()
-        {
-            // Vérifier si le chemin source existe
-            try
-            {
-                string jsonFilePath = "../../../Logs/state.json"; // Remplace par le chemin de ton fichier JSON
-
-                if (System.IO.File.Exists(jsonFilePath))
-                {
-                    var saveList = EtatSauvegarde.ReadState(jsonFilePath);
-                    foreach (var save in saveList)
-                    {
-                        // Vérifier si la sauvegarde existe déjà dans la collection
-                        if (!Backups.Any(b => b.NameSave == save.NameSave))
-                        {
-                            Backups.Add(save); // Ajouter seulement si elle n'existe pas déjà
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erreur lors du chargement de la liste : {ex.Message}");
-            }
-        }
-
     }
 }

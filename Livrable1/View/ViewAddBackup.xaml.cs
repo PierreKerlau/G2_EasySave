@@ -68,15 +68,16 @@ namespace Livrable1.View
                 string sourcePath = txtSourcePath.Text;
                 string destinationPath = txtDestinationPath.Text;
 
-                // Create a new SaveInformation object with the input values
-                
-
-                // Check if the save was added successfully
+                    // Check if the save was added successfully
                 if (viewModel != null)
                 {
                     ButtonValidate2.Visibility = Visibility.Visible;
                     ButtonCancel2.Visibility = Visibility.Visible;
                     ListFiles.Visibility = Visibility.Visible; // Show the list of files
+
+
+                    SaveInformation viewChargement = new SaveInformation(name, sourcePath, destinationPath);
+                    viewChargement.LoadFiles();
 
                     txtNameSave.IsReadOnly = true;
                     txtSourcePath.IsReadOnly = true;
@@ -84,7 +85,7 @@ namespace Livrable1.View
 
                     ButtonValidate.Visibility = Visibility.Collapsed;
                     ButtonCancel.Visibility = Visibility.Collapsed;
-
+                    
                     viewModel.LoadFilesFromSource(sourcePath); // Load files from the source path
 
                     MessageBox.Show(LanguageManager.GetText("backup_added_success")); // Show success message
@@ -123,61 +124,54 @@ namespace Livrable1.View
         {
             if (DataContext is AddSaveViewModel viewModel)
             {
-                bool isAnyChecked = viewModel.Files.Any(file => file.IsSelected); 
+                bool isAnyChecked = viewModel.Files.Any(file => file.IsSelected);
 
-                if (!isAnyChecked) 
+                if (!isAnyChecked)
                 {
                     MessageBox.Show($"{LanguageManager.GetText("select_at_least_one_element")}", $"{LanguageManager.GetText("error_title")}", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return; 
+                    return;
                 }
-                // Get the last saved backup
-                var save = viewModel.Backups.LastOrDefault();
 
                 // Get the input values from the text boxes
                 string name = txtNameSave.Text;
                 string sourcePath = txtSourcePath.Text;
                 string destinationPath = txtDestinationPath.Text;
-                int numberFile = viewModel.Files.Count(file => file.IsSelected);
+
+                // Gather the selected files
+                var selectedFiles = viewModel.Files.Where(file => file.IsSelected).ToList();
+                int numberFile = selectedFiles.Count;
                 DateTime date = DateTime.Now;
-                //---
-                bool isActive = false;
-                long totalSize = viewModel.Files.Where(file => file.IsSelected).Sum(file => file.Size);
-                int remainingFiles = viewModel.Files.Count(file => file.IsSelected);
-                long remainingSize = viewModel.Files.Count(file => file.IsSelected);
+                bool isActive = false; // Set active status as per your logic
+                long totalSize = selectedFiles.Sum(file => file.Size);
+                int remainingFiles = numberFile;
+                long remainingSize = totalSize; // Assuming remaining size equals total size for the selected files
 
-                save = new SaveInformation(name, sourcePath, destinationPath, numberFile, date, isActive, totalSize, remainingFiles, remainingSize);
+                // Create a new SaveInformation instance with selected files
+                var save = new SaveInformation(name, sourcePath, destinationPath, numberFile, date, isActive, totalSize, remainingFiles, remainingSize, selectedFiles);
 
+                // Save the selected files for the backup
+                viewModel.SaveSelectedFiles(save);
 
-                if (save != null)
-                    {
-                        // Save the selected files for the backup
-                        viewModel.SaveSelectedFiles(save);
+                // Call the method to add the save and get the result
+                bool result = viewModel.AddSaveMethod(save);
 
-                        
-                        // Call the method to add the save and get the result
-                        bool result = viewModel.AddSaveMethod(save);
-                        
-                        
-                        MessageBox.Show(LanguageManager.GetText("selected_files_saved")); // Show success message
+                MessageBox.Show(LanguageManager.GetText("selected_files_saved")); // Show success message
 
-                        txtNameSave.IsReadOnly = false;
-                        txtSourcePath.IsReadOnly = false;
-                        txtDestinationPath.IsReadOnly = false;
+                // Reset UI
+                txtNameSave.IsReadOnly = false;
+                txtSourcePath.IsReadOnly = false;
+                txtDestinationPath.IsReadOnly = false;
 
-                        // Clear the text boxes and hide the file list
-                        txtNameSave.Clear();
-                        txtSourcePath.Clear();
-                        txtDestinationPath.Clear();
+                txtNameSave.Clear();
+                txtSourcePath.Clear();
+                txtDestinationPath.Clear();
 
-                        ButtonValidate.Visibility = Visibility.Visible;
-                        ButtonCancel.Visibility = Visibility.Visible;
+                ButtonValidate.Visibility = Visibility.Visible;
+                ButtonCancel.Visibility = Visibility.Visible;
 
-                        ButtonValidate2.Visibility = Visibility.Collapsed;
-                        ButtonCancel2.Visibility = Visibility.Collapsed;
-                        ListFiles.Visibility = Visibility.Collapsed;
-
-                    }
-                
+                ButtonValidate2.Visibility = Visibility.Collapsed;
+                ButtonCancel2.Visibility = Visibility.Collapsed;
+                ListFiles.Visibility = Visibility.Collapsed;
             }
         }
         //-------------------End Methods for Validate 2-------------------//

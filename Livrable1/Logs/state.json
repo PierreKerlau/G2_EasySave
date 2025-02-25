@@ -1,46 +1,62 @@
 [
   {
-    "name": "Save2",
+    "name": "Save7",
     "realDirectoryPath": "C:\\ProjetEasySave\\path\\source",
     "copyDirectoryPath": "C:\\ProjetEasySave\\path\\destination",
     "numberFile": 2,
-    "lastTimeStamp": "2025-02-24T15:08:10.3907618+01:00",
+    "lastTimeStamp": "2025-02-25T11:40:17.5979333+01:00",
     "Active": false,
     "totalSize": 95,
     "remainingFiles": 2,
-    "remainingSize": 2
+    "remainingSize": 95,
+    "files": [
+      "C:\\ProjetEasySave\\path\\source\\Anglais.txt",
+      "C:\\ProjetEasySave\\path\\source\\Dear Hiring Manager,.txt"
+    ]
   },
   {
     "name": "Save1",
     "realDirectoryPath": "C:\\ProjetEasySave\\path\\source",
     "copyDirectoryPath": "C:\\ProjetEasySave\\path\\destination",
     "numberFile": 1,
-    "lastTimeStamp": "2025-02-24T15:13:28.8620421+01:00",
+    "lastTimeStamp": "2025-02-25T14:16:15.3720381+01:00",
     "Active": false,
     "totalSize": 41,
     "remainingFiles": 1,
-    "remainingSize": 1
+    "remainingSize": 41,
+    "files": [
+      "C:\\ProjetEasySave\\path\\source\\Anglais.txt"
+    ]
+  },
+  {
+    "name": "Save2",
+    "realDirectoryPath": "C:\\ProjetEasySave\\path\\source",
+    "copyDirectoryPath": "C:\\ProjetEasySave\\path\\destination",
+    "numberFile": 2,
+    "lastTimeStamp": "2025-02-25T14:16:35.7865138+01:00",
+    "Active": false,
+    "totalSize": 95,
+    "remainingFiles": 2,
+    "remainingSize": 95,
+    "files": [
+      "C:\\ProjetEasySave\\path\\source\\Dear Hiring Manager,.txt",
+      "C:\\ProjetEasySave\\path\\source\\message.txt"
+    ]
   },
   {
     "name": "Save3",
     "realDirectoryPath": "C:\\ProjetEasySave\\path\\source",
     "copyDirectoryPath": "C:\\ProjetEasySave\\path\\destination",
     "numberFile": 3,
-    "lastTimeStamp": "2025-02-24T15:21:23.6528332+01:00",
+    "lastTimeStamp": "2025-02-25T14:17:02.0737326+01:00",
     "Active": false,
-    "totalSize": 136,
+    "totalSize": 161,
     "remainingFiles": 3,
-    "remainingSize": 3
-  },
-  {
-    "name": "Save4",
-    "realDirectoryPath": "C:\\ProjetEasySave\\path\\source",
-    "copyDirectoryPath": "C:\\ProjetEasySave\\path\\destination",
-    "numberFile": 1,
-    "lastTimeStamp": "2025-02-24T15:22:41.4375721+01:00",
-    "Active": false,
-    "totalSize": 41,
-    "remainingFiles": 1,
-    "remainingSize": 1
+    "remainingSize": 161,
+    "files": [
+      "C:\\ProjetEasySave\\path\\source\\Anglais.txt",
+      "C:\\ProjetEasySave\\path\\source\\message.txt",
+      "C:\\ProjetEasySave\\path\\source\\SI R\u00E9seau et Administration VUE Logique notes.txt"
+    ]
   }
 ]
