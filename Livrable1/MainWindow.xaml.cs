@@ -109,15 +109,6 @@ namespace Livrable1
             }
         }
 
-        // Event handler for the "Logs" button click
-        private void ButtonShowViewLogs_Click(object sender, RoutedEventArgs e)
-        {
-            // Open the ViewLogs window and close the current window
-            ViewLogs viewLogs = new ViewLogs();
-            viewLogs.Show();
-            this.Close();
-        }
-
         // Event handler for the "Parameters" button click
         private void ButtonShowViewParameter_Click(object sender, RoutedEventArgs e)
         {

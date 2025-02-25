@@ -5,18 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Livrable1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="EasySave - Main Menu" Height="450" Width="800"
+        Background="{StaticResource BackgroundBrush}">
     <Grid>
-        <Grid Margin="0,0,0,346">
-            <Label x:Name="LabelMainViewTitle" Content="EasySave" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Franklin Gothic Demi" FontSize="36"/>
-        </Grid>
-        <Grid Margin="0,93,0,0">
+        <!-- Titre principal -->
+        <Label x:Name="LabelMainViewTitle" Content="EasySave" 
+               HorizontalAlignment="Center" VerticalAlignment="Top" 
+               FontSize="36" FontWeight="Bold" 
+               Foreground="{StaticResource PrimaryBrush}" 
+               Margin="0,20,0,0"/>
 
-            <Button x:Name="ButtonShowViewAddBackup" Content="Add a backup job" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" Click="ButtonShowViewAddBackup_Click" IsEnabled="{Binding IsButtonEnabled}"/>
-            <Button x:Name="ButtonShowViewParameter" Content="Modify parameters" HorizontalAlignment="Left" Margin="648,276,0,0" VerticalAlignment="Top" Click="ButtonShowViewParameter_Click"/>
-            <Button x:Name="ButtonShowViewExecuteBackup" Content="Execute a backup job" HorizontalAlignment="Center" Margin="0,113,0,0" VerticalAlignment="Top" Click="ButtonShowViewExecuteBackup_Click"/>
-            <Button x:Name="ButtonShowViewRecoverBackup" Content="Recover a backup" HorizontalAlignment="Center" Margin="0,168,0,0" VerticalAlignment="Top" Click="ButtonShowViewRecoverBackup_Click"/>
-        </Grid>
+        <!-- Boutons du menu principal -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+            <!-- Bouton "Add a backup job" -->
+            <Button x:Name="ButtonShowViewAddBackup" 
+                    Content="Add a backup job" 
+                    HorizontalAlignment="Stretch" 
+                    Margin="0,10,0,0" 
+                    Click="ButtonShowViewAddBackup_Click" 
+                    Style="{StaticResource {x:Type Button}}"
+                    IsEnabled="{Binding IsButtonEnabled}"/>
 
+            <!-- Bouton "Execute a backup job" -->
+            <Button x:Name="ButtonShowViewExecuteBackup" 
+                    Content="Execute a backup job" 
+                    HorizontalAlignment="Stretch" 
+                    Margin="0,10,0,0" 
+                    Click="ButtonShowViewExecuteBackup_Click" 
+                    Style="{StaticResource {x:Type Button}}"/>
+
+            <!-- Bouton "Recover a backup" -->
+            <Button x:Name="ButtonShowViewRecoverBackup" 
+                    Content="Recover a backup" 
+                    HorizontalAlignment="Stretch" 
+                    Margin="0,10,0,0" 
+                    Click="ButtonShowViewRecoverBackup_Click" 
+                    Style="{StaticResource {x:Type Button}}"/>
+
+            <!-- Bouton "Modify parameters" -->
+            <Button x:Name="ButtonShowViewParameter" 
+                    Content="Modify parameters" 
+                    HorizontalAlignment="Stretch" 
+                    Margin="0,30,0,0" 
+                    Click="ButtonShowViewParameter_Click" 
+                    Style="{StaticResource {x:Type Button}}"/>
+        </StackPanel>
     </Grid>
 </Window>
