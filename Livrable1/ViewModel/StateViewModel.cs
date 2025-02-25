@@ -1,4 +1,6 @@
 using System.Windows;
+using Livrable1.Model;
+using System.Text.Json;
 
 //---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
@@ -17,6 +19,8 @@ namespace Livrable1.ViewModel
         public static bool IsXmlEnabled { get; set; } = false;
         public static bool IsDocxEnabled { get; set; } = false;
         public static bool IsTxtEnabled { get; set; } = false;
+        public static bool IsMkvEnabled { get; set; } = false;
+        public static bool IsJpgEnabled { get; set; } = false;
 
         // Additional state flags for JSON and XML (e.g., for logging or output options)
         public static bool IsJsonOn { get; set; } = true;
@@ -33,6 +37,16 @@ namespace Livrable1.ViewModel
             {
                 MessageBox.Show($"{LanguageManager.GetText("extension_name")} '{extension}' {LanguageManager.GetText("supp_for_encryption")}"); // Show message when the extension is disabled for encryption
             }
+        }
+
+        public static void UpdatePriorityExtension(string extension, bool isPriority)
+        {
+            PriorityExtensionManager.Instance.UpdatePriorityExtension(extension, isPriority);
+        }
+
+        public static bool IsPriorityExtension(string extension)
+        {
+            return PriorityExtensionManager.Instance.PriorityExtensions.Contains(extension.ToLower());
         }
     }
     //------------Class StateViewModel------------//

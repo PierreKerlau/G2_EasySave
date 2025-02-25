@@ -89,6 +89,7 @@
     "log_format": "Log Format",
     "format_json": "JSON Format",
     "format_xml": "XML Format",
+    "Priority_Extension": "Priority extension",
     "app_closing": "A business software is running. EasySave will now close.",
 
     "select_backup_type": "Please select a backup type.",
@@ -264,6 +265,7 @@
     "log_format": "Format des logs",
     "format_json": "Format JSON",
     "format_xml": "Format XML",
+    "Priority_Extension": "Extension prioritaires",
     "app_closing": "Un logiciel métier est en cours d'exécution. EasySave va maintenant se fermer.",
 
     "select_backup_type": "Veuillez sélectionner un type de sauvegarde.",
