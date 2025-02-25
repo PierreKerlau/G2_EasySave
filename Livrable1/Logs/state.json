@@ -1,24 +1,13 @@
 [
   {
-    "name": "zebiiii",
-    "realDirectoryPath": "D:/clonage/source",
-    "copyDirectoryPath": "D:/clonage/destination",
-    "numberfile": 2,
-    "date": "2025-02-24T11:10:52.9716803+01:00",
+    "name": "aled",
+    "realDirectoryPath": "C:/clonage/source",
+    "copyDirectoryPath": "C:/clonage/destination",
+    "numberfile": 1,
+    "date": "2025-02-24T19:09:28.1614545+01:00",
     "isActive": false,
-    "totalSize": 130,
-    "remainingFiles": 2,
-    "remainingSize": 2
-  },
-  {
-    "name": "helppppp",
-    "realDirectoryPath": "D:/clonage/source",
-    "copyDirectoryPath": "D:/clonage/destination",
-    "numberfile": 2,
-    "date": "2025-02-24T11:11:06.4928366+01:00",
-    "isActive": false,
-    "totalSize": 130,
-    "remainingFiles": 2,
-    "remainingSize": 2
+    "totalSize": 26,
+    "remainingFiles": 1,
+    "remainingSize": 1
   }
 ]
