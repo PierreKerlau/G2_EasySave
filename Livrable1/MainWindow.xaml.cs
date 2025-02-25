@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.IO;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +14,7 @@ using System.Windows.Shapes;
 using Livrable1.Model;
 using Livrable1.View;
 using Livrable1.ViewModel;
+using System.Text.Json;
 
 //---------------------View---------------------//
 namespace Livrable1
@@ -40,8 +43,8 @@ namespace Livrable1
         private void ButtonShowViewAddBackup_Click(object sender, RoutedEventArgs e)
         {
             // Check if any forbidden process is running based on settings in ProcessWatcher
-            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
             {
                 MessageBox.Show(
                     $"{LanguageManager.GetText("action_blocked_software")}",
@@ -64,8 +67,8 @@ namespace Livrable1
         private void ButtonShowViewExecuteBackup_Click(object sender, RoutedEventArgs e)
         {
             // Check if any forbidden process is running
-            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
             {
                 MessageBox.Show(
                     $"{LanguageManager.GetText("action_blocked_software")}",
@@ -88,8 +91,8 @@ namespace Livrable1
         private void ButtonShowViewRecoverBackup_Click(object sender, RoutedEventArgs e)
         {
             // Check if any forbidden process is running
-            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
             {
                 MessageBox.Show(
                     $"{LanguageManager.GetText("action_blocked_software")}",

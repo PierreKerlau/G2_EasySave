@@ -3,6 +3,7 @@ using Livrable1.Model;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml;
 
 namespace Livrable1.View
 {
@@ -35,7 +36,8 @@ namespace Livrable1.View
                 {
                     if (backup.IsSelected)
                     {
-                        viewModel.ExecuteBackup(backup, selectedType.Content.ToString()); // Execute backup for selected items
+                        // Exécute la sauvegarde pour les éléments sélectionnés
+                        viewModel.ExecuteBackup(backup, selectedType.Content.ToString());
                     }
                 }
             }

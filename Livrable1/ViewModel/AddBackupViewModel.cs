@@ -21,7 +21,9 @@ namespace Livrable1.ViewModel
     public class AddSaveViewModel
     {
         // Constructor for AddSaveViewModel
-        public AddSaveViewModel() { }
+        public AddSaveViewModel() 
+        {
+        }
 
         // List to store backups
         public List<SaveInformation> Backups { get; set; } = new List<SaveInformation>();
