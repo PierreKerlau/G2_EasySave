@@ -13,6 +13,8 @@ using System.Windows;
 using static System.Net.WebRequestMethods;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
+using System.Xml.Linq;
+using System.Text.Json;
 
 //---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
@@ -21,7 +23,9 @@ namespace Livrable1.ViewModel
     public class AddSaveViewModel
     {
         // Constructor for AddSaveViewModel
-        public AddSaveViewModel() { }
+        public AddSaveViewModel() 
+        {
+        }
 
         // List to store backups
         public List<SaveInformation> Backups { get; set; } = new List<SaveInformation>();
@@ -44,6 +48,21 @@ namespace Livrable1.ViewModel
 
             return true; // Return true if backup is successfully added
         }
+
+
+        public bool VerifAddName(string name)
+        {
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                var savedState = EtatSauvegarde.ReadState("../../../Logs/state.json"); // Lire le fichier JSON
+
+                // Vérifier si le nom existe déjà dans les sauvegardes
+                return savedState.Any(s => s.NameSave == name);
+            }
+
+            return false; // Retourne false si le nom est vide ou null
+        }
+
 
         // Collection to store file information
         public ObservableCollection<FileInformation> Files { get; set; } = new ObservableCollection<FileInformation>();
