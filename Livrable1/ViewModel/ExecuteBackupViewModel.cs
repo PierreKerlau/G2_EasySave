@@ -448,10 +448,10 @@ namespace Livrable1.ViewModel
             SaveManager.Instance.StopBackup(backup);
         }
 
-        public void DeleteBackup(SaveInformation backup)
-        {
-            SaveManager.Instance.DeleteBackup(backup);
-            Backups.Remove(backup);
-        }
+        //public void DeleteBackup(SaveInformation backup)
+        //{
+        //    SaveManager.Instance.DeleteBackup(backup);
+        //    Backups.Remove(backup);
+        //}
     }
 }

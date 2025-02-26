@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Livrable1.View"
         mc:Ignorable="d"
-        Title="ViewRecoverBackup" Height="450" Width="800" ResizeMode="CanResizeWithGrip">
+        Title="EasySave - Recover Backup" Height="450" Width="800" ResizeMode="CanResizeWithGrip"
+        Background="{StaticResource BackgroundBrush}">
     <Grid>
-        <!-- Defining rows and columns for the grid -->
+        <!-- Définition des lignes et colonnes pour la grille -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -19,68 +20,77 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Title -->
+        <!-- Titre principal -->
         <Label x:Name="LabelMainViewTitle" Content="EasySave" 
                HorizontalAlignment="Center" VerticalAlignment="Center" 
-               FontFamily="Franklin Gothic Demi" FontSize="36" 
-               Grid.Row="0" Grid.ColumnSpan="2" Margin="0,10"/>
+               FontSize="36" FontWeight="Bold" 
+               Foreground="{StaticResource PrimaryBrush}" 
+               Grid.Row="0" Grid.ColumnSpan="2" Margin="0,20"/>
+
+        <!-- Sous-titre -->
         <Label x:Name="LabelMainViewRecoverBackup" Content="Recover backup jobs" 
                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"
-               Grid.Row="0" Margin="46,66,0,0" Grid.Column="1" Grid.RowSpan="2" RenderTransformOrigin="0.183,0.614"/>
+               Grid.Row="0" Margin="50,70,0,0" Grid.Column="1" Grid.RowSpan="2"
+               Foreground="{StaticResource TextBrush}"/>
 
-        <!-- Backup selection -->
+        <!-- Sélection des sauvegardes -->
         <Label x:Name="LabelMainSelectRecoverBackup" Content="Select backup jobs to recover"
                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"
-               Grid.Row="1" Grid.Column="0" Margin="74,24,0,0" Grid.ColumnSpan="2"/>
+               Grid.Row="1" Grid.Column="0" Margin="50,20,0,0" Grid.ColumnSpan="2"
+               Foreground="{StaticResource TextBrush}"/>
 
-        <!-- StackPanel to display Checkboxes dynamically -->
+        <!-- Liste des sauvegardes à récupérer -->
         <StackPanel x:Name="BackupCheckboxesPanel" 
                     Grid.Row="1" Grid.Column="0" 
                     HorizontalAlignment="Left" VerticalAlignment="Top" 
-                    Margin="90,85,0,10">
-        <!-- CheckBoxes will be added here dynamically via C# -->
-
+                    Margin="70,60,0,10">
             <ItemsControl ItemsSource="{Binding FilesToRecover}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding FileName}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                        <CheckBox Content="{Binding FileName}" IsChecked="{Binding IsSelected, Mode=TwoWay}" 
+                                  Style="{StaticResource {x:Type CheckBox}}" Margin="0,5,0,5"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
 
-        
-
-        <!-- Choice of backup type -->
+        <!-- Choix du type de sauvegarde -->
         <Label x:Name="LabelMainBackupType" Content="Choose the backup type"
                HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18"
-               Grid.Row="1" Grid.Column="1" Margin="0,24,74,0"/>
+               Grid.Row="1" Grid.Column="1" Margin="0,20,50,0"
+               Foreground="{StaticResource TextBrush}"/>
 
-        <!-- Using Grid instead of StackPanel for dynamic layout -->
-        <Grid Grid.Row="1" Grid.Column="1" Margin="0,40,20,10">
-            <!-- Column Definitions for checkboxes -->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="399.774"/>
-                <ColumnDefinition Width="0.161"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- Backup type (Full or Differential) -->
+        <!-- Type de sauvegarde (Full ou Differential) -->
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="270,50,50,0" VerticalAlignment="Top">
             <RadioButton x:Name="FullBackupCheckBox" Content="Full Backup" 
-                      HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Margin="232,67,0,0"/>
+                          Style="{StaticResource {x:Type RadioButton}}" Margin="0,5,0,5"/>
             <RadioButton x:Name="DifferentialBackupCheckBox" Content="Differential Backup" 
-                      HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Margin="232,99,0,0"/>
-        </Grid>
+                          Style="{StaticResource {x:Type RadioButton}}" Margin="0,5,0,5"/>
+        </StackPanel>
 
-        <!-- Buttons -->
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="250,306,0,0" Grid.RowSpan="2">
-            <Button x:Name="ButtonCancel" Content="Cancel" Width="80" Height="30" 
-                    Margin="10,0" Background="#FFBD0000" Foreground="White" Click="ButtonCancel_Click"/>
-            <Button x:Name="ButtonValidate" Content="Validate" Width="80" Height="30" 
-                    Margin="10,0" Background="#FF0FB700" Foreground="White" Click="ButtonValidate_Click"/>
-            <Button x:Name="ButtonLeave" Content="Exit" Width="80" Height="30" 
-                    Margin="10,0" Click="ButtonLeave_Click"/>
+        <Label x:Name="LabelProgress" Content="0%" 
+       HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+       Grid.Row="1" Grid.Column="1" Margin="118,0,0,54" 
+       Foreground="{StaticResource TextBrush}"/>
+
+        <ProgressBar x:Name="ProgressBarRecovery" 
+             Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" 
+             Height="20" Margin="70,0,337,34" 
+             Minimum="0" Maximum="100" Value="0"
+             Foreground="{StaticResource PrimaryBrush}"/>
+
+        <!-- Boutons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" 
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Button x:Name="ButtonCancel" Content="Cancel" Width="100" Height="30" 
+                    Margin="10,0" Click="ButtonCancel_Click"
+                    Style="{StaticResource {x:Type Button}}" Background="{StaticResource AccentBrush}"/>
+            <Button x:Name="ButtonValidate" Content="Validate" Width="100" Height="30" 
+                    Margin="10,0" Click="ButtonValidate_Click"
+                    Style="{StaticResource {x:Type Button}}" Background="{StaticResource PrimaryBrush}"/>
+            <Button x:Name="ButtonLeave" Content="Exit" Width="100" Height="30" 
+                    Margin="10,0" Click="ButtonLeave_Click"
+                    Style="{StaticResource {x:Type Button}}"/>
         </StackPanel>
     </Grid>
 </Window>

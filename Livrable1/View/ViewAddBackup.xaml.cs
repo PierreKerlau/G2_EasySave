@@ -44,9 +44,12 @@ namespace Livrable1.View
         // Event handler for the leave button click
         private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
         {
-            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
-            viewMain.Show(); // Show the MainWindow
-            this.Close(); // Close the current window
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+            mainWindow.Left = this.Left;
+            mainWindow.Top = this.Top;
+            mainWindow.Show();
+            this.Close();
         }
 
         // Event handler for the first cancel button click
