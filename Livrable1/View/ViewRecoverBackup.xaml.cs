@@ -60,6 +60,10 @@ namespace Livrable1.View
             // Get the type of backup (Full or Differential)
             string backupType = FullBackupCheckBox.IsChecked == true ? "full" : "differential";
 
+            ProgressBarRecovery.Value = 0;
+            ProgressBarRecovery.Maximum = selectedFiles.Count;
+            LabelProgress.Content = "0%";
+
             // Call the ViewModel to perform the recovery
             foreach (var selectedFile in selectedFiles)
             {
@@ -68,6 +72,8 @@ namespace Livrable1.View
                 {
                     _viewModel.RecoverBackup(backupToRecover, backupType); // Call the ViewModel method to recover the backup
                 }
+                ProgressBarRecovery.Value++;
+                LabelProgress.Content = $"{(int)((ProgressBarRecovery.Value / ProgressBarRecovery.Maximum) * 100)}%";
             }
 
             MessageBox.Show(LanguageManager.GetText("recovery_completed")); // Show success message

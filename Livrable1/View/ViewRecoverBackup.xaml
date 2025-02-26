@@ -68,6 +68,17 @@
                           Style="{StaticResource {x:Type RadioButton}}" Margin="0,5,0,5"/>
         </StackPanel>
 
+        <Label x:Name="LabelProgress" Content="0%" 
+       HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+       Grid.Row="1" Grid.Column="1" Margin="118,0,0,54" 
+       Foreground="{StaticResource TextBrush}"/>
+
+        <ProgressBar x:Name="ProgressBarRecovery" 
+             Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" 
+             Height="20" Margin="70,0,337,34" 
+             Minimum="0" Maximum="100" Value="0"
+             Foreground="{StaticResource PrimaryBrush}"/>
+
         <!-- Boutons -->
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" 
                     HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">

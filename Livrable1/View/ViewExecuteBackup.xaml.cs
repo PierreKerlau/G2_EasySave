@@ -19,12 +19,6 @@ namespace Livrable1.View
             this.DataContext = viewModel; // Set the DataContext to the ViewModel
         }
 
-        // Event handler for the leave button click
-        private void ButtonLeave_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close(); // Close the current window
-        }
-
         // Event handler for the execute button click
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {

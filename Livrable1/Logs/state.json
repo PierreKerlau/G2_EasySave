@@ -1,13 +1,13 @@
 [
   {
-    "name": "Cassoulet",
-    "realDirectoryPath": "C:/clonage/source",
-    "copyDirectoryPath": "C:/clonage/destination",
-    "numberfile": 1,
-    "date": "2025-02-25T21:39:49.5470533+01:00",
+    "name": "test",
+    "realDirectoryPath": "D:/clonage/source",
+    "copyDirectoryPath": "D:/clonage/destination",
+    "numberfile": 2,
+    "date": "2025-02-26T09:59:26.7789353+01:00",
     "isActive": false,
-    "totalSize": 26,
-    "remainingFiles": 1,
-    "remainingSize": 1
+    "totalSize": 130,
+    "remainingFiles": 2,
+    "remainingSize": 2
   }
 ]
