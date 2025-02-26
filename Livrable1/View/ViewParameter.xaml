@@ -42,7 +42,7 @@
         </StackPanel>
 
         <!-- Section Extensions -->
-        <StackPanel Margin="50,300,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel Margin="50,279,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock x:Name="TextBlockExtensions" Text="Extensions to encrypt" 
                        FontWeight="Bold" Margin="0,0,0,10" 
                        Foreground="{StaticResource TextBrush}"/>
@@ -61,6 +61,10 @@
                     <CheckBox x:Name="CheckBoxTXT" Content="TXT" 
                               Margin="0,5,0,5" Checked="CheckBox_Checked_TXT" Unchecked="CheckBox_Unchecked_TXT"
                               Style="{StaticResource {x:Type CheckBox}}"/>
+                    <CheckBox x:Name="CheckBoxMKV" Content="MKV" 
+                              Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_MKV" Unchecked="CheckBox_Unchecked_Prio_MKV"
+                              Style="{StaticResource {x:Type CheckBox}}"/>
+                    
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <CheckBox x:Name="CheckBoxJSON" Content="JSON" 
@@ -71,6 +75,9 @@
                               Style="{StaticResource {x:Type CheckBox}}"/>
                     <CheckBox x:Name="CheckBoxDOCX" Content="DOCX" 
                               Margin="0,5,0,5" Checked="CheckBox_Checked_DOCX" Unchecked="CheckBox_Unchecked_DOCX"
+                              Style="{StaticResource {x:Type CheckBox}}"/>
+                    <CheckBox x:Name="CheckBoxJPG" Content="JPG" 
+                              Margin="0,5,0,5" Checked="CheckBox_Checked_JPG" Unchecked="CheckBox_Unchecked_JPG"
                               Style="{StaticResource {x:Type CheckBox}}"/>
                 </StackPanel>
             </Grid>
@@ -89,6 +96,46 @@
                          Margin="0,5,0,5" Checked="RadioButton_LogFormat_Checked" 
                          x:Name="RadioButtonLogXML"
                          Style="{StaticResource {x:Type RadioButton}}"/>
+        </StackPanel>
+
+        <StackPanel Margin="573,217,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock x:Name="TextBlockPriorityExtension" Text="Priority Extension" 
+                       FontWeight="Bold" Margin="0,0,0,10" 
+                       Foreground="{StaticResource TextBrush}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,50,0">
+                    <CheckBox x:Name="CheckBoxPrioPDF" Content="PDF" 
+                      Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_PDF" 
+                      Unchecked="CheckBox_Unchecked_Prio_PDF"/>
+                    <CheckBox x:Name="CheckBoxPrioPNG" Content="PNG" 
+                      Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_PNG" 
+                      Unchecked="CheckBox_Unchecked_Prio_PNG"/>
+                    <CheckBox x:Name="CheckBoxPrioTXT" Content="TXT" 
+                      Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_TXT" 
+                      Unchecked="CheckBox_Unchecked_Prio_TXT"/>
+                    <CheckBox x:Name="CheckBoxPrioMKV" Content="MKV" 
+                      Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_MKV" 
+                      Unchecked="CheckBox_Unchecked_Prio_MKV"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <CheckBox x:Name="CheckBoxPrioJSON" Content="JSON" 
+                      Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_JSON" 
+                      Unchecked="CheckBox_Unchecked_Prio_JSON"/>
+                    <CheckBox x:Name="CheckBoxPrioXML" Content="XML" 
+                      Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_XML" 
+                      Unchecked="CheckBox_Unchecked_Prio_XML"/>
+                    <CheckBox x:Name="CheckBoxPrioDOCX" Content="DOCX" 
+                      Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_DOCX" 
+                      Unchecked="CheckBox_Unchecked_Prio_DOCX"/>
+                    <CheckBox x:Name="CheckBoxPrioJPG" Content="JPG" 
+                      Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_JPG" 
+                      Unchecked="CheckBox_Unchecked_Prio_JPG"/>
+                </StackPanel>
+            </Grid>
         </StackPanel>
 
         <!-- Bouton Quitter -->

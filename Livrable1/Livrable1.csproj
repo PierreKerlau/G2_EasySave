@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Livrable1.logger\Livrable1.logger.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
 </Project>
