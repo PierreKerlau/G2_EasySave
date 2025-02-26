@@ -75,7 +75,7 @@
                                     </StackPanel>
                                 </Button>
 
-                                <!-- Bouton Supprimer -->
+                                <!-- Bouton Supprimer
                                 <Button Click="DeleteBackup_Click" Margin="2" Style="{StaticResource {x:Type Button}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Viewbox Width="16" Height="16">
@@ -84,7 +84,7 @@
                                             </Canvas>
                                         </Viewbox>
                                     </StackPanel>
-                                </Button>
+                                </Button> -->
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

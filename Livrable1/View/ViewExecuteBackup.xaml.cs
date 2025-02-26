@@ -104,12 +104,12 @@ namespace Livrable1.View
             }
         }
 
-        private void DeleteBackup_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
-            {
-                viewModel.DeleteBackup(selectedBackup); // Delete the selected backup
-            }
-        }
+        //private void DeleteBackup_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+        //    {
+        //        viewModel.DeleteBackup(selectedBackup); // Delete the selected backup
+        //    }
+        //}
     }
 }
