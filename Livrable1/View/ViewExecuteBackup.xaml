@@ -24,10 +24,10 @@
                   HeadersVisibility="Column"
                   IsReadOnly="False">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn x:Name="NameColumn" Header="✓" Binding="{Binding IsSelected}" Width="Auto"/>
-                <DataGridTextColumn x:Name="SourceColumn" Header="Nom" Binding="{Binding NameSave}" Width="*"/>
-                <DataGridTextColumn x:Name="DestinationColumn" Header="Source" Binding="{Binding SourcePath}" Width="*"/>
-                <DataGridTextColumn x:Name="BackupDestinationColumn" Header="Destination" Binding="{Binding DestinationPath}" Width="*"/>
+                <DataGridCheckBoxColumn x:Name="HeaderColumn" Header="✓" Binding="{Binding IsSelected}" Width="Auto"/>
+                <DataGridTextColumn x:Name="NameColumn" Header="Nom" Binding="{Binding NameSave}" Width="*"/>
+                <DataGridTextColumn x:Name="SourceColumn" Header="Source" Binding="{Binding SourcePath}" Width="*"/>
+                <DataGridTextColumn x:Name="DestinationColumn" Header="Destination" Binding="{Binding DestinationPath}" Width="*"/>
                 <DataGridTemplateColumn x:Name="ProgressColumn" Header="Progression" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -72,7 +72,7 @@ namespace Livrable1.Model
         {
             if (string.IsNullOrWhiteSpace(NameSave))
             {
-                MessageBox.Show("Le nom de la sauvegarde ne peut pas être vide.");
+                MessageBox.Show(LanguageManager.GetText("backup_name_cannot_be_empty"));
                 return false;
             }
 

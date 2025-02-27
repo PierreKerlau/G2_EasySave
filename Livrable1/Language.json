@@ -154,6 +154,7 @@
     "source_path_not_exists": "The source path does not exist.",
     "destination_path_not_exists": "The destination path does not exist.",
     "source_path_contains_no_file": "The source path does not contain any.",
+    "backup_name_cannot_be_empty": "Backup name cannot be empty.",
 
     "text_block_choose_language": "Choose Language",
     "text_block_choose_software": "Business Software",
@@ -172,7 +173,16 @@
     "combobox_differential_backup": "Differential backup",
     "column_name": "Name",
     "column_source": "Source",
-    "column_destination": "Destination"
+    "column_destination": "Destination",
+
+    "error_starting_server": "Error starting server: ",
+    "error_accepting_client": "Error accepting client: ",
+    "error_handling client": "Error handling client: "
+
+
+
+
+
 
   },
   "fr": {
@@ -330,6 +340,7 @@
     "source_path_not_exists": "Le chemin source n'existe pas.",
     "destination_path_not_exists": "Le chemin de destination n'existe pas.",
     "source_path_contains_no_file": "Le chemin source ne contient aucun fichier.",
+    "backup_name_cannot_be_empty": "Le nom de la sauvegarde ne peut pas être vide.",
 
     "text_block_choose_language": "Choisir une langue",
     "text_block_choose_software": "Logiciel métier",
@@ -348,7 +359,11 @@
     "combobox_differential_backup": "Sauvegarde différentielle",
     "column_name": "Nom",
     "column_source": "Source",
-    "column_destination": "Destination"
+    "column_destination": "Destination",
+
+    "error_starting_server": "Erreur en démarrant le serveur : ",
+    "error_accepting_client": "Erreur en acceptant le client : ",
+    "error_handling client": "Gestion des erreurs par le client : "
   }
 }
 
