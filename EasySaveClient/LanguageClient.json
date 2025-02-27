@@ -1,0 +1,14 @@
+{
+  "en": {
+    "add_backup_jobs": "Add Backup Jobs",
+    "label_backup_name": "Backup name",
+    "label_source_name": "Source path",
+    "label_destination_path": "Destination path"
+  },
+  "fr": {
+    "add_backup_jobs": "Add Backup Jobs",
+    "label_backup_name": "Backup name",
+    "label_source_name": "Source path",
+    "label_destination_path": "Destination path"
+  }
+}

@@ -59,7 +59,7 @@ namespace Livrable1.View
                 else
                 {
                     // Show error message if selections are missing
-                    MessageBox.Show("Veuillez sélectionner un type de sauvegarde.");
+                    MessageBox.Show(LanguageManager.GetText("select_backup_type"));
                 }
             }
         }

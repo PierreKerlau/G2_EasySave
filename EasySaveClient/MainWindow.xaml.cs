@@ -49,7 +49,7 @@ namespace EasySaveClient
                 // Attempt to connect to the server at localhost on port 8888
                 _tcpClient = new TcpClient("127.0.0.1", 8888); // Connect to server at port 8888
                 _networkStream = _tcpClient.GetStream(); // Get the network stream for communication
-                MessageBox.Show("Connected to the server"); // Notify the user that the connection is established
+                //MessageBox.Show("Connected to the server"); 
 
                 // Continuously read server messages in a separate thread
                 Task.Run(() => ListenForProgressUpdates()); // Start listening for server messages in the background
