@@ -19,7 +19,6 @@
           AutoGenerateColumns="False"
           Margin="50,80,50,217">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn x:Name="NameColumnExecute" Header="✓" Binding="{Binding IsSelected}"/>
                 <DataGridTextColumn x:Name="SourceColumnExecute" Header="Nom" Binding="{Binding NameSave}" Width="*"/>
                 <DataGridTextColumn x:Name="DestinationColumnExecute" Header="Source" Binding="{Binding SourcePath}" Width="*"/>
                 <DataGridTextColumn x:Name="BackupDestinationColumnExecute" Header="Destination" Binding="{Binding DestinationPath}" Width="*"/>

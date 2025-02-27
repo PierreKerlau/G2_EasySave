@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace Livrable1.ViewModel
 {
@@ -27,6 +28,7 @@ namespace Livrable1.ViewModel
         public ExecuteBackupViewModel()
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
+            Server.Instance.SendProgressUpdate(Backups.ToList());
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -109,6 +111,9 @@ namespace Livrable1.ViewModel
                 copiedSize += fileSize;
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
+
+                // Send updates to the client
+                Server.Instance.SendProgressUpdate(Backups.ToList());
             }
         }
 
@@ -151,6 +156,9 @@ namespace Livrable1.ViewModel
 
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
+
+                // Send updates to the client
+                Server.Instance.SendProgressUpdate(Backups.ToList());
             }
         }
 
