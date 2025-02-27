@@ -18,13 +18,10 @@ namespace Livrable1.Model
     // Server class is responsible for managing TCP client connections and broadcasting updates to connected clients
     public class Server
     {
-        private static Server _instance; // Static instance of the Server class to ensure only one instance exists (Singleton pattern)
-
-        private TcpListener _tcpListener; // TcpListener used to listen for incoming client connections
-
-        private bool _isRunning; // Flag to check if the server is running
-
-        private List<TcpClient> tcpClients = new List<TcpClient>(); // List to store connected TCP clients
+        private static Server _instance; // Singleton instance of Server
+        private TcpListener _tcpListener; // Listener for incoming TCP connections
+        private bool _isRunning; // Indicates if the server is running
+        private List<TcpClient> tcpClients = new List<TcpClient>(); // List of connected clients
 
         public event EventHandler ServerDisconnected; // Event to notify when the server gets disconnected
 
@@ -36,9 +33,9 @@ namespace Livrable1.Model
                 // Create a new instance if one doesn't exist
                 if (_instance == null)
                 {
-                    _instance = new Server();
+                    _instance = new Server(); // Create new instance if it doesn't exist
                 }
-                return _instance;
+                return _instance; // Return singleton instance
             }
         }
 
@@ -53,10 +50,9 @@ namespace Livrable1.Model
 
             try
             {
-                // Create and start the TCP listener on the provided port
-                _tcpListener = new TcpListener(IPAddress.Loopback, port);
-                _tcpListener.Start();
-                _isRunning = true;
+                _tcpListener = new TcpListener(IPAddress.Loopback, port); // Initialize TCP listener
+                _tcpListener.Start(); // Start listening for connections
+                _isRunning = true; // Set running state to true
                 //MessageBox.Show("Server started on port " + port);
 
                 // Start listening for incoming client connections in a separate task (thread)
@@ -64,8 +60,7 @@ namespace Livrable1.Model
             }
             catch (Exception ex)
             {
-                // Show an error message if the server fails to start
-                MessageBox.Show($"{LanguageManager.GetText("error_starting_server")}: {ex.Message}");
+                MessageBox.Show("Error starting server: " + ex.Message); // Show error message
             }
         }
 
@@ -78,6 +73,7 @@ namespace Livrable1.Model
                 {
                     // Accept an incoming client connection asynchronously
                     TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
+                  
                     // Lock the tcpClients list to ensure thread-safety when adding a new client
                     lock (tcpClients)
                     {
@@ -89,8 +85,7 @@ namespace Livrable1.Model
                 }
                 catch (Exception ex)
                 {
-                    // Show an error message if there's an issue accepting a client
-                    MessageBox.Show($"{LanguageManager.GetText("error_accepting_client")}: {ex.Message}");
+                    MessageBox.Show($"Error accepting client: {ex.Message}"); // Show error message
                 }
             }
         }
@@ -123,21 +118,19 @@ namespace Livrable1.Model
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{LanguageManager.GetText("error_handling")}: {ex.Message}");
+                Console.WriteLine($"Error handling client: {ex.Message}"); // Log error message
             }
             finally
             {
-                // Close the client connection when done
-                tcpClient.Close();
+                tcpClient.Close(); // Close the client connection
             }
         }
 
         // Method to send progress updates to the connected clients
         public void SendProgressUpdate(List<SaveInformation> Backups)
         {
-            string message = ""; // Initialize an empty message string
+            string message = "";
 
-            // Loop through the list of backups and build the message string
             foreach (var backup in Backups)
             {
                 string backupName = backup.NameSave;
@@ -145,14 +138,14 @@ namespace Livrable1.Model
                 string destinationPath = backup.DestinationPath;
                 int progress = (int)backup.Progression;
 
-                // Append the backup information to the message string
+                // Construct message for each backup
                 if (message.Length == 0)
                 {
                     message = $"{backupName}*{sourcePath}*{destinationPath}*{progress}%";
                 }
                 else
                 {
-                    message = message + "|" + $"{backupName}*{sourcePath}*{destinationPath}*{progress}%";
+                    message += "|" + $"{backupName}*{sourcePath}*{destinationPath}*{progress}%";
                 }
             }
 
@@ -166,7 +159,7 @@ namespace Livrable1.Model
             // Loop through all connected clients and send the message to each
             foreach (var client in tcpClients)
             {
-                NetworkStream networkStream = client.GetStream();
+                NetworkStream networkStream = client.GetStream(); // Get the network stream for the client
                 byte[] data = Encoding.UTF8.GetBytes(message); // Convert message to bytes
                 await networkStream.WriteAsync(data, 0, data.Length); // Send data asynchronously
             }

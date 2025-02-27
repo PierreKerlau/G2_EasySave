@@ -2,10 +2,8 @@ using System.Windows;
 using Livrable1.Model;
 using System.Text.Json;
 
-//---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
 {
-    //------------Class StateViewModel------------//
     public static class StateViewModel
     {
         // Business application states
@@ -49,6 +47,4 @@ namespace Livrable1.ViewModel
             return PriorityExtensionManager.Instance.PriorityExtensions.Contains(extension.ToLower());
         }
     }
-    //------------Class StateViewModel------------//
 }
-//---------------------ViewModel---------------------//

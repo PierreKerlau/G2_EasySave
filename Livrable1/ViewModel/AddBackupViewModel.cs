@@ -16,14 +16,12 @@ using System.Windows.Media;
 using System.Xml.Linq;
 using System.Text.Json;
 
-//---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
 {
-    //------------Class AddSaveViewModel------------//   
     public class AddSaveViewModel
     {
         // Constructor for AddSaveViewModel
-        public AddSaveViewModel() 
+        public AddSaveViewModel()
         {
         }
 
@@ -41,28 +39,32 @@ namespace Livrable1.ViewModel
                 return false; // Return false if validation fails
             }
 
+            // Calculate the total size of selected files
+            backup.RemainingSize = backup.Files.Sum(file => new FileInfo(file.FilePath).Length);
+            backup.TotalSize = backup.Files.Sum(file => new FileInfo(file.FilePath).Length);
+
             Backups.Add(backup); // Add backup to the list
-            CreationLogsSave.WriteState(Backups);
+            CreationLogsSave.WriteState(Backups); // Write the current state of backups
+
             // Save the backup in SaveManager to make it visible in ExecuteBackup
             SaveManager.Instance.AddBackup(backup);
 
             return true; // Return true if backup is successfully added
         }
 
-
+        // Method to check if the backup name already exists
         public bool VerifAddName(string name)
         {
             if (!string.IsNullOrWhiteSpace(name))
             {
-                var savedState = EtatSauvegarde.ReadState("../../../Logs/state.json"); // Lire le fichier JSON
+                var savedState = EtatSauvegarde.ReadState("../../../Logs/state.json"); // Read the JSON file
 
-                // Vérifier si le nom existe déjà dans les sauvegardes
+                // Check if the name already exists in the backups
                 return savedState.Any(s => s.NameSave == name);
             }
 
-            return false; // Retourne false si le nom est vide ou null
+            return false; // Return false if the name is empty or null
         }
-
 
         // Collection to store file information
         public ObservableCollection<FileInformation> Files { get; set; } = new ObservableCollection<FileInformation>();
@@ -93,6 +95,4 @@ namespace Livrable1.ViewModel
             save.SetSelectedFiles(selectedFiles);
         }
     }
-    //------------Class AddSaveViewModel------------//
 }
-//---------------------ViewModel---------------------//

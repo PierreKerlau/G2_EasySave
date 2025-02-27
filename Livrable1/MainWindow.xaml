@@ -8,16 +8,16 @@
         Title="EasySave - Main Menu" Height="450" Width="800"
         Background="{StaticResource BackgroundBrush}">
     <Grid>
-        <!-- Titre principal -->
+        <!-- Main title -->
         <Label x:Name="LabelMainViewTitle" Content="EasySave" 
                HorizontalAlignment="Center" VerticalAlignment="Top" 
                FontSize="36" FontWeight="Bold" 
                Foreground="{StaticResource PrimaryBrush}" 
                Margin="0,20,0,0"/>
 
-        <!-- Boutons du menu principal -->
+        <!-- Main menu buttons -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
-            <!-- Bouton "Add a backup job" -->
+            <!-- Button "Add a backup job" -->
             <Button x:Name="ButtonShowViewAddBackup" 
                     Content="Add a backup job" 
                     HorizontalAlignment="Stretch" 
@@ -26,7 +26,7 @@
                     Style="{StaticResource {x:Type Button}}"
                     IsEnabled="{Binding IsButtonEnabled}"/>
 
-            <!-- Bouton "Execute a backup job" -->
+            <!-- Button "Execute a backup job" -->
             <Button x:Name="ButtonShowViewExecuteBackup" 
                     Content="Execute a backup job" 
                     HorizontalAlignment="Stretch" 
@@ -34,7 +34,7 @@
                     Click="ButtonShowViewExecuteBackup_Click" 
                     Style="{StaticResource {x:Type Button}}"/>
 
-            <!-- Bouton "Recover a backup" -->
+            <!-- Button "Recover a backup" -->
             <Button x:Name="ButtonShowViewRecoverBackup" 
                     Content="Recover a backup" 
                     HorizontalAlignment="Stretch" 
@@ -42,7 +42,7 @@
                     Click="ButtonShowViewRecoverBackup_Click" 
                     Style="{StaticResource {x:Type Button}}"/>
 
-            <!-- Bouton "Modify parameters" -->
+            <!-- Button "Modify parameters" -->
             <Button x:Name="ButtonShowViewParameter" 
                     Content="Modify parameters" 
                     HorizontalAlignment="Stretch" 

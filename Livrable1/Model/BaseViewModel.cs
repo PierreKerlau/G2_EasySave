@@ -7,10 +7,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-//------------Model------------//
 namespace Livrable1.Model
 {
-    //------------Class BaseViewModel------------//
     public class BaseViewModel : INotifyPropertyChanged
     {
         // Event triggered when a property value changes
@@ -22,10 +20,7 @@ namespace Livrable1.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-    //------------Class BaseViewModel------------//
 
-
-    //------------Class RelayCommand------------//
     public class RelayCommand : ICommand
     {
         private readonly Action _execute; // The action to execute when the command is triggered
@@ -51,6 +46,4 @@ namespace Livrable1.Model
             remove { CommandManager.RequerySuggested -= value; }
         }
     }
-    //------------Class RelayCommand------------//
 }
-//------------Model------------//
