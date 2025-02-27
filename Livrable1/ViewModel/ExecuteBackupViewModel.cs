@@ -302,6 +302,9 @@ namespace Livrable1.ViewModel
 
         private void ExecuteDifferentialBackup(SaveInformation backup, CancellationToken token)
         {
+            backup.RemainingSize = backup.TotalSize;
+            backup.RemainingFiles = backup.NumberFile;
+
             string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
             Directory.CreateDirectory(backupFolder);
 
@@ -320,9 +323,6 @@ namespace Livrable1.ViewModel
 
             // 4 fichiers
             var selectedFiles = savedBackup.Files;
-
-            // 0 fichiers
-            //var selectedFiles = savedBackup.Files.Where(f => f.);
 
             // Vérifier si des fichiers sont sélectionnés
             if (selectedFiles.Count == 0)
@@ -371,6 +371,11 @@ namespace Livrable1.ViewModel
                 long transferTime = stopwatch.ElapsedMilliseconds;
                 
                 copiedSize += fileSize;
+
+                // Décrémentation sécurisée
+                if (backup.RemainingFiles > 0) backup.RemainingFiles--;
+                if (backup.RemainingSize >= fileSize) backup.RemainingSize -= fileSize;
+                else backup.RemainingSize = 0;
 
                 updateEtat.UpdateSaveState(backup.NameSave, file.FilePath, backup.RemainingFiles, backup.RemainingSize);
 
