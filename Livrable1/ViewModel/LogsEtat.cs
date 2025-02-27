@@ -115,36 +115,216 @@ namespace Livrable1.ViewModel
 
         public void WriteState(List<SaveInformation> saves)
         {
-            // Charger les sauvegardes existantes
-            List<SaveInformation> existingSaves = ReadState(STATE_FILE_PATH);
+            // Afficher le chemin pour débogage
+            MessageBox.Show($"Écriture dans le fichier : {STATE_FILE_PATH}");
 
-            // Ajouter les nouvelles sauvegardes sans dupliquer
-            foreach (var newSave in saves)
+            try
             {
-                if (!existingSaves.Any(s => s.NameSave == newSave.NameSave))
+                // Charger les sauvegardes existantes
+                List<SaveInformation> existingSaves = ReadState(STATE_FILE_PATH);
+                
+                // Ajouter les nouvelles sauvegardes sans dupliquer
+                foreach (var newSave in saves)
                 {
-                    existingSaves.Add(newSave);
+                    if (!existingSaves.Any(s => s.NameSave == newSave.NameSave))
+                    {
+                        existingSaves.Add(newSave);
+                    }
                 }
+
+                // Convertir en JSON et sauvegarder
+                var savesToStore = existingSaves.Select(save => new
+                {
+                    name = save.NameSave,
+                    realDirectoryPath = save.SourcePath,
+                    copyDirectoryPath = save.DestinationPath,
+                    numberFile = save.NumberFile,
+                    lastTimeStamp = save.Date,
+                    Active = save.IsActive,
+                    totalSize = save.TotalSize,
+                    remainingFiles = save.RemainingFiles,
+                    remainingSize = save.RemainingSize,
+                    files = save.Files.Select(f => f.FilePath) // Serialize the list of files
+                }).ToList();
+
+                string json = JsonSerializer.Serialize(savesToStore, new JsonSerializerOptions { WriteIndented = true });
+
+                // Vérifiez le JSON avant l'écriture
+                MessageBox.Show($"JSON à écrire : {json}");
+                File.WriteAllText(STATE_FILE_PATH, json);
             }
-
-            // Convertir en JSON et sauvegarder
-            var savesToStore = existingSaves.Select(save => new
+            catch (Exception ex)
             {
-                name = save.NameSave,
-                realDirectoryPath = save.SourcePath,
-                copyDirectoryPath = save.DestinationPath,
-                numberFile = save.NumberFile,
-                lastTimeStamp = save.Date,
-                Active = save.IsActive,
-                totalSize = save.TotalSize,
-                remainingFiles = save.RemainingFiles,
-                remainingSize = save.RemainingSize,
-                files = save.Files.Select(f => f.FilePath) // Serialize the list of files
-            }).ToList();
-
-            string json = JsonSerializer.Serialize(savesToStore, new JsonSerializerOptions { WriteIndented = true });
-
-            File.WriteAllText(STATE_FILE_PATH, json);
+                MessageBox.Show($"Erreur lors de l'écriture dans le fichier : {ex.Message}");
+            }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public void UpdateSaveState(string nameSave, string filePath, int remainingFiles, long remainingSize)
+        {
+            // Lire l'état actuel
+            List<SaveInformation> saves = ReadState(STATE_FILE_PATH);
+
+            // Trouver la sauvegarde à modifier
+            var saveToUpdate = saves.FirstOrDefault(s => s.NameSave == nameSave);
+
+            if (saveToUpdate != null)
+            {
+                // Recherche du fichier exact
+                var fileToTransfer = saveToUpdate.Files
+                    .FirstOrDefault(f => Path.GetFullPath(f.FilePath).Equals(Path.GetFullPath(filePath), StringComparison.OrdinalIgnoreCase));
+
+                if (fileToTransfer == null)
+                {
+                    MessageBox.Show($"Fichier non trouvé dans la sauvegarde : {filePath}");
+                    return;
+                }
+
+                // Récupération de la taille du fichier
+                long fileSize = 0;
+                if (File.Exists(fileToTransfer.FilePath))
+                {
+                    fileSize = new FileInfo(fileToTransfer.FilePath).Length;
+                }
+                else if (fileToTransfer.Size > 0)
+                {
+                    fileSize = fileToTransfer.Size; // Utiliser la taille stockée si elle est disponible
+                }
+                else
+                {
+                    MessageBox.Show($"Impossible d'obtenir la taille du fichier : {fileToTransfer.FilePath}");
+                }
+
+                // Décrémentation sécurisée des valeurs
+                int newRemainingFiles = saveToUpdate.RemainingFiles - 1;
+                long newRemainingSize = saveToUpdate.RemainingSize - new FileInfo(fileToTransfer.FilePath).Length;
+
+                // Vérification pour éviter d'écraser avec une ancienne valeur
+                if (newRemainingFiles > 0)
+                {
+                    saveToUpdate.RemainingFiles = newRemainingFiles;
+                }
+                else
+                {
+                    saveToUpdate.RemainingFiles = 0;
+                }
+
+                if (newRemainingSize < saveToUpdate.RemainingSize)
+                {
+                    if (newRemainingSize > 0)
+                    {
+                        saveToUpdate.RemainingSize = newRemainingSize;
+                    }
+                    else
+                    {
+                        saveToUpdate.RemainingSize = 0;
+                    }
+                }
+
+                saveToUpdate.IsActive = true;
+
+
+
+
+                // Afficher les nouvelles valeurs pour débogage
+                MessageBox.Show($"Mise à jour : RemainingFiles = {saveToUpdate.RemainingFiles}, RemainingSize = {saveToUpdate.RemainingSize}");
+
+
+
+
+                // Mise à jour du fichier JSON (sans supprimer les fichiers)
+                var savesToStore = saves.Select(save => new
+                {
+                    name = save.NameSave,
+                    realDirectoryPath = save.SourcePath,
+                    copyDirectoryPath = save.DestinationPath,
+                    numberFile = save.NumberFile,
+                    lastTimeStamp = save.Date,
+                    Active = save.IsActive,
+                    totalSize = save.TotalSize,
+                    remainingFiles = save.RemainingFiles,
+                    remainingSize = save.RemainingSize,
+                    files = save.Files.Select(f => f.FilePath) // On garde tous les fichiers
+                }).ToList();
+
+                string json = JsonSerializer.Serialize(savesToStore, new JsonSerializerOptions { WriteIndented = true });
+
+                // Vérifier le JSON avant l'écriture
+
+
+                MessageBox.Show($"JSON à écrire : {json}");
+
+
+                File.WriteAllText(STATE_FILE_PATH, json);
+            }
+            else
+            {
+                MessageBox.Show($"Aucune sauvegarde trouvée avec le nom : {nameSave}");
+            }
+        }
+
+
+
+
+
+
+
+
+        public void UpdateActive(string nameSave)
+        {
+            // Lire l'état actuel
+            List<SaveInformation> saves = ReadState(STATE_FILE_PATH);
+
+            // Trouver la sauvegarde à modifier
+            var saveToUpdate = saves.FirstOrDefault(s => s.NameSave == nameSave);
+
+            if (saveToUpdate != null)
+            {
+                saveToUpdate.IsActive = false;
+
+                // Afficher les nouvelles valeurs pour débogage
+                MessageBox.Show($"Mise à jour : RemainingFiles = {saveToUpdate.RemainingFiles}, RemainingSize = {saveToUpdate.RemainingSize}");
+
+                // Mise à jour du fichier JSON (sans supprimer les fichiers)
+                var savesToStore = saves.Select(save => new
+                {
+                    name = save.NameSave,
+                    realDirectoryPath = save.SourcePath,
+                    copyDirectoryPath = save.DestinationPath,
+                    numberFile = save.NumberFile,
+                    lastTimeStamp = save.Date,
+                    Active = save.IsActive,
+                    totalSize = save.TotalSize,
+                    remainingFiles = save.RemainingFiles,
+                    remainingSize = save.RemainingSize,
+                    files = save.Files.Select(f => f.FilePath) // On garde tous les fichiers
+                }).ToList();
+
+                string json = JsonSerializer.Serialize(savesToStore, new JsonSerializerOptions { WriteIndented = true });
+
+                // Vérifier le JSON avant l'écriture
+                MessageBox.Show($"JSON à écrire : {json}");
+                File.WriteAllText(STATE_FILE_PATH, json);
+            }
+            else
+            {
+                MessageBox.Show($"Aucune sauvegarde trouvée avec le nom : {nameSave}");
+            }
+        }
+
+
+
+
     }
 }

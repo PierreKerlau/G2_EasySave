@@ -28,6 +28,33 @@ namespace Livrable1.ViewModel
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
             FilesToRecover = new ObservableCollection<BackupFileViewModel>();
+            LoadSaves();
+        }
+
+        public void LoadSaves()
+        {
+            // Vérifier si le chemin source existe
+            try
+            {
+                string jsonFilePath = "../../../Logs/state.json"; // Remplace par le chemin de ton fichier JSON
+
+                if (System.IO.File.Exists(jsonFilePath))
+                {
+                    var saveList = EtatSauvegarde.ReadState(jsonFilePath);
+                    foreach (var save in saveList)
+                    {
+                        // Vérifier si la sauvegarde existe déjà dans la collection
+                        if (!Backups.Any(b => b.NameSave == save.NameSave))
+                        {
+                            Backups.Add(save); // Ajouter seulement si elle n'existe pas déjà
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement de la liste : {ex.Message}");
+            }
         }
 
         // Recover selected files (from destination folder to source folder)

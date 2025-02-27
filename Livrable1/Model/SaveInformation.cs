@@ -8,15 +8,8 @@ using System.Windows;
 namespace Livrable1.Model
 {
     //------------Class SaveInformation------------//
-    public class SaveInformation : INotifyPropertyChanged
+    public class SaveInformation : BaseViewModel
     {
-        // Property change notification
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         // Properties for Save Information
         public string NameSave { get; set; }
         public string SourcePath { get; set; }
@@ -64,7 +57,6 @@ namespace Livrable1.Model
             RemainingSize = remainingSize;
             Files = filesbackup ?? new List<FileInformation>();
 
-            //LoadFiles(); // Load files during initialization
         }
 
         // Validate the paths for source and destination

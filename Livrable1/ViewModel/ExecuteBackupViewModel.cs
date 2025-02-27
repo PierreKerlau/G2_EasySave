@@ -16,15 +16,13 @@ using Livrable1.logger;
 
 namespace Livrable1.ViewModel
 {
-    public class ExecuteBackupViewModel : INotifyPropertyChanged
+    public class ExecuteBackupViewModel : BaseViewModel
     {
         public int TailleLimiteKo { get; set; } = 1024;
         public ObservableCollection<SaveInformation> Backups { get; set; }
         private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens = new();
         private readonly Dictionary<string, ManualResetEventSlim> _pauseEvents = new();
-        private readonly SemaphoreSlim _largeFileSemaphore = new(1, 1); 
-
-        public event PropertyChangedEventHandler? PropertyChanged;
+        private readonly SemaphoreSlim _largeFileSemaphore = new(1, 1);
 
         public ExecuteBackupViewModel()
         {
@@ -58,11 +56,6 @@ namespace Livrable1.ViewModel
             {
                 MessageBox.Show($"Erreur lors du chargement de la liste : {ex.Message}");
             }
-        }
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void ExecuteBackup(SaveInformation backup, string backupType)
@@ -248,6 +241,9 @@ namespace Livrable1.ViewModel
 
         private void ExecuteFullBackup(SaveInformation backup, CancellationToken token)
         {
+            backup.RemainingSize = backup.TotalSize;
+            backup.RemainingFiles = backup.NumberFile;
+
             string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
             Directory.CreateDirectory(backupFolder);
 
@@ -261,8 +257,8 @@ namespace Livrable1.ViewModel
             }
 
             var selectedFiles = savedBackup.Files;
-
-            if (selectedFiles.Count == 0)
+            
+            if (selectedFiles == null || selectedFiles.Count == 0)
             {
                 MessageBox.Show("Aucun fichier sélectionné pour la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -271,13 +267,17 @@ namespace Livrable1.ViewModel
             long totalSize = selectedFiles.Sum(f => new FileInfo(f.FilePath).Length);
             long copiedSize = 0;
 
-            foreach (var file in selectedFiles)
+            // Mise à jour de l'état après la suppression du fichier
+            EtatSauvegarde updateEtat = new EtatSauvegarde();
+
+            foreach (var file in selectedFiles.ToList()) // Copie pour éviter les erreurs de modification de collection
             {
                 token.ThrowIfCancellationRequested();
                 _pauseEvents[backup.NameSave].Wait(token);
 
                 string destFile = Path.Combine(backupFolder, file.FileName);
                 long fileSize = new FileInfo(file.FilePath).Length;
+
 
                 if (fileSize > TailleLimiteKo * 1024)
                 {
@@ -296,6 +296,7 @@ namespace Livrable1.ViewModel
                         _largeFileSemaphore.Release();
                     }
                 }
+                
                 stopwatch.Stop();
                 long transferTime = stopwatch.ElapsedMilliseconds;
 
@@ -303,17 +304,34 @@ namespace Livrable1.ViewModel
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
 
+                // Décrémentation sécurisée
+                if (backup.RemainingFiles > 0) backup.RemainingFiles--;
+                if (backup.RemainingSize >= fileSize) backup.RemainingSize -= fileSize;
+                else backup.RemainingSize = 0;
+
+                // Vérification et mise à jour de l'état de sauvegarde
+                updateEtat.UpdateSaveState(backup.NameSave, file.FilePath, backup.RemainingFiles, backup.RemainingSize);
+
+                
                 // Send updates to the client
                 Server.Instance.SendProgressUpdate(Backups.ToList());
-
+                
+                // Log de l'opération de sauvegarde
                 Logger logger = new Logger();
                 logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
-                    new FileInfo(file.FilePath).Length, transferTime, 0, StateViewModel.IsJsonOn);
+                    fileSize, transferTime, 0, StateViewModel.IsJsonOn);
             }
+
+            updateEtat.UpdateActive(backup.NameSave);
         }
+
+
 
         private void ExecuteDifferentialBackup(SaveInformation backup, CancellationToken token)
         {
+            backup.RemainingSize = backup.TotalSize;
+            backup.RemainingFiles = backup.NumberFile;
+
             string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
             Directory.CreateDirectory(backupFolder);
 
@@ -342,6 +360,8 @@ namespace Livrable1.ViewModel
 
             long totalSize = backup.Files.Sum(f => new FileInfo(f.FilePath).Length);
             long copiedSize = 0;
+
+            EtatSauvegarde updateEtat = new EtatSauvegarde();
 
             foreach (var file in backup.Files)
             {
@@ -381,6 +401,13 @@ namespace Livrable1.ViewModel
                     copiedSize += fileSize;
                     backup.Progression = (int)((double)copiedSize / totalSize * 100);
                     OnPropertyChanged(nameof(backup.Progression));
+                    
+                    // Décrémentation sécurisée
+                    if (backup.RemainingFiles > 0) backup.RemainingFiles--;
+                    if (backup.RemainingSize >= fileSize) backup.RemainingSize -= fileSize;
+                    else backup.RemainingSize = 0;
+
+                    updateEtat.UpdateSaveState(backup.NameSave, file.FilePath, backup.RemainingFiles, backup.RemainingSize);
 
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
@@ -394,6 +421,8 @@ namespace Livrable1.ViewModel
                         fileSize, transferTime, 0, StateViewModel.IsJsonOn);
                 }
             }
+
+            updateEtat.UpdateActive(backup.NameSave);
         }
 
         private void CopyOrEncryptFile(string sourceFile, string destinationFile)
