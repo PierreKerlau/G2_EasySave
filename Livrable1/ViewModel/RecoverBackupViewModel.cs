@@ -93,64 +93,44 @@ namespace Livrable1.ViewModel
             {
                 MessageBox.Show($"{LanguageManager.GetText("error_during_recovery")} {ex.Message}");
             }
+        }
+        private void CopyOrDecryptFile(string sourceFile, string destinationFile)
+        {
+            string extension = Path.GetExtension(sourceFile).ToLower();
+            bool shouldEncrypt = (StateViewModel.IsPdfEnabled && extension == ".pdf") ||
+                                 (StateViewModel.IsTxtEnabled && extension == ".txt") ||
+                                 (StateViewModel.IsPngEnabled && extension == ".png") ||
+                                 (StateViewModel.IsJsonEnabled && extension == ".json") ||
+                                 (StateViewModel.IsXmlEnabled && extension == ".xml") ||
+                                 (StateViewModel.IsDocxEnabled && extension == ".docx") ||
+                                 (StateViewModel.IsMkvEnabled && extension == ".mkv") ||
+                                 (StateViewModel.IsJpgEnabled && extension == ".jpg");
 
-            try
+            if (shouldEncrypt)
             {
-                // Select only files marked for recovery in the GUI
-                var selectedFiles = FilesToRecover
-                    .Where(f => f.IsSelected)
-                    .Select(f => f.FileName) // Assume that the file name is in the CheckBox content
-                    .ToList();
-
-                foreach (var fileName in selectedFiles)
+                try
                 {
-                    string sourceFile = Path.Combine(sourceDirectory, fileName);
-                    string recoverPath = Path.Combine(destinationFolder, fileName);
-                    string extension = Path.GetExtension(fileName).ToLower();
-
-                    bool shouldEncrypt = (StateViewModel.IsPdfEnabled && extension == ".pdf") ||
-                                        (StateViewModel.IsTxtEnabled && extension == ".txt") ||
-                                        (StateViewModel.IsPngEnabled && extension == ".png") ||
-                                        (StateViewModel.IsJsonEnabled && extension == ".json") ||
-                                        (StateViewModel.IsXmlEnabled && extension == ".xml") ||
-                                        (StateViewModel.IsDocxEnabled && extension == ".docx") ||
-                                        (StateViewModel.IsMkvEnabled && extension == ".mkv") ||
-                                        (StateViewModel.IsJpgEnabled && extension == ".jpg");
-
-                    if (shouldEncrypt)
+                    string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
+                    using (Process cryptoProcess = new Process())
                     {
-                        try
-                        {
-                            string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
-
-                            using (Process cryptoProcess = new Process())
-                            {
-                                cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
-                                cryptoProcess.StartInfo.Arguments = $"\"{recoverPath}\" \"{sourceFile}\" \"{key}\"";
-                                cryptoProcess.StartInfo.UseShellExecute = true;
-                                cryptoProcess.StartInfo.RedirectStandardError = false;
-
-                                cryptoProcess.Start();
-                                cryptoProcess.WaitForExit();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"{LanguageManager.GetText("error_during_encryption")}: {ex.Message}");
-                        }
-                    }
-                    else
-                    {
-                        File.Copy(recoverPath, sourceFile, true);
-                        MessageBox.Show($"{LanguageManager.GetText("simple_copy_of")} '{fileName}'");
+                        cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                        cryptoProcess.StartInfo.Arguments = $"\"{sourceFile}\" \"{destinationFile}\" \"{key}\"";
+                        cryptoProcess.StartInfo.UseShellExecute = true;
+                        cryptoProcess.Start();
+                        cryptoProcess.WaitForExit();
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"{LanguageManager.GetText("error_encryption")}: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"{LanguageManager.GetText("error_encryption")}: {ex.Message}");
+                File.Copy(sourceFile, destinationFile, true);
             }
         }
+
 
         // Function for copying the entire contents of one folder to another, with management of recent files for differential backup
         private void CopyDirectory(string sourceDir, string destDir, bool overwrite)
@@ -166,7 +146,7 @@ namespace Livrable1.ViewModel
             {
                 string destFile = Path.Combine(destDir, Path.GetFileName(file));
 
-                // For differential backup, only copy if the source file is older.
+                // Pour differential backup, only copy if the source file is older.
                 if (!overwrite)
                 {
                     if (File.Exists(destFile))
@@ -177,19 +157,19 @@ namespace Livrable1.ViewModel
                         if (sourceLastModified > destLastModified)
                         {
                             // Copy only if the file is more recent
-                            File.Copy(file, destFile, true);
+                            CopyOrDecryptFile(file, destFile);
                         }
                     }
                     else
                     {
                         // Copy if the file does not exist in the destination folder
-                        File.Copy(file, destFile, true);
+                        CopyOrDecryptFile(file, destFile);
                     }
                 }
                 else
                 {
                     // Copy all files unconditionally for full backup
-                    File.Copy(file, destFile, true);
+                    CopyOrDecryptFile(file, destFile);
                 }
             }
 

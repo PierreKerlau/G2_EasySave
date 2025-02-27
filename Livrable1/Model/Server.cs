@@ -1,96 +1,159 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Threading;
-//using System.Net.Sockets;
-//using System.Net;
-//using System.IO;
-//using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Net.Sockets;
+using System.Net;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Net.Http;
+using System.Windows.Interop;
 
-//namespace Livrable1.Model
-//{
-//    public class Server
-//    {
-//        private static Server _instance;
+namespace Livrable1.Model
+{
+    public class Server
+    {
+        private static Server _instance;
 
-//        private TcpListener _tcpListener;
-//        private bool _isRunning;
+        private TcpListener _tcpListener;
 
-//        // Private constructor to prevent direct instantiation
-//        //private Server() { }
+        private bool _isRunning;
 
-//        public static Server Instance
-//        {
-//            get
-//            {
-//                if (_instance == null)
-//                {
-//                    _instance = new Server();
-//                }
-//                return _instance;
-//            }
-//        }
+        private List<TcpClient> tcpClients = new List<TcpClient>();
 
-//        // Method to start the server
-//        public void StartServer(int port)
-//        {
-//            _tcpListener = new TcpListener(IPAddress.Any, port);
-//            _tcpListener.Start();
-//            _isRunning = true;
-//            Console.WriteLine("Server strated on port " + port);
+        public static Server Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Server();
+                }
+                return _instance;
+            }
+        }
 
-//            // Listens for incoming connections in a separate thread
-//            Task.Run(() => ListenForClients());
-//        }
+        // Method to start the server
+        public void StartServer(int port)
+        {
+            if (_isRunning)
+            {
+                return; // Server is not restarted if it is already started
+            }
 
-//        private async Task ListenForClients()
-//        {
-//            while (_isRunning)
-//            {
-//                // Accepts new connection
-//                TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
+            try
+            {
+                _tcpListener = new TcpListener(IPAddress.Loopback, port);
+                _tcpListener.Start();
+                _isRunning = true;
+                MessageBox.Show("Server strated on port " + port);
 
-//                // Starts a new thread to manage communication with this client
-//                Task.Run(() => HandleClient(tcpClient));
-//            }
-//        }
+                // Listens for incoming connections in a separate thread
+                Task.Run(() => ListenForClients());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error starting server: " + ex.Message);
+            }
+        }
 
-//        private async Task HandleClient(TcpClient client)
-//        {
-//            Console.WriteLine("Client connected");
+        private async Task ListenForClients()
+        {
+            while (_isRunning)
+            {
+                try
+                {
+                    // Wait for a client to connect
+                    TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
+                    //MessageBox.Show("Client connected");
+                    lock (tcpClients)
+                    {
+                        tcpClients.Add(tcpClient);
+                    }
 
-//            // Obtains the client's data stream
-//            NetworkStream stream = client.GetStream();
+                    // Start handling the client in a new task
+                    Task.Run(() => HandleClient(tcpClient));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error accepting client: {ex.Message}");
+                }
+            }
+        }
 
-//            byte[] buffer = new byte[1024];
-//            int bytesRead;
+        private async Task HandleClient(TcpClient tcpClient)
+        {
+            try
+            {
+                NetworkStream networkStream = tcpClient.GetStream();
+                byte[] buffer = new byte[1024];
 
-//            // Receives data and manages the communication
-//            while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
-//            {
-//                string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-//                Console.WriteLine("Message from client: " + message);
+                Broadcast("test");
 
-//                // Sending of progression
-//                await SendProgressUpdate(stream, "Backup1", 50); // EXEMPLE
-//            }
-//            client.Close();
-//        }
+                //Loop to listen for messages from the client
+                while (true)
+                {
+                    int bytesRead = await networkStream.ReadAsync(buffer, 0, buffer.Length);
+                    if (bytesRead == 0)
+                    {
+                        break;
+                    }
 
-//        private async Task SendProgressUpdate(NetworkStream stream, string backupName, int progress)
-//        {
-//            string message = $"{backupName}:{progress}%";
-//            byte[] data = Encoding.UTF8.GetBytes(message);
-//            await stream.WriteAsync(data, 0, data.Length);
-//        }
+                    string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    Console.WriteLine($"Message from client: {message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error handling client: {ex.Message}");
+            }
+            finally
+            {
+                tcpClient.Close();
+            }
+        }
 
-//        public void StopServer()
-//        {
-//            _isRunning = false;
-//            _tcpListener.Stop();
-//            Console.WriteLine("Server stopped");
-//        }
-//    }
-//}
+        public void SendProgressUpdate(List<SaveInformation> Backups)
+        { 
+
+            string message = "";
+            foreach (var backup in Backups)
+            {
+                string backupName = backup.NameSave;
+                string sourcePath = backup.SourcePath;
+                string destinationPath = backup.DestinationPath;
+                int progress = (int)backup.Progression;
+
+                if (message.Length == 0)
+                {
+                    message = $"{backupName}*{sourcePath}*{destinationPath}*{progress}%";
+                }
+                else
+                {
+                    message = message + "|" + $"{backupName}*{sourcePath}*{destinationPath}*{progress}%";
+                }
+                
+            }
+            Broadcast(message); // Send the data to the connected clients
+        }
+
+        public async void Broadcast(string message)
+        {
+            foreach (var client in tcpClients)
+            {
+                NetworkStream networkStream = client.GetStream();
+                byte[] data = Encoding.UTF8.GetBytes(message);
+                await networkStream.WriteAsync(data, 0, data.Length);
+            }
+        }
+        public void StopServer()
+        {
+            _isRunning = false;
+            _tcpListener.Stop();
+            Console.WriteLine("Server stopped");
+        }
+    }
+}

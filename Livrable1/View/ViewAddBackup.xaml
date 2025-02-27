@@ -5,60 +5,102 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Livrable1.View"
         mc:Ignorable="d"
-        Title="ViewAddBackup" Height="450" Width="800">
-
-
-
+        Title="EasySave - Add Backup" Height="450" Width="800"
+        Background="{StaticResource BackgroundBrush}">
     <Grid>
-        <Grid>
-            <!-- Validate First Condition -->
-            <Button x:Name="ButtonValidate" Content="Validate" HorizontalAlignment="Left" Margin="265,160,0,0" VerticalAlignment="Top" Click="FirstValidateAddBackup" Background="#FF0FB700" Foreground="White" Width="60"/>
-            <!-- Cancel First Condition -->
-            <Button x:Name="ButtonCancel" Content="Cancel" HorizontalAlignment="Left" Margin="475,160,0,0" VerticalAlignment="Top" Click="FirstCancelAddBackups_Click" Background="#FFBD0000" Foreground="White" Width="60"/>
-            <!-- Leave -->
-            <Button x:Name="ButtonLeave" Content="Exit" HorizontalAlignment="Left" Margin="716,370,0,0" VerticalAlignment="Top" Click="ButtonLeave_Click_1"/>
-            <!-- Validate Second Condition -->
-            <Button x:Name="ButtonValidate2" Content="Validate" HorizontalAlignment="Left" Margin="265,370,0,0" VerticalAlignment="Top" Click="SecondValidateAddBackup" Background="#FF0FB700" Foreground="White" Width="60"/>
-            <!-- Cancel Second Condition -->
-            <Button x:Name="ButtonCancel2" Content="Cancel" HorizontalAlignment="Left" Margin="475,370,0,0" VerticalAlignment="Top" Click="SecondCancelAddBackups" Background="#FFBD0000" Foreground="White" Width="60"/>
+        <!-- Titre principal -->
+        <Label x:Name="LabelMainViewTitle" Content="EasySave" 
+               HorizontalAlignment="Center" VerticalAlignment="Top" 
+               FontSize="36" FontWeight="Bold" 
+               Foreground="{StaticResource PrimaryBrush}" 
+               Margin="0,20,0,0"/>
 
+        <!-- Sous-titre -->
+        <Label x:Name="LabelTitleAddBackup" Content="Add Backup Jobs" 
+               HorizontalAlignment="Center" VerticalAlignment="Top" 
+               FontSize="18" Foreground="{StaticResource TextBrush}" 
+               Margin="0,80,0,0"/>
 
-            <!-- TextBlock Name -->
-            <TextBox x:Name="txtNameSave" Text="{Binding NameSave, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="100,120,0,0"/>
-            <!-- TextBlock SourcePath -->
-            <TextBox x:Name="txtSourcePath" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="310,120,0,0"/>
-            <!-- TextBlock DestinationPath -->
-            <TextBox x:Name="txtDestinationPath" Text="{Binding DestinationPath, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="520,120,0,0"/>
+        <!-- Champs de saisie -->
+        <Grid Margin="50,120,50,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <!-- Nom de la sauvegarde -->
+            <StackPanel Grid.Column="0">
+                <Label x:Name="LabelBackupName" Content="Backup name" 
+                       FontWeight="Bold" Foreground="{StaticResource TextBrush}" 
+                       Margin="0,0,0,5"/>
+                <TextBox x:Name="txtNameSave" Text="{Binding NameSave, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource {x:Type TextBox}}" Width="180"/>
+            </StackPanel>
 
-            <!-- List Files -->
-            <Grid Margin="100,200,100,80">
-                <ListView x:Name="ListFiles" ItemsSource="{Binding Files}" SelectionMode="Multiple" MaxHeight="300">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="5">
-                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="5"/>
-                                <Image Source="{Binding FileIcon}" Width="20" Height="20" Margin="5"/>
-                                <TextBlock Text="{Binding FileName}" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-            <Label x:Name="LabelBackupName" Content="Backup name" HorizontalAlignment="Left" Margin="100,94,0,0" VerticalAlignment="Top" Width="180"/>
-            <Label x:Name="LabelSourcePath" Content="Source path" HorizontalAlignment="Center" Margin="0,94,0,0" VerticalAlignment="Top" Width="180"/>
-            <Label x:Name="LabelDestinationPath" Content="Destination path" HorizontalAlignment="Left" Margin="520,94,0,0" VerticalAlignment="Top" Width="180"/>
+            <!-- Chemin source -->
+            <StackPanel Grid.Column="1" Margin="20,0,20,0">
+                <Label x:Name="LabelSourcePath" Content="Source path" 
+                       FontWeight="Bold" Foreground="{StaticResource TextBrush}" 
+                       Margin="0,0,0,5"/>
+                <TextBox x:Name="txtSourcePath" Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource {x:Type TextBox}}" Width="180"/>
+            </StackPanel>
 
-
+            <!-- Chemin de destination -->
+            <StackPanel Grid.Column="2">
+                <Label x:Name="LabelDestinationPath" Content="Destination path" 
+                       FontWeight="Bold" Foreground="{StaticResource TextBrush}" 
+                       Margin="0,0,0,5"/>
+                <TextBox x:Name="txtDestinationPath" Text="{Binding DestinationPath, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource {x:Type TextBox}}" Width="180"/>
+            </StackPanel>
         </Grid>
 
-        <Grid Margin="0,0,0,346">
-            <Label x:Name="LabelMainViewTitle" Content="EasySave" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Franklin Gothic Demi" FontSize="36"/>
+        <!-- Liste des fichiers -->
+        <Grid Margin="50,200,50,100">
+            <ListView x:Name="ListFiles" ItemsSource="{Binding Files}" SelectionMode="Multiple" MaxHeight="300"
+                      Background="White" BorderBrush="{StaticResource SecondaryBrush}" BorderThickness="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="5"
+                                      Style="{StaticResource {x:Type CheckBox}}"/>
+                            <Image Source="{Binding FileIcon}" Width="20" Height="20" Margin="5"/>
+                            <TextBlock Text="{Binding FileName}" VerticalAlignment="Center" 
+                                       Foreground="{StaticResource TextBrush}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
+        <!-- Boutons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <!-- Bouton Valider (Première condition) -->
+            <Button x:Name="ButtonValidate" Content="Validate" Width="100" Height="30" 
+                    Margin="10,0" Click="FirstValidateAddBackup"
+                    Style="{StaticResource {x:Type Button}}" Background="{StaticResource PrimaryBrush}"/>
 
-        <Label x:Name="LabelTitleAddBackup" Content="Add Backup Jobs" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <!-- Bouton Annuler (Première condition) -->
+            <Button x:Name="ButtonCancel" Content="Cancel" Width="100" Height="30" 
+                    Margin="10,0" Click="FirstCancelAddBackups_Click"
+                    Style="{StaticResource {x:Type Button}}" Background="{StaticResource AccentBrush}"/>
 
+            <!-- Bouton Valider (Deuxième condition) -->
+            <Button x:Name="ButtonValidate2" Content="Validate" Width="100" Height="30" 
+                    Margin="10,0" Click="SecondValidateAddBackup"
+                    Style="{StaticResource {x:Type Button}}" Background="{StaticResource PrimaryBrush}"/>
+
+            <!-- Bouton Annuler (Deuxième condition) -->
+            <Button x:Name="ButtonCancel2" Content="Cancel" Width="100" Height="30" 
+                    Margin="10,0" Click="SecondCancelAddBackups"
+                    Style="{StaticResource {x:Type Button}}" Background="{StaticResource AccentBrush}"/>
+
+            <!-- Bouton Quitter -->
+            <Button x:Name="ButtonLeave" Content="Exit" Width="100" Height="30" 
+                    Margin="10,0" Click="ButtonLeave_Click_1"
+                    Style="{StaticResource {x:Type Button}}"/>
+        </StackPanel>
     </Grid>
-
 </Window>

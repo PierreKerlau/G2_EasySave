@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Xml;
 using Livrable1.logger;
@@ -26,6 +27,9 @@ namespace Livrable1.ViewModel
         public ExecuteBackupViewModel()
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
+
+            Server.Instance.SendProgressUpdate(Backups.ToList());
+
             LoadSaves();
         }
         public void LoadSaves()
@@ -253,6 +257,7 @@ namespace Livrable1.ViewModel
             }
 
             var selectedFiles = savedBackup.Files;
+            
             if (selectedFiles == null || selectedFiles.Count == 0)
             {
                 MessageBox.Show("Aucun fichier sélectionné pour la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -273,8 +278,25 @@ namespace Livrable1.ViewModel
                 string destFile = Path.Combine(backupFolder, file.FileName);
                 long fileSize = new FileInfo(file.FilePath).Length;
 
+
+                if (fileSize > TailleLimiteKo * 1024)
+                {
+                    _largeFileSemaphore.Wait(token);
+                }
+
                 var stopwatch = Stopwatch.StartNew();
-                CopyOrEncryptFile(file.FilePath, destFile);
+                try
+                {
+                    CopyOrEncryptFile(file.FilePath, destFile);
+                }
+                finally
+                {
+                    if (fileSize > TailleLimiteKo * 1024)
+                    {
+                        _largeFileSemaphore.Release();
+                    }
+                }
+                
                 stopwatch.Stop();
                 long transferTime = stopwatch.ElapsedMilliseconds;
 
@@ -290,6 +312,10 @@ namespace Livrable1.ViewModel
                 // Vérification et mise à jour de l'état de sauvegarde
                 updateEtat.UpdateSaveState(backup.NameSave, file.FilePath, backup.RemainingFiles, backup.RemainingSize);
 
+                
+                // Send updates to the client
+                Server.Instance.SendProgressUpdate(Backups.ToList());
+                
                 // Log de l'opération de sauvegarde
                 Logger logger = new Logger();
                 logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
@@ -300,6 +326,7 @@ namespace Livrable1.ViewModel
         }
 
 
+
         private void ExecuteDifferentialBackup(SaveInformation backup, CancellationToken token)
         {
             backup.RemainingSize = backup.TotalSize;
@@ -308,27 +335,27 @@ namespace Livrable1.ViewModel
             string backupFolder = Path.Combine(backup.DestinationPath, backup.NameSave);
             Directory.CreateDirectory(backupFolder);
 
-            // Lire l'état à partir du JSON
-            var savedState = EtatSauvegarde.ReadState("../../../Logs/state.json"); // Appel statique
+            // Read the state from the JSON file
+            var savedState = EtatSauvegarde.ReadState("../../../Logs/state.json");
 
-            // Trouver le bon enregistrement basé sur le nom de sauvegarde
+            // Find the corresponding backup record based on the backup name
             var savedBackup = savedState.FirstOrDefault(s => s.NameSave == backup.NameSave);
 
-            // Vérifier si un enregistrement a été trouvé
+            // Check if a record was found
             if (savedBackup == null)
             {
-                MessageBox.Show("Aucun enregistrement de sauvegarde trouvé.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("No backup record found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            // 4 fichiers
+            // Get the list of files to back up
             var selectedFiles = savedBackup.Files;
 
-            // Vérifier si des fichiers sont sélectionnés
+            // Check if any files are selected
             if (selectedFiles.Count == 0)
             {
-                MessageBox.Show("Aucun fichier sélectionné pour la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                return; // Quitter la méthode si aucun fichier n'est sélectionné
+                MessageBox.Show("No files selected for backup.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             long totalSize = backup.Files.Sum(f => new FileInfo(f.FilePath).Length);
@@ -344,49 +371,55 @@ namespace Livrable1.ViewModel
                 string destFile = Path.Combine(backupFolder, file.FileName);
                 long fileSize = new FileInfo(file.FilePath).Length;
 
+                // Check if the file needs to be backed up (new or modified)
                 if (!File.Exists(destFile) || File.GetLastWriteTime(file.FilePath) > File.GetLastWriteTime(destFile))
                 {
-                // long fileSize = new FileInfo(file.FilePath).Length;
-                
-                if (fileSize > TailleLimiteKo)
-                {
-                    _largeFileSemaphore.Wait(token);
-                }
-                
-                var stopwatch = Stopwatch.StartNew();
-                
-                try
-                {
-                    CopyOrEncryptFile(file.FilePath, destFile);
-                }
-                finally
-                {
-                    if (fileSize > TailleLimiteKo)
+                    // Acquire the semaphore for large files
+                    if (fileSize > TailleLimiteKo * 1024)
                     {
-                        _largeFileSemaphore.Release();
+                        _largeFileSemaphore.Wait(token);
                     }
-                }
-                
-                stopwatch.Stop();
-                long transferTime = stopwatch.ElapsedMilliseconds;
-                
-                copiedSize += fileSize;
 
-                // Décrémentation sécurisée
-                if (backup.RemainingFiles > 0) backup.RemainingFiles--;
-                if (backup.RemainingSize >= fileSize) backup.RemainingSize -= fileSize;
-                else backup.RemainingSize = 0;
+                    var stopwatch = Stopwatch.StartNew();
+                    try
+                    {
+                        // Copy or encrypt the file
+                        CopyOrEncryptFile(file.FilePath, destFile);
+                    }
+                    finally
+                    {
+                        // Release the semaphore for large files
+                        if (fileSize > TailleLimiteKo * 1024)
+                        {
+                            _largeFileSemaphore.Release();
+                        }
+                    }
+                    stopwatch.Stop();
+                    long transferTime = stopwatch.ElapsedMilliseconds;
 
-                updateEtat.UpdateSaveState(backup.NameSave, file.FilePath, backup.RemainingFiles, backup.RemainingSize);
+                    // Update the copied size and progress
+                    copiedSize += fileSize;
+                    backup.Progression = (int)((double)copiedSize / totalSize * 100);
+                    OnPropertyChanged(nameof(backup.Progression));
+                    
+                    // Décrémentation sécurisée
+                    if (backup.RemainingFiles > 0) backup.RemainingFiles--;
+                    if (backup.RemainingSize >= fileSize) backup.RemainingSize -= fileSize;
+                    else backup.RemainingSize = 0;
 
-                // Log the backup operation
-                Logger logger = new Logger();
-                logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
-                    fileSize, transferTime, 0, StateViewModel.IsJsonOn);
-                }
+                    updateEtat.UpdateSaveState(backup.NameSave, file.FilePath, backup.RemainingFiles, backup.RemainingSize);
 
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
+
+                // Send updates to the client
+                Server.Instance.SendProgressUpdate(Backups.ToList());
+
+                    // Log the backup operation
+                    Logger logger = new Logger();
+                    logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
+                        fileSize, transferTime, 0, StateViewModel.IsJsonOn);
+                }
             }
 
             updateEtat.UpdateActive(backup.NameSave);
@@ -457,10 +490,10 @@ namespace Livrable1.ViewModel
             SaveManager.Instance.StopBackup(backup);
         }
 
-        public void DeleteBackup(SaveInformation backup)
-        {
-            SaveManager.Instance.DeleteBackup(backup);
-            Backups.Remove(backup);
-        }
+        //public void DeleteBackup(SaveInformation backup)
+        //{
+        //    SaveManager.Instance.DeleteBackup(backup);
+        //    Backups.Remove(backup);
+        //}
     }
 }

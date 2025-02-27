@@ -15,7 +15,7 @@ namespace Livrable1.Model
     {
         // Event triggered when a property value changes
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         // Method to raise the PropertyChanged event
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -24,7 +24,7 @@ namespace Livrable1.Model
     }
     //------------Class BaseViewModel------------//
 
- 
+
     //------------Class RelayCommand------------//
     public class RelayCommand : ICommand
     {
