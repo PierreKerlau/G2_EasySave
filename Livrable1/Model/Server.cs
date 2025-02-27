@@ -60,7 +60,7 @@ namespace Livrable1.Model
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error starting server: " + ex.Message); // Show error message
+                MessageBox.Show($"{LanguageManager.GetText("error_starting_server")}: {ex.Message}");
             }
         }
 
@@ -85,7 +85,7 @@ namespace Livrable1.Model
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error accepting client: {ex.Message}"); // Show error message
+                    MessageBox.Show($"{LanguageManager.GetText("error_accepting_client")}: {ex.Message}");
                 }
             }
         }
@@ -98,9 +98,6 @@ namespace Livrable1.Model
                 // Get the network stream for reading/writing data with the client
                 NetworkStream networkStream = tcpClient.GetStream();
                 byte[] buffer = new byte[1024]; // Buffer to hold incoming data
-
-                // Send a test message to the client (for example, as an initial message)
-                Broadcast("test");
 
                 // Loop to listen for incoming messages from the client
                 while (true)
@@ -118,7 +115,7 @@ namespace Livrable1.Model
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error handling client: {ex.Message}"); // Log error message
+                MessageBox.Show($"{LanguageManager.GetText("error_handling_client")}: {ex.Message}");
             }
             finally
             {

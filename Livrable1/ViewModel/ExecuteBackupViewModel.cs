@@ -52,7 +52,7 @@ namespace Livrable1.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors du chargement de la liste : {ex.Message}");
+                MessageBox.Show($"{LanguageManager.GetText("error_charging_list")}: {ex.Message}");
             }
         }
 
@@ -89,11 +89,11 @@ namespace Livrable1.ViewModel
                 }
                 catch (OperationCanceledException)
                 {
-                    MessageBox.Show($"Backup cancelled for {backup.NameSave}.");
+                    MessageBox.Show($"{LanguageManager.GetText("backup_cancelled_for")} {backup.NameSave}.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Backup error: {ex.Message}");
+                    MessageBox.Show($"{LanguageManager.GetText("backup_error")}: {ex.Message}");
                 }
                 finally
                 {
@@ -249,7 +249,7 @@ namespace Livrable1.ViewModel
 
             if (savedBackup == null)
             {
-                MessageBox.Show("Aucun enregistrement de sauvegarde trouvé.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(LanguageManager.GetText("none_backups_found"));
                 return;
             }
 
@@ -257,7 +257,7 @@ namespace Livrable1.ViewModel
             
             if (selectedFiles == null || selectedFiles.Count == 0)
             {
-                MessageBox.Show("Aucun fichier sélectionné pour la sauvegarde.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(LanguageManager.GetText("no_file_selected_for_backup"));
                 return;
             }
 
@@ -338,7 +338,7 @@ namespace Livrable1.ViewModel
             // Check if a record was found
             if (savedBackup == null)
             {
-                MessageBox.Show("No backup record found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(LanguageManager.GetText("none_backups_found"));
                 return;
             }
 
@@ -348,7 +348,7 @@ namespace Livrable1.ViewModel
             // Check if any files are selected
             if (selectedFiles.Count == 0)
             {
-                MessageBox.Show("No files selected for backup.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(LanguageManager.GetText("no_file_selected_for_backup"));
                 return;
             }
 

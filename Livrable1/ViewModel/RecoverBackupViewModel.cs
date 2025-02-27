@@ -48,7 +48,7 @@ namespace Livrable1.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading the list: {ex.Message}"); // Show error message
+                MessageBox.Show($"{LanguageManager.GetText("error_charging_list")}: {ex.Message}"); // Show error message
             }
         }
 

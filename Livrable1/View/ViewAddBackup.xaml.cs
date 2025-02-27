@@ -90,7 +90,7 @@ namespace Livrable1.View
 
                     if (viewModel.VerifAddName(name))
                     {
-                        MessageBox.Show("Ce nom de sauvegarde existe déjà !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show(LanguageManager.GetText("backup_name_already_exists"));
                         return; // Stop execution to avoid duplication
                     }
 
