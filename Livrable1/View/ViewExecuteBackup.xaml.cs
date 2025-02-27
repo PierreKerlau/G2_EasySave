@@ -3,6 +3,7 @@ using Livrable1.Model;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Net.Sockets;
 using System.Xml;
 
 namespace Livrable1.View

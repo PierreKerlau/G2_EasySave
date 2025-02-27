@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Xml;
 using Livrable1.logger;
@@ -28,6 +29,9 @@ namespace Livrable1.ViewModel
         public ExecuteBackupViewModel()
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
+
+            Server.Instance.SendProgressUpdate(Backups.ToList());
+
             LoadSaves();
         }
         public void LoadSaves()
@@ -299,6 +303,9 @@ namespace Livrable1.ViewModel
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
 
+                // Send updates to the client
+                Server.Instance.SendProgressUpdate(Backups.ToList());
+
                 Logger logger = new Logger();
                 logger.LogBackupOperation(backup.NameSave, file.FilePath, destFile,
                     new FileInfo(file.FilePath).Length, transferTime, 0, StateViewModel.IsJsonOn);
@@ -374,6 +381,12 @@ namespace Livrable1.ViewModel
                     copiedSize += fileSize;
                     backup.Progression = (int)((double)copiedSize / totalSize * 100);
                     OnPropertyChanged(nameof(backup.Progression));
+
+                backup.Progression = (int)((double)copiedSize / totalSize * 100);
+                OnPropertyChanged(nameof(backup.Progression));
+
+                // Send updates to the client
+                Server.Instance.SendProgressUpdate(Backups.ToList());
 
                     // Log the backup operation
                     Logger logger = new Logger();
