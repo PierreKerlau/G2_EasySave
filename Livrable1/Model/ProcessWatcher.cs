@@ -1,10 +1,8 @@
 ﻿using System;
 using Livrable1.ViewModel;
 
-//------------Model------------//
 namespace Livrable1.Model
 {
-    //------------Class ProcessWatcher------------//
     public class ProcessWatcher
     {
         private static ProcessWatcher _instanceWatch; // Singleton instance
@@ -33,7 +31,4 @@ namespace Livrable1.Model
             }
         }
     }
-    //------------Class ProcessWatcher------------//
-
 }
-//------------Model------------//

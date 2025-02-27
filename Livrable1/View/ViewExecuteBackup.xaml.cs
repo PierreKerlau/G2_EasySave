@@ -21,25 +21,46 @@ namespace Livrable1.View
             this.DataContext = viewModel; // Set the DataContext to the ViewModel
         }
 
+        // Method to check if a process with the given name is running
+        private bool IsProcessRunning(string processName)
+        {
+            return System.Diagnostics.Process.GetProcessesByName(processName).Any();
+        }
+
         // Event handler for the execute button click
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
-            // Check if a backup is selected in the DataGrid and a backup type is selected
-            if (BackupTypeSelector.SelectedItem is ComboBoxItem selectedType)
+            // Check if any forbidden process is running based on settings in ProcessWatcher
+            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
             {
-                foreach (var backup in viewModel.Backups)
-                {
-                    if (backup.IsSelected)
-                    {
-                        // Exécute la sauvegarde pour les éléments sélectionnés
-                        viewModel.ExecuteBackup(backup, selectedType.Content.ToString());
-                    }
-                }
+                MessageBox.Show(
+                    $"{LanguageManager.GetText("action_blocked_software")}",
+                    LanguageManager.GetText("alert_software"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
             }
             else
             {
-                // Show error message if selections are missing
-                MessageBox.Show("Veuillez sélectionner un type de sauvegarde.");
+                // Check if a backup is selected in the DataGrid and a backup type is selected
+                if (BackupTypeSelector.SelectedItem is ComboBoxItem selectedType)
+                {
+                    foreach (var backup in viewModel.Backups)
+                    {
+                        if (backup.IsSelected)
+                        {
+                            // Exécute la sauvegarde pour les éléments sélectionnés
+                            viewModel.ExecuteBackup(backup, selectedType.Content.ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    // Show error message if selections are missing
+                    MessageBox.Show("Veuillez sélectionner un type de sauvegarde.");
+                }
             }
         }
 

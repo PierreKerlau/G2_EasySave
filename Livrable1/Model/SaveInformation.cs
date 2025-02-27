@@ -7,14 +7,12 @@ using System.Windows;
 
 namespace Livrable1.Model
 {
-    //------------Class SaveInformation------------//
     public class SaveInformation : BaseViewModel
     {
         // Properties for Save Information
         public string NameSave { get; set; }
         public string SourcePath { get; set; }
         public string DestinationPath { get; set; }
-
         public int NumberFile { get; set; }
         public DateTime Date { get; set; }
         public bool IsActive { get; set; }
@@ -56,7 +54,6 @@ namespace Livrable1.Model
             RemainingFiles = remainingFiles;
             RemainingSize = remainingSize;
             Files = filesbackup ?? new List<FileInformation>();
-
         }
 
         // Validate the paths for source and destination
@@ -110,5 +107,4 @@ namespace Livrable1.Model
             Files = selectedFiles; // Update the list with selected files
         }
     }
-    //------------Class SaveInformation------------//
 }

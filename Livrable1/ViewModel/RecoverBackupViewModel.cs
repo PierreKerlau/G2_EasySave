@@ -7,18 +7,13 @@ using Livrable1.ViewModel;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-//---------------------ViewModel---------------------//
 namespace Livrable1.ViewModel
 {
-    //------------Class BackupFileViewModel------------//
     public class BackupFileViewModel
     {
         public string FileName { get; set; }
         public bool IsSelected { get; set; } // Property indicating whether the file is selected
     }
-    //------------Class BackupFileViewModel------------//
-
-    //------------Class RecoverBackupViewModel------------//
     internal class RecoverBackupViewModel
     {
         public ObservableCollection<SaveInformation> Backups { get; set; }
@@ -28,32 +23,32 @@ namespace Livrable1.ViewModel
         {
             Backups = new ObservableCollection<SaveInformation>(SaveManager.Instance.GetBackups());
             FilesToRecover = new ObservableCollection<BackupFileViewModel>();
-            LoadSaves();
+            LoadSaves(); // Load saved backup information
         }
 
         public void LoadSaves()
         {
-            // Vérifier si le chemin source existe
+            // Check if the source path exists
             try
             {
-                string jsonFilePath = "../../../Logs/state.json"; // Remplace par le chemin de ton fichier JSON
+                string jsonFilePath = "../../../Logs/state.json"; // Path to JSON file
 
                 if (System.IO.File.Exists(jsonFilePath))
                 {
                     var saveList = EtatSauvegarde.ReadState(jsonFilePath);
                     foreach (var save in saveList)
                     {
-                        // Vérifier si la sauvegarde existe déjà dans la collection
+                        // Add only if the backup does not already exist in the collection
                         if (!Backups.Any(b => b.NameSave == save.NameSave))
                         {
-                            Backups.Add(save); // Ajouter seulement si elle n'existe pas déjà
+                            Backups.Add(save);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors du chargement de la liste : {ex.Message}");
+                MessageBox.Show($"Error loading the list: {ex.Message}"); // Show error message
             }
         }
 
@@ -72,15 +67,13 @@ namespace Livrable1.ViewModel
                     // Full backup: copy the entire contents of the backup folder to the source folder
                     if (backupType == "full")
                     {
-                        // Copy all the contents of the backup folder to the source folder
-                        CopyDirectory(backupFolder, sourceDirectory, true);
+                        CopyDirectory(backupFolder, sourceDirectory, true); // Copy all contents
                         MessageBox.Show($"{LanguageManager.GetText("file_has")} '{selectedBackup.NameSave}' {LanguageManager.GetText("been_success_recover_complete")}");
                     }
                     // Differential backup: copy only the most recent files
                     else if (backupType == "differential")
                     {
-                        // Copy all the contents of the backup folder to the source folder, but check the modification dates
-                        CopyDirectory(backupFolder, sourceDirectory, false);
+                        CopyDirectory(backupFolder, sourceDirectory, false); // Check modification dates
                         MessageBox.Show($"{LanguageManager.GetText("file_has")} '{selectedBackup.NameSave}' {LanguageManager.GetText("been_success_recover_diff")}");
                     }
                 }
@@ -94,6 +87,8 @@ namespace Livrable1.ViewModel
                 MessageBox.Show($"{LanguageManager.GetText("error_during_recovery")} {ex.Message}");
             }
         }
+
+        // Copy or decrypt a file based on its type
         private void CopyOrDecryptFile(string sourceFile, string destinationFile)
         {
             string extension = Path.GetExtension(sourceFile).ToLower();
@@ -113,11 +108,11 @@ namespace Livrable1.ViewModel
                     string key = Environment.GetEnvironmentVariable("EASYSAVE_CRYPTO_KEY");
                     using (Process cryptoProcess = new Process())
                     {
-                        cryptoProcess.StartInfo.FileName = "CryptoSoft.exe";
+                        cryptoProcess.StartInfo.FileName = "CryptoSoft.exe"; // CryptoSoft application for encryption
                         cryptoProcess.StartInfo.Arguments = $"\"{sourceFile}\" \"{destinationFile}\" \"{key}\"";
                         cryptoProcess.StartInfo.UseShellExecute = true;
                         cryptoProcess.Start();
-                        cryptoProcess.WaitForExit();
+                        cryptoProcess.WaitForExit(); // Wait for the encryption process to finish
                     }
                 }
                 catch (Exception ex)
@@ -127,10 +122,9 @@ namespace Livrable1.ViewModel
             }
             else
             {
-                File.Copy(sourceFile, destinationFile, true);
+                File.Copy(sourceFile, destinationFile, true); // Copy file without encryption
             }
         }
-
 
         // Function for copying the entire contents of one folder to another, with management of recent files for differential backup
         private void CopyDirectory(string sourceDir, string destDir, bool overwrite)
@@ -146,7 +140,7 @@ namespace Livrable1.ViewModel
             {
                 string destFile = Path.Combine(destDir, Path.GetFileName(file));
 
-                // Pour differential backup, only copy if the source file is older.
+                // For differential backup, only copy if the source file is newer
                 if (!overwrite)
                 {
                     if (File.Exists(destFile))
@@ -156,20 +150,17 @@ namespace Livrable1.ViewModel
 
                         if (sourceLastModified > destLastModified)
                         {
-                            // Copy only if the file is more recent
-                            CopyOrDecryptFile(file, destFile);
+                            CopyOrDecryptFile(file, destFile); // Copy only if the file is more recent
                         }
                     }
                     else
                     {
-                        // Copy if the file does not exist in the destination folder
-                        CopyOrDecryptFile(file, destFile);
+                        CopyOrDecryptFile(file, destFile); // Copy if the file does not exist in the destination folder
                     }
                 }
                 else
                 {
-                    // Copy all files unconditionally for full backup
-                    CopyOrDecryptFile(file, destFile);
+                    CopyOrDecryptFile(file, destFile); // Copy all files unconditionally for full backup
                 }
             }
 
@@ -177,10 +168,8 @@ namespace Livrable1.ViewModel
             foreach (var subDir in Directory.GetDirectories(sourceDir))
             {
                 string subDirDest = Path.Combine(destDir, Path.GetFileName(subDir));
-                CopyDirectory(subDir, subDirDest, overwrite);
+                CopyDirectory(subDir, subDirDest, overwrite); // Recursively copy sub-directories
             }
         }
     }
-    //------------Class RecoverBackupViewModel------------//
 }
-//---------------------ViewModel---------------------//
