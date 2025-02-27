@@ -40,6 +40,9 @@ namespace Livrable1.ViewModel
             {
                 return false; // Return false if validation fails
             }
+            // Calculer la taille totale des fichiers sélectionnés
+            backup.RemainingSize = backup.Files.Sum(file => new FileInfo(file.FilePath).Length);
+            backup.TotalSize = backup.Files.Sum(file => new FileInfo(file.FilePath).Length);
 
             Backups.Add(backup); // Add backup to the list
             CreationLogsSave.WriteState(Backups);
