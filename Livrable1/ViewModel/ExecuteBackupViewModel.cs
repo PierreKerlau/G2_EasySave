@@ -34,20 +34,18 @@ namespace Livrable1.ViewModel
         }
         public void LoadSaves()
         {
-            // Vérifier si le chemin source existe
             try
             {
-                string jsonFilePath = "../../../Logs/state.json"; // Remplace par le chemin de ton fichier JSON
+                string jsonFilePath = "../../../Logs/state.json";
 
                 if (System.IO.File.Exists(jsonFilePath))
                 {
                     var saveList = EtatSauvegarde.ReadState(jsonFilePath);
                     foreach (var save in saveList)
                     {
-                        // Vérifier si la sauvegarde existe déjà dans la collection
                         if (!Backups.Any(b => b.NameSave == save.NameSave))
                         {
-                            Backups.Add(save); // Ajouter seulement si elle n'existe pas déjà
+                            Backups.Add(save);
                         }
                     }
                 }
@@ -185,7 +183,6 @@ namespace Livrable1.ViewModel
                     new FileInfo(file.FilePath).Length, transferTime, cryptingTime, StateViewModel.IsJsonOn);
             }
 
-            // Puis traiter les fichiers non prioritaires de la même manière
             foreach (var file in nonPriorityFiles)
             {
                 token.ThrowIfCancellationRequested();
@@ -267,10 +264,9 @@ namespace Livrable1.ViewModel
             long totalSize = selectedFiles.Sum(f => new FileInfo(f.FilePath).Length);
             long copiedSize = 0;
 
-            // Mise à jour de l'état après la suppression du fichier
             EtatSauvegarde updateEtat = new EtatSauvegarde();
 
-            foreach (var file in selectedFiles.ToList()) // Copie pour éviter les erreurs de modification de collection
+            foreach (var file in selectedFiles.ToList())
             {
                 token.ThrowIfCancellationRequested();
                 _pauseEvents[backup.NameSave].Wait(token);
@@ -304,12 +300,10 @@ namespace Livrable1.ViewModel
                 backup.Progression = (int)((double)copiedSize / totalSize * 100);
                 OnPropertyChanged(nameof(backup.Progression));
 
-                // Décrémentation sécurisée
                 if (backup.RemainingFiles > 0) backup.RemainingFiles--;
                 if (backup.RemainingSize >= fileSize) backup.RemainingSize -= fileSize;
                 else backup.RemainingSize = 0;
 
-                // Vérification et mise à jour de l'état de sauvegarde
                 updateEtat.UpdateSaveState(backup.NameSave, file.FilePath, backup.RemainingFiles, backup.RemainingSize);
 
                 
@@ -402,7 +396,6 @@ namespace Livrable1.ViewModel
                     backup.Progression = (int)((double)copiedSize / totalSize * 100);
                     OnPropertyChanged(nameof(backup.Progression));
                     
-                    // Décrémentation sécurisée
                     if (backup.RemainingFiles > 0) backup.RemainingFiles--;
                     if (backup.RemainingSize >= fileSize) backup.RemainingSize -= fileSize;
                     else backup.RemainingSize = 0;

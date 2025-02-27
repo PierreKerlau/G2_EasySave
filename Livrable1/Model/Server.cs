@@ -16,13 +16,10 @@ namespace Livrable1.Model
 {
     public class Server
     {
-        private static Server _instance;
-
-        private TcpListener _tcpListener;
-
-        private bool _isRunning;
-
-        private List<TcpClient> tcpClients = new List<TcpClient>();
+        private static Server _instance; // Singleton instance of Server
+        private TcpListener _tcpListener; // Listener for incoming TCP connections
+        private bool _isRunning; // Indicates if the server is running
+        private List<TcpClient> tcpClients = new List<TcpClient>(); // List of connected clients
 
         public static Server Instance
         {
@@ -30,9 +27,9 @@ namespace Livrable1.Model
             {
                 if (_instance == null)
                 {
-                    _instance = new Server();
+                    _instance = new Server(); // Create new instance if it doesn't exist
                 }
-                return _instance;
+                return _instance; // Return singleton instance
             }
         }
 
@@ -46,17 +43,17 @@ namespace Livrable1.Model
 
             try
             {
-                _tcpListener = new TcpListener(IPAddress.Loopback, port);
-                _tcpListener.Start();
-                _isRunning = true;
-                MessageBox.Show("Server strated on port " + port);
+                _tcpListener = new TcpListener(IPAddress.Loopback, port); // Initialize TCP listener
+                _tcpListener.Start(); // Start listening for connections
+                _isRunning = true; // Set running state to true
+                MessageBox.Show("Server started on port " + port);
 
                 // Listens for incoming connections in a separate thread
                 Task.Run(() => ListenForClients());
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error starting server: " + ex.Message);
+                MessageBox.Show("Error starting server: " + ex.Message); // Show error message
             }
         }
 
@@ -68,10 +65,9 @@ namespace Livrable1.Model
                 {
                     // Wait for a client to connect
                     TcpClient tcpClient = await _tcpListener.AcceptTcpClientAsync();
-                    //MessageBox.Show("Client connected");
                     lock (tcpClients)
                     {
-                        tcpClients.Add(tcpClient);
+                        tcpClients.Add(tcpClient); // Add the connected client to the list
                     }
 
                     // Start handling the client in a new task
@@ -79,7 +75,7 @@ namespace Livrable1.Model
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error accepting client: {ex.Message}");
+                    MessageBox.Show($"Error accepting client: {ex.Message}"); // Show error message
                 }
             }
         }
@@ -88,37 +84,36 @@ namespace Livrable1.Model
         {
             try
             {
-                NetworkStream networkStream = tcpClient.GetStream();
-                byte[] buffer = new byte[1024];
+                NetworkStream networkStream = tcpClient.GetStream(); // Get the network stream for the client
+                byte[] buffer = new byte[1024]; // Buffer to hold incoming data
 
-                Broadcast("test");
+                Broadcast("test"); // Send a test message to connected clients
 
-                //Loop to listen for messages from the client
+                // Loop to listen for messages from the client
                 while (true)
                 {
-                    int bytesRead = await networkStream.ReadAsync(buffer, 0, buffer.Length);
+                    int bytesRead = await networkStream.ReadAsync(buffer, 0, buffer.Length); // Read data from the client
                     if (bytesRead == 0)
                     {
-                        break;
+                        break; // Exit if no data is read (client disconnected)
                     }
 
-                    string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Console.WriteLine($"Message from client: {message}");
+                    string message = Encoding.UTF8.GetString(buffer, 0, bytesRead); // Convert bytes to string
+                    Console.WriteLine($"Message from client: {message}"); // Log the received message
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error handling client: {ex.Message}");
+                Console.WriteLine($"Error handling client: {ex.Message}"); // Log error message
             }
             finally
             {
-                tcpClient.Close();
+                tcpClient.Close(); // Close the client connection
             }
         }
 
         public void SendProgressUpdate(List<SaveInformation> Backups)
-        { 
-
+        {
             string message = "";
             foreach (var backup in Backups)
             {
@@ -127,15 +122,15 @@ namespace Livrable1.Model
                 string destinationPath = backup.DestinationPath;
                 int progress = (int)backup.Progression;
 
+                // Construct message for each backup
                 if (message.Length == 0)
                 {
                     message = $"{backupName}*{sourcePath}*{destinationPath}*{progress}%";
                 }
                 else
                 {
-                    message = message + "|" + $"{backupName}*{sourcePath}*{destinationPath}*{progress}%";
+                    message += "|" + $"{backupName}*{sourcePath}*{destinationPath}*{progress}%";
                 }
-                
             }
             Broadcast(message); // Send the data to the connected clients
         }
@@ -144,16 +139,17 @@ namespace Livrable1.Model
         {
             foreach (var client in tcpClients)
             {
-                NetworkStream networkStream = client.GetStream();
-                byte[] data = Encoding.UTF8.GetBytes(message);
-                await networkStream.WriteAsync(data, 0, data.Length);
+                NetworkStream networkStream = client.GetStream(); // Get the network stream for the client
+                byte[] data = Encoding.UTF8.GetBytes(message); // Convert message to bytes
+                await networkStream.WriteAsync(data, 0, data.Length); // Send message to client
             }
         }
+
         public void StopServer()
         {
-            _isRunning = false;
-            _tcpListener.Stop();
-            Console.WriteLine("Server stopped");
+            _isRunning = false; // Set running state to false
+            _tcpListener.Stop(); // Stop the TCP listener
+            Console.WriteLine("Server stopped"); // Log server stop message
         }
     }
 }

@@ -4,7 +4,6 @@ using Livrable1.Model;
 
 namespace Livrable1.ViewModel
 {
-    //------------Class SaveManager------------//
     public class SaveManager
     {
         private static SaveManager instance; // Singleton instance of SaveManager
@@ -87,5 +86,4 @@ namespace Livrable1.ViewModel
             return backups; // Return the list of backups
         }
     }
-    //------------Class SaveManager------------//
 }

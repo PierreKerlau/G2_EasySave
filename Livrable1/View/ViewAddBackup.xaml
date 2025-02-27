@@ -8,20 +8,20 @@
         Title="EasySave - Add Backup" Height="450" Width="800"
         Background="{StaticResource BackgroundBrush}">
     <Grid>
-        <!-- Titre principal -->
+        <!-- Main title -->
         <Label x:Name="LabelMainViewTitle" Content="EasySave" 
                HorizontalAlignment="Center" VerticalAlignment="Top" 
                FontSize="36" FontWeight="Bold" 
                Foreground="{StaticResource PrimaryBrush}" 
                Margin="0,20,0,0"/>
 
-        <!-- Sous-titre -->
+        <!-- Subtitle -->
         <Label x:Name="LabelTitleAddBackup" Content="Add Backup Jobs" 
                HorizontalAlignment="Center" VerticalAlignment="Top" 
                FontSize="18" Foreground="{StaticResource TextBrush}" 
                Margin="0,80,0,0"/>
 
-        <!-- Champs de saisie -->
+        <!-- Input fields -->
         <Grid Margin="50,120,50,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Nom de la sauvegarde -->
+            <!-- Backup name -->
             <StackPanel Grid.Column="0">
                 <Label x:Name="LabelBackupName" Content="Backup name" 
                        FontWeight="Bold" Foreground="{StaticResource TextBrush}" 
@@ -38,7 +38,7 @@
                          Style="{StaticResource {x:Type TextBox}}" Width="180"/>
             </StackPanel>
 
-            <!-- Chemin source -->
+            <!-- Source path -->
             <StackPanel Grid.Column="1" Margin="20,0,20,0">
                 <Label x:Name="LabelSourcePath" Content="Source path" 
                        FontWeight="Bold" Foreground="{StaticResource TextBrush}" 
@@ -47,7 +47,7 @@
                          Style="{StaticResource {x:Type TextBox}}" Width="180"/>
             </StackPanel>
 
-            <!-- Chemin de destination -->
+            <!-- Destination path -->
             <StackPanel Grid.Column="2">
                 <Label x:Name="LabelDestinationPath" Content="Destination path" 
                        FontWeight="Bold" Foreground="{StaticResource TextBrush}" 
@@ -57,7 +57,7 @@
             </StackPanel>
         </Grid>
 
-        <!-- Liste des fichiers -->
+        <!-- File list -->
         <Grid Margin="50,200,50,100">
             <ListView x:Name="ListFiles" ItemsSource="{Binding Files}" SelectionMode="Multiple" MaxHeight="300"
                       Background="White" BorderBrush="{StaticResource SecondaryBrush}" BorderThickness="1">
@@ -75,29 +75,29 @@
             </ListView>
         </Grid>
 
-        <!-- Boutons -->
+        <!-- Buttons -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
-            <!-- Bouton Valider (Première condition) -->
+            <!-- Validate button (First condition) -->
             <Button x:Name="ButtonValidate" Content="Validate" Width="100" Height="30" 
                     Margin="10,0" Click="FirstValidateAddBackup"
                     Style="{StaticResource {x:Type Button}}" Background="{StaticResource PrimaryBrush}"/>
 
-            <!-- Bouton Annuler (Première condition) -->
+            <!-- Cancel button (First condition) -->
             <Button x:Name="ButtonCancel" Content="Cancel" Width="100" Height="30" 
                     Margin="10,0" Click="FirstCancelAddBackups_Click"
                     Style="{StaticResource {x:Type Button}}" Background="{StaticResource AccentBrush}"/>
 
-            <!-- Bouton Valider (Deuxième condition) -->
+            <!-- Validate button (Second condition) -->
             <Button x:Name="ButtonValidate2" Content="Validate" Width="100" Height="30" 
                     Margin="10,0" Click="SecondValidateAddBackup"
                     Style="{StaticResource {x:Type Button}}" Background="{StaticResource PrimaryBrush}"/>
 
-            <!-- Bouton Annuler (Deuxième condition) -->
+            <!-- Cancel button (Second condition) -->
             <Button x:Name="ButtonCancel2" Content="Cancel" Width="100" Height="30" 
                     Margin="10,0" Click="SecondCancelAddBackups"
                     Style="{StaticResource {x:Type Button}}" Background="{StaticResource AccentBrush}"/>
 
-            <!-- Bouton Quitter -->
+            <!-- Exit button -->
             <Button x:Name="ButtonLeave" Content="Exit" Width="100" Height="30" 
                     Margin="10,0" Click="ButtonLeave_Click_1"
                     Style="{StaticResource {x:Type Button}}"/>

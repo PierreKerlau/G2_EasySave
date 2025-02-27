@@ -16,14 +16,12 @@ using Livrable1.View;
 using Livrable1.ViewModel;
 using System.Text.Json;
 
-//---------------------View---------------------//
 namespace Livrable1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-    //------------Class MainWindow------------//
     public partial class MainWindow : Window
     {
         // Constructor for MainWindow
@@ -33,29 +31,9 @@ namespace Livrable1
             UpdateUILanguageMainWindows(); // Update UI elements with language-specific texts
         }
 
-        // Method to check if a process with the given name is running
-        private bool IsProcessRunning(string processName)
-        {
-            return System.Diagnostics.Process.GetProcessesByName(processName).Any();
-        }
-
         // Event handler for the "Add Backup" button click
         private void ButtonShowViewAddBackup_Click(object sender, RoutedEventArgs e)
         {
-            // Check if any forbidden process is running based on settings in ProcessWatcher
-            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
-            {
-                MessageBox.Show(
-                    $"{LanguageManager.GetText("action_blocked_software")}",
-                    LanguageManager.GetText("alert_software"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
-            else
-            {
                 // Open the ViewAddBackup window and close the current window
                 ViewAddBackup viewAddBackup = new ViewAddBackup();
                 viewAddBackup.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -63,26 +41,11 @@ namespace Livrable1
                 viewAddBackup.Top = this.Top;
                 viewAddBackup.Show();
                 this.Close();
-            }
         }
 
         // Event handler for the "Execute Backup" button click
         private void ButtonShowViewExecuteBackup_Click(object sender, RoutedEventArgs e)
         {
-            // Check if any forbidden process is running
-            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
-            {
-                MessageBox.Show(
-                    $"{LanguageManager.GetText("action_blocked_software")}",
-                    LanguageManager.GetText("alert_software"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
-            else
-            {
                 // Ouvrir la fenêtre ViewExecuteBackup à la position de la fenêtre actuelle
                 ViewExecuteBackup viewExecuteBackup = new ViewExecuteBackup();
                 viewExecuteBackup.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -90,34 +53,17 @@ namespace Livrable1
                 viewExecuteBackup.Top = this.Top;
                 viewExecuteBackup.Show();
                 this.Close();
-            } 
         }
 
         // Event handler for the "Recover Backup" button click
         private void ButtonShowViewRecoverBackup_Click(object sender, RoutedEventArgs e)
         {
-            // Check if any forbidden process is running
-            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
-            {
-                MessageBox.Show(
-                    $"{LanguageManager.GetText("action_blocked_software")}",
-                    LanguageManager.GetText("alert_software"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
-            else
-            {
                 ViewRecoverBackup viewRecoverBackup = new ViewRecoverBackup();
                 viewRecoverBackup.WindowStartupLocation = WindowStartupLocation.Manual;
                 viewRecoverBackup.Left = this.Left;
                 viewRecoverBackup.Top = this.Top;
                 viewRecoverBackup.Show();
                 this.Close();
-
-            }
         }
 
         // Event handler for the "Parameters" button click
@@ -141,6 +87,4 @@ namespace Livrable1
             ButtonShowViewRecoverBackup.Content = LanguageManager.GetText("button_recover_backup");
         }
     }
-    //------------Class MainWindow------------//
 }
-//---------------------View---------------------//

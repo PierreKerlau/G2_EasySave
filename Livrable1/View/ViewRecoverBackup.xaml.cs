@@ -8,14 +8,8 @@ using Livrable1.ViewModel;
 using System.Diagnostics;
 using Livrable1.Model;
 
-//---------------------View---------------------//
 namespace Livrable1.View
 {
-    /// <summary>
-    /// Interaction logic for ViewRecoverBackup.xaml
-    /// </summary>
-
-    //------------Class ViewRecoverBackup------------//
     public partial class ViewRecoverBackup : Window
     {
         private List<SaveInformation> backupJobs; // List of backup jobs
@@ -31,10 +25,15 @@ namespace Livrable1.View
             UpdateUILanguageRecoveryBackup(); // Update language
         }
 
+        // Method to check if a process with the given name is running
+        private bool IsProcessRunning(string processName)
+        {
+            return System.Diagnostics.Process.GetProcessesByName(processName).Any();
+        }
+
         // Method to display backup jobs in checkboxes
         private void DisplayBackupJobs()
         {
-            // Add all backups to the FilesToRecover collection (used for displaying checkboxes)
             foreach (var backup in _viewModel.Backups)
             {
                 _viewModel.FilesToRecover.Add(new BackupFileViewModel { FileName = backup.NameSave, IsSelected = false });
@@ -44,56 +43,71 @@ namespace Livrable1.View
         // Event handler for the validate button click - runs the recovery process
         private void ButtonValidate_Click(object sender, RoutedEventArgs e)
         {
-            // Get selected files for recovery
-            var selectedFiles = _viewModel.FilesToRecover
-                .Where(f => f.IsSelected)
-                .Select(f => f.FileName)
-                .ToList();
-
-            // Check if at least one file is selected
-            if (selectedFiles.Count == 0)
+            // Check if any forbidden process is running
+            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
             {
-                MessageBox.Show(LanguageManager.GetText("select_backup_type"));
+                MessageBox.Show(
+                    $"{LanguageManager.GetText("action_blocked_software")}",
+                    LanguageManager.GetText("alert_software"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
                 return;
             }
-
-            // Get the type of backup (Full or Differential)
-            string backupType = FullBackupCheckBox.IsChecked == true ? "full" : "differential";
-
-            ProgressBarRecovery.Value = 0;
-            ProgressBarRecovery.Maximum = selectedFiles.Count;
-            LabelProgress.Content = "0%";
-
-            // Call the ViewModel to perform the recovery
-            foreach (var selectedFile in selectedFiles)
+            else
             {
-                var backupToRecover = _viewModel.Backups.FirstOrDefault(b => b.NameSave == selectedFile);
-                if (backupToRecover != null)
-                {
-                    _viewModel.RecoverBackup(backupToRecover, backupType); // Call the ViewModel method to recover the backup
-                }
-                ProgressBarRecovery.Value++;
-                LabelProgress.Content = $"{(int)((ProgressBarRecovery.Value / ProgressBarRecovery.Maximum) * 100)}%";
-            }
+                // Get selected files for recovery
+                var selectedFiles = _viewModel.FilesToRecover
+                    .Where(f => f.IsSelected)
+                    .Select(f => f.FileName)
+                    .ToList();
 
-            MessageBox.Show(LanguageManager.GetText("recovery_completed")); // Show success message
+                // Check if at least one file is selected
+                if (selectedFiles.Count == 0)
+                {
+                    MessageBox.Show(LanguageManager.GetText("select_backup_type"));
+                    return;
+                }
+
+                // Get the type of backup (Full or Differential)
+                string backupType = FullBackupCheckBox.IsChecked == true ? "full" : "differential";
+
+                ProgressBarRecovery.Value = 0;
+                ProgressBarRecovery.Maximum = selectedFiles.Count;
+                LabelProgress.Content = "0%";
+
+                // Call the ViewModel to perform the recovery
+                foreach (var selectedFile in selectedFiles)
+                {
+                    var backupToRecover = _viewModel.Backups.FirstOrDefault(b => b.NameSave == selectedFile);
+                    if (backupToRecover != null)
+                    {
+                        _viewModel.RecoverBackup(backupToRecover, backupType); // Recover the backup
+                    }
+                    ProgressBarRecovery.Value++;
+                    LabelProgress.Content = $"{(int)((ProgressBarRecovery.Value / ProgressBarRecovery.Maximum) * 100)}%";
+                }
+
+                MessageBox.Show(LanguageManager.GetText("recovery_completed")); // Show success message
+            }
         }
 
-        // Cancel Button : Reset the selections
+        // Cancel Button: Reset the selections
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             // Uncheck all checkboxes
             foreach (CheckBox checkBox in BackupCheckboxesPanel.Children)
             {
-                checkBox.IsChecked = false;  // Uncheck each box
+                checkBox.IsChecked = false; // Uncheck each box
             }
 
             // Reset backup type choices
-            FullBackupCheckBox.IsChecked = false;  // Uncheck Full Backup
-            DifferentialBackupCheckBox.IsChecked = false;  // Uncheck Differential Backup
+            FullBackupCheckBox.IsChecked = false; // Uncheck Full Backup
+            DifferentialBackupCheckBox.IsChecked = false; // Uncheck Differential Backup
         }
 
-        // Leave Button : Open main window and close this one
+        // Leave Button: Open main window and close this one
         private void ButtonLeave_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
@@ -117,6 +131,4 @@ namespace Livrable1.View
             ButtonLeave.Content = LanguageManager.GetText("menu_leave");
         }
     }
-    //------------Class ViewRecoverBackup------------//
 }
-//---------------------View---------------------//

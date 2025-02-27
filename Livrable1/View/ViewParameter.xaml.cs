@@ -16,7 +16,6 @@ using Livrable1.Model;
 using System.Diagnostics;
 using System.ComponentModel;
 
-//---------------------View---------------------//
 namespace Livrable1.View
 {
     /// <summary>

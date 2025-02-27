@@ -8,7 +8,7 @@
         Title="EasySave - Recover Backup" Height="450" Width="800" ResizeMode="CanResizeWithGrip"
         Background="{StaticResource BackgroundBrush}">
     <Grid>
-        <!-- Définition des lignes et colonnes pour la grille -->
+        <!-- Definition of rows and columns for the grid -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -20,26 +20,26 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Titre principal -->
+        <!-- Main title -->
         <Label x:Name="LabelMainViewTitle" Content="EasySave" 
                HorizontalAlignment="Center" VerticalAlignment="Center" 
                FontSize="36" FontWeight="Bold" 
                Foreground="{StaticResource PrimaryBrush}" 
                Grid.Row="0" Grid.ColumnSpan="2" Margin="0,20"/>
 
-        <!-- Sous-titre -->
+        <!-- Subtitle -->
         <Label x:Name="LabelMainViewRecoverBackup" Content="Recover backup jobs" 
                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"
                Grid.Row="0" Margin="50,70,0,0" Grid.Column="1" Grid.RowSpan="2"
                Foreground="{StaticResource TextBrush}"/>
 
-        <!-- Sélection des sauvegardes -->
+        <!-- Selection of backups -->
         <Label x:Name="LabelMainSelectRecoverBackup" Content="Select backup jobs to recover"
                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"
                Grid.Row="1" Grid.Column="0" Margin="50,20,0,0" Grid.ColumnSpan="2"
                Foreground="{StaticResource TextBrush}"/>
 
-        <!-- Liste des sauvegardes à récupérer -->
+        <!-- List of backups to recover -->
         <StackPanel x:Name="BackupCheckboxesPanel" 
                     Grid.Row="1" Grid.Column="0" 
                     HorizontalAlignment="Left" VerticalAlignment="Top" 
@@ -54,13 +54,13 @@
             </ItemsControl>
         </StackPanel>
 
-        <!-- Choix du type de sauvegarde -->
+        <!-- Choice of backup type -->
         <Label x:Name="LabelMainBackupType" Content="Choose the backup type"
                HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18"
                Grid.Row="1" Grid.Column="1" Margin="0,20,50,0"
                Foreground="{StaticResource TextBrush}"/>
 
-        <!-- Type de sauvegarde (Full ou Differential) -->
+        <!-- Backup type (Full or Differential) -->
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="270,50,50,0" VerticalAlignment="Top">
             <RadioButton x:Name="FullBackupCheckBox" Content="Full Backup" 
                           Style="{StaticResource {x:Type RadioButton}}" Margin="0,5,0,5"/>
@@ -79,7 +79,7 @@
              Minimum="0" Maximum="100" Value="0"
              Foreground="{StaticResource PrimaryBrush}"/>
 
-        <!-- Boutons -->
+        <!-- Buttons -->
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" 
                     HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
             <Button x:Name="ButtonCancel" Content="Cancel" Width="100" Height="30" 
