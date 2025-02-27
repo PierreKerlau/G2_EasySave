@@ -18,16 +18,16 @@ namespace Livrable1.Model
         }
 
         // Properties for Save Information
-        public string NameSave { get; set; } = "";
-        public string SourcePath { get; set; } = "";
-        public string DestinationPath { get; set; } = "";
+        public string NameSave { get; set; }
+        public string SourcePath { get; set; }
+        public string DestinationPath { get; set; }
 
-        public int NumberFile { get; set; } = 0;
-        public DateTime Date { get; set; } = DateTime.Now;
-        public bool IsActive { get; set; } = false;
-        public long TotalSize { get; set; } = 0;
-        public int RemainingFiles { get; set; } = 0;
-        public long RemainingSize { get; set; } = 0;
+        public int NumberFile { get; set; }
+        public DateTime Date { get; set; }
+        public bool IsActive { get; set; }
+        public long TotalSize { get; set; }
+        public int RemainingFiles { get; set; }
+        public long RemainingSize { get; set; }
 
         // List to hold file information
         public List<FileInformation> Files { get; set; } = new List<FileInformation>();
@@ -51,7 +51,7 @@ namespace Livrable1.Model
         public bool IsSelected { get; set; }
 
         // Constructor
-        public SaveInformation(string nameSave, string sourcePath, string destinationPath, int numberFile = 0, DateTime date = default, bool isActive = false, long totalSize = 0, int remainingFiles = 0, long remainingSize = 0)
+        public SaveInformation(string nameSave, string sourcePath, string destinationPath, int numberFile = 0, DateTime date = default, bool isActive = false, long totalSize = 0, int remainingFiles = 0, long remainingSize = 0, List<FileInformation> filesbackup = null)
         {
             NameSave = nameSave;
             SourcePath = sourcePath;
@@ -62,13 +62,20 @@ namespace Livrable1.Model
             TotalSize = totalSize;
             RemainingFiles = remainingFiles;
             RemainingSize = remainingSize;
+            Files = filesbackup ?? new List<FileInformation>();
 
-            LoadFiles(); // Load files during initialization
+            //LoadFiles(); // Load files during initialization
         }
 
         // Validate the paths for source and destination
         public bool ValidatePaths()
         {
+            if (string.IsNullOrWhiteSpace(NameSave))
+            {
+                MessageBox.Show("Le nom de la sauvegarde ne peut pas être vide.");
+                return false;
+            }
+
             if (!Directory.Exists(SourcePath))
             {
                 MessageBox.Show(LanguageManager.GetText("source_path_not_exists"));

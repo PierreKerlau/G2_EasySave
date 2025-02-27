@@ -6,16 +6,25 @@ using System.Linq;
 
 namespace Livrable1.logger
 {
+    // Represents a single log entry for a backup operation
     public class LogEntry
     {
+        // Name of the backup job
         public required string Name { get; set; }
+        // Source file path
         public required string FileSource { get; set; }
+        // Target file path where the backup is stored
         public required string FileTarget { get; set; }
+        // Size of the file in bytes
         public required long FileSize { get; set; }
+        // Time taken to transfer the file in seconds
         public required double FileTransferTime { get; set; }
+        // Time taken to encrypt the file in seconds
         public required double CryptingTime { get; set; }
+        // Timestamp of when the operation occurred
         public required string time { get; set; }
 
+        // Constructor initializes timestamp and sets default encryption time
         public LogEntry()
         {
             time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
@@ -23,18 +32,26 @@ namespace Livrable1.logger
         }
     }
 
+    // Represents the current state of a backup job
     public class StateEntry
     {
+        // Name of the backup job
         public string BackupName { get; set; }
+        // Timestamp of the last action performed
         public DateTime LastActionTimestamp { get; set; }
+        // Current action being performed (e.g., "Copying", "Encrypting")
         public string CurrentAction { get; set; }
     }
 
+    // Main logger class for handling backup operations logging
     public class Logger
     {
+        // Directory where log files are stored
         private readonly string _logDirectory;
+        // Path to the state file that tracks backup progress
         private readonly string _stateFilePath;
 
+        // Constructor initializes logging directory
         public Logger(string logDirectory = @"../../../Logs")
         {
             _logDirectory = logDirectory;
@@ -45,6 +62,7 @@ namespace Livrable1.logger
             _stateFilePath = Path.Combine(_logDirectory, "backup_state.json");
         }
 
+        // Logs a single backup operation with details about the transfer
         public void LogBackupOperation(string jobName, string sourcePath, string destinationPath, long fileSize, long transferTime, long cryptingTime, bool useJson)
         {
             if (string.IsNullOrEmpty(jobName)) return;
@@ -74,6 +92,7 @@ namespace Livrable1.logger
             }
         }
 
+        // Writes log entry to JSON file
         private void WriteJsonLog(LogEntry logEntry, string logFilePath)
         {
             List<LogEntry> dailyLogs = new();
@@ -94,6 +113,7 @@ namespace Livrable1.logger
             File.WriteAllText(logFilePath, jsonContent);
         }
 
+        // Writes log entry to XML file
         private void WriteXmlLog(LogEntry logEntry, string logFilePath)
         {
             var xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(List<LogEntry>));
@@ -122,6 +142,7 @@ namespace Livrable1.logger
             }
         }
 
+        // Updates the state of a backup job
         public void UpdateState(string backupName, string currentAction)
         {
             var stateEntry = new StateEntry

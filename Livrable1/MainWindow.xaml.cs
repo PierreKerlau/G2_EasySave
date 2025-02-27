@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.IO;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +14,7 @@ using System.Windows.Shapes;
 using Livrable1.Model;
 using Livrable1.View;
 using Livrable1.ViewModel;
+using System.Text.Json;
 
 //---------------------View---------------------//
 namespace Livrable1
@@ -40,8 +43,8 @@ namespace Livrable1
         private void ButtonShowViewAddBackup_Click(object sender, RoutedEventArgs e)
         {
             // Check if any forbidden process is running based on settings in ProcessWatcher
-            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
             {
                 MessageBox.Show(
                     $"{LanguageManager.GetText("action_blocked_software")}",
@@ -55,6 +58,9 @@ namespace Livrable1
             {
                 // Open the ViewAddBackup window and close the current window
                 ViewAddBackup viewAddBackup = new ViewAddBackup();
+                viewAddBackup.WindowStartupLocation = WindowStartupLocation.Manual;
+                viewAddBackup.Left = this.Left;
+                viewAddBackup.Top = this.Top;
                 viewAddBackup.Show();
                 this.Close();
             }
@@ -64,8 +70,8 @@ namespace Livrable1
         private void ButtonShowViewExecuteBackup_Click(object sender, RoutedEventArgs e)
         {
             // Check if any forbidden process is running
-            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
             {
                 MessageBox.Show(
                     $"{LanguageManager.GetText("action_blocked_software")}",
@@ -77,8 +83,11 @@ namespace Livrable1
             }
             else
             {
-                // Open the ViewExecuteBackup window and close the current window
+                // Ouvrir la fenêtre ViewExecuteBackup à la position de la fenêtre actuelle
                 ViewExecuteBackup viewExecuteBackup = new ViewExecuteBackup();
+                viewExecuteBackup.WindowStartupLocation = WindowStartupLocation.Manual;
+                viewExecuteBackup.Left = this.Left;
+                viewExecuteBackup.Top = this.Top;
                 viewExecuteBackup.Show();
                 this.Close();
             } 
@@ -88,8 +97,8 @@ namespace Livrable1
         private void ButtonShowViewRecoverBackup_Click(object sender, RoutedEventArgs e)
         {
             // Check if any forbidden process is running
-            if (ProcessWatcher.Instance.BloquerCheatEngine && IsProcessRunning("Notepad") ||
-                ProcessWatcher.Instance.BloquerWireshark && IsProcessRunning("CalculatorApp"))
+            if (ProcessWatcher.Instance.BloquerNotepad && IsProcessRunning("Notepad") ||
+                ProcessWatcher.Instance.BloquerCalculator && IsProcessRunning("CalculatorApp"))
             {
                 MessageBox.Show(
                     $"{LanguageManager.GetText("action_blocked_software")}",
@@ -101,21 +110,14 @@ namespace Livrable1
             }
             else
             {
-                // Open the ViewRecoverBackup window and close the current window
                 ViewRecoverBackup viewRecoverBackup = new ViewRecoverBackup();
+                viewRecoverBackup.WindowStartupLocation = WindowStartupLocation.Manual;
+                viewRecoverBackup.Left = this.Left;
+                viewRecoverBackup.Top = this.Top;
                 viewRecoverBackup.Show();
                 this.Close();
-                
-            }
-        }
 
-        // Event handler for the "Logs" button click
-        private void ButtonShowViewLogs_Click(object sender, RoutedEventArgs e)
-        {
-            // Open the ViewLogs window and close the current window
-            ViewLogs viewLogs = new ViewLogs();
-            viewLogs.Show();
-            this.Close();
+            }
         }
 
         // Event handler for the "Parameters" button click
@@ -123,6 +125,9 @@ namespace Livrable1
         {
             // Open the ViewParameter window and close the current window
             ViewParameter viewParameter = new ViewParameter();
+            viewParameter.WindowStartupLocation = WindowStartupLocation.Manual;
+            viewParameter.Left = this.Left;
+            viewParameter.Top = this.Top;
             viewParameter.Show();
             this.Close();
         }

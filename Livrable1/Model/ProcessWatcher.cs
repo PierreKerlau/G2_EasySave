@@ -11,10 +11,10 @@ namespace Livrable1.Model
         private static readonly object _lock = new object(); // Lock object for thread safety
 
         // Indicates whether Cheat Engine should be blocked
-        public bool BloquerCheatEngine { get; set; }
+        public bool BloquerNotepad { get; set; }
 
         // Indicates whether Wireshark should be blocked
-        public bool BloquerWireshark { get; set; }
+        public bool BloquerCalculator { get; set; }
 
         // Private constructor to prevent external instantiation
         private ProcessWatcher() { }

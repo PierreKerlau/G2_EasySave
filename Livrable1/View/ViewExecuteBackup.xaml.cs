@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Net.Sockets;
+using System.Xml;
 
 namespace Livrable1.View
 {
@@ -20,12 +21,6 @@ namespace Livrable1.View
             this.DataContext = viewModel; // Set the DataContext to the ViewModel
         }
 
-        // Event handler for the leave button click
-        private void ButtonLeave_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close(); // Close the current window
-        }
-
         // Event handler for the execute button click
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
         {
@@ -36,7 +31,8 @@ namespace Livrable1.View
                 {
                     if (backup.IsSelected)
                     {
-                        viewModel.ExecuteBackup(backup, selectedType.Content.ToString()); // Execute backup for selected items
+                        // Exécute la sauvegarde pour les éléments sélectionnés
+                        viewModel.ExecuteBackup(backup, selectedType.Content.ToString());
                     }
                 }
             }
@@ -50,9 +46,12 @@ namespace Livrable1.View
         // Event handler for the leave button click (alternative button)
         private void ButtonLeave_Click_1(object sender, RoutedEventArgs e)
         {
-            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
-            viewMain.Show(); // Show the MainWindow
-            this.Close(); // Close the current window
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+            mainWindow.Left = this.Left;
+            mainWindow.Top = this.Top;
+            mainWindow.Show();
+            this.Close();
         }
 
         // Method to update UI elements with language-specific texts
@@ -108,12 +107,12 @@ namespace Livrable1.View
             }
         }
 
-        private void DeleteBackup_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
-            {
-                viewModel.DeleteBackup(selectedBackup); // Delete the selected backup
-            }
-        }
+        //private void DeleteBackup_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (DataGridBackups.SelectedItem is SaveInformation selectedBackup)
+        //    {
+        //        viewModel.DeleteBackup(selectedBackup); // Delete the selected backup
+        //    }
+        //}
     }
 }

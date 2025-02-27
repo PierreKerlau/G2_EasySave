@@ -60,6 +60,10 @@ namespace Livrable1.View
             // Get the type of backup (Full or Differential)
             string backupType = FullBackupCheckBox.IsChecked == true ? "full" : "differential";
 
+            ProgressBarRecovery.Value = 0;
+            ProgressBarRecovery.Maximum = selectedFiles.Count;
+            LabelProgress.Content = "0%";
+
             // Call the ViewModel to perform the recovery
             foreach (var selectedFile in selectedFiles)
             {
@@ -68,6 +72,8 @@ namespace Livrable1.View
                 {
                     _viewModel.RecoverBackup(backupToRecover, backupType); // Call the ViewModel method to recover the backup
                 }
+                ProgressBarRecovery.Value++;
+                LabelProgress.Content = $"{(int)((ProgressBarRecovery.Value / ProgressBarRecovery.Maximum) * 100)}%";
             }
 
             MessageBox.Show(LanguageManager.GetText("recovery_completed")); // Show success message
@@ -90,9 +96,12 @@ namespace Livrable1.View
         // Leave Button : Open main window and close this one
         private void ButtonLeave_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow viewMain = new MainWindow(); // Create a new instance of MainWindow
-            viewMain.Show(); // Show the MainWindow
-            this.Close(); // Close the current window
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+            mainWindow.Left = this.Left;
+            mainWindow.Top = this.Top;
+            mainWindow.Show();
+            this.Close();
         }
 
         // Method to update UI elements with language-specific texts
