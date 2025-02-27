@@ -15,6 +15,7 @@ using Livrable1.Model;
 using Livrable1.View;
 using Livrable1.ViewModel;
 using System.Text.Json;
+using System.Net.Sockets;
 
 namespace Livrable1
 {
@@ -24,11 +25,18 @@ namespace Livrable1
 
     public partial class MainWindow : Window
     {
+        private ExecuteBackupViewModel viewModel; // ViewModel for executing backups
+        public event EventHandler ServerWindowClosed; 
+
         // Constructor for MainWindow
         public MainWindow()
         {
             InitializeComponent(); // Initialize UI components
+            viewModel = new ExecuteBackupViewModel(); // Create a new instance of ExecuteBackupViewModel
+            this.DataContext = viewModel; // Set the DataContext to the ViewModel
             UpdateUILanguageMainWindows(); // Update UI elements with language-specific texts
+
+            Server.Instance.StartServer(8888); // Start the server
         }
 
         // Event handler for the "Add Backup" button click

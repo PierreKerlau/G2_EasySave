@@ -10,42 +10,15 @@
 
         <Label Content="EasySave Tracking" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36"/>
 
-        <Label x:Name="LabelMainViewExecuteBackupInProgress" Content="Execution in progress" 
-       HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="17"
-       Grid.Row="0" Margin="50,46,0,0" RenderTransformOrigin="0.183,0.614"/>
-
         <DataGrid x:Name="DataGridExecuteBackups"
           ItemsSource="{Binding Backups}"
           AutoGenerateColumns="False"
-          Margin="50,80,50,217">
+          Margin="50,84,50,39">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="SourceColumnExecute" Header="Nom" Binding="{Binding NameSave}" Width="*"/>
+                <DataGridTextColumn x:Name="SourceColumnExecute" Header="Name" Binding="{Binding NameSave}" Width="*"/>
                 <DataGridTextColumn x:Name="DestinationColumnExecute" Header="Source" Binding="{Binding SourcePath}" Width="*"/>
                 <DataGridTextColumn x:Name="BackupDestinationColumnExecute" Header="Destination" Binding="{Binding DestinationPath}" Width="*"/>
                 <DataGridTemplateColumn x:Name="ProgressColumnExecute" Header="Progression" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ProgressBar Value="{Binding Progression}" Minimum="0" Maximum="100" Height="20"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-
-
-        <Label x:Name="LabelMainViewRecoverBackupInProgress" Content="Recovery in progress" 
-        HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="17" Margin="50,223,0,0" RenderTransformOrigin="0.183,0.614"/>
-
-        <DataGrid x:Name="DataGridRecoverBackups"
-       ItemsSource="{Binding Backups}"
-       AutoGenerateColumns="False"
-       Margin="50,257,50,40">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn x:Name="NameColumnRecover" Header="✓" Binding="{Binding IsSelected}"/>
-                <DataGridTextColumn x:Name="SourceColumnRecover" Header="Nom" Binding="{Binding NameSave}" Width="*"/>
-                <DataGridTextColumn x:Name="DestinationColumnRecover" Header="Source" Binding="{Binding SourcePath}" Width="*"/>
-                <DataGridTextColumn x:Name="BackupDestinationColumnRecover" Header="Destination" Binding="{Binding DestinationPath}" Width="*"/>
-                <DataGridTemplateColumn x:Name="ProgressColumnRecover" Header="Progression" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ProgressBar Value="{Binding Progression}" Minimum="0" Maximum="100" Height="20"/>
