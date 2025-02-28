@@ -62,7 +62,7 @@
                               Margin="0,5,0,5" Checked="CheckBox_Checked_TXT" Unchecked="CheckBox_Unchecked_TXT"
                               Style="{StaticResource {x:Type CheckBox}}"/>
                     <CheckBox x:Name="CheckBoxMKV" Content="MKV" 
-                              Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_MKV" Unchecked="CheckBox_Unchecked_Prio_MKV"
+                              Margin="0,5,0,5" Checked="CheckBox_Checked_MKV" Unchecked="CheckBox_Unchecked_MKV"
                               Style="{StaticResource {x:Type CheckBox}}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">

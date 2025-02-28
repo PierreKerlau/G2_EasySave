@@ -25,17 +25,6 @@ namespace Livrable1.ViewModel
         public static bool IsXmlOn { get; set; } = false;
 
         // Method to update encryption settings for a specific extension
-        public static void UpdateExtensionEncryption(string extension, bool isEnabled)
-        {
-            if (isEnabled)
-            {
-                MessageBox.Show($"{LanguageManager.GetText("extension_name")} '{extension}' {LanguageManager.GetText("add_for_encryption")}"); // Show message when the extension is enabled for encryption
-            }
-            else
-            {
-                MessageBox.Show($"{LanguageManager.GetText("extension_name")} '{extension}' {LanguageManager.GetText("supp_for_encryption")}"); // Show message when the extension is disabled for encryption
-            }
-        }
 
         public static void UpdatePriorityExtension(string extension, bool isPriority)
         {
