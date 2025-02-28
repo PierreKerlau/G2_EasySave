@@ -8,15 +8,15 @@
         Title="EasySave - Parameters" Height="450" Width="800"
         Background="{StaticResource BackgroundBrush}">
     <Grid>
-        <!-- Main title -->
+        <!-- Titre principal -->
         <Label x:Name="LabelMainViewTitle" Content="EasySave" 
                HorizontalAlignment="Center" VerticalAlignment="Top" 
                FontSize="36" FontWeight="Bold" 
                Foreground="{StaticResource PrimaryBrush}" 
                Margin="0,20,0,0"/>
 
-        <!-- Language section -->
-        <StackPanel Margin="50,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <!-- Section Langue -->
+        <StackPanel Margin="50,122,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock x:Name="TextBlockLanguage" Text="Choose Language" 
                        FontWeight="Bold" Margin="0,0,0,10" 
                        Foreground="{StaticResource TextBrush}"/>
@@ -28,8 +28,8 @@
                          Style="{StaticResource {x:Type RadioButton}}"/>
         </StackPanel>
 
-        <!-- Business software section -->
-        <StackPanel Margin="50,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <!-- Section Logiciels métier -->
+        <StackPanel Margin="50,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock x:Name="TextBlockSoftware" Text="Business Software" 
                        FontWeight="Bold" Margin="0,0,0,10" 
                        Foreground="{StaticResource TextBrush}"/>
@@ -41,8 +41,8 @@
                       Style="{StaticResource {x:Type CheckBox}}"/>
         </StackPanel>
 
-        <!-- Extensions section -->
-        <StackPanel Margin="50,279,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <!-- Section Extensions -->
+        <StackPanel Margin="0,275,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock x:Name="TextBlockExtensions" Text="Extensions to encrypt" 
                        FontWeight="Bold" Margin="0,0,0,10" 
                        Foreground="{StaticResource TextBrush}"/>
@@ -62,8 +62,9 @@
                               Margin="0,5,0,5" Checked="CheckBox_Checked_TXT" Unchecked="CheckBox_Unchecked_TXT"
                               Style="{StaticResource {x:Type CheckBox}}"/>
                     <CheckBox x:Name="CheckBoxMKV" Content="MKV" 
-                              Margin="0,5,0,5" Checked="CheckBox_Checked_MKV" Unchecked="CheckBox_Unchecked_MKV"
+                              Margin="0,5,0,5" Checked="CheckBox_Checked_Prio_MKV" Unchecked="CheckBox_Unchecked_Prio_MKV"
                               Style="{StaticResource {x:Type CheckBox}}"/>
+
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <CheckBox x:Name="CheckBoxJSON" Content="JSON" 
@@ -82,8 +83,8 @@
             </Grid>
         </StackPanel>
 
-        <!-- Log format section -->
-        <StackPanel Margin="400,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <!-- Section Format des logs -->
+        <StackPanel Margin="654,122,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock x:Name="TextBlockLogFormat" Text="Log Format" 
                        FontWeight="Bold" Margin="0,0,0,10" 
                        Foreground="{StaticResource TextBrush}"/>
@@ -97,7 +98,7 @@
                          Style="{StaticResource {x:Type RadioButton}}"/>
         </StackPanel>
 
-        <StackPanel Margin="573,217,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel Margin="319,122,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock x:Name="TextBlockPriorityExtension" Text="Priority Extension" 
                        FontWeight="Bold" Margin="0,0,0,10" 
                        Foreground="{StaticResource TextBrush}"/>
@@ -137,10 +138,17 @@
             </Grid>
         </StackPanel>
 
-        <!-- Exit button -->
+        <!-- Bouton Quitter -->
         <Button x:Name="ButtonLeave" Content="Exit" 
                 HorizontalAlignment="Right" Margin="0,0,20,20" VerticalAlignment="Bottom" 
                 Click="ButtonLeave_Click_1"
                 Style="{StaticResource {x:Type Button}}" Width="100"/>
+        <StackPanel Margin="654,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock x:Name="TextBlockFileSize" 
+                FontWeight="Bold" Margin="0,0,0,10" 
+                Foreground="{StaticResource TextBrush}" Text="Max size"/>
+            <TextBox x:Name="MaxFileSize" TextWrapping="Wrap" Text="" Width="85" Height="35"/>
+            <Button Content="✔️" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" Click="ButtonSize_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

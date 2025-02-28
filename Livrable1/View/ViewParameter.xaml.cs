@@ -441,6 +441,19 @@ namespace Livrable1.View
             StateViewModel.UpdatePriorityExtension(".jpg", false);
         }
 
+        private void ButtonSize_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(MaxFileSize.Text, out int size))
+            {
+                StateViewModel.TailleLimiteKo = size;
+                MessageBox.Show(LanguageManager.GetText("size_updated"));
+            }
+            else
+            {
+                MessageBox.Show(LanguageManager.GetText("invalid_size"));
+            }
+        }
+
         // Method to update UI elements with language-specific texts
         private void UpdateUILanguageParameter()
         {

@@ -19,6 +19,7 @@ namespace Livrable1.ViewModel
         public static bool IsTxtEnabled { get; set; } = false;
         public static bool IsMkvEnabled { get; set; } = false;
         public static bool IsJpgEnabled { get; set; } = false;
+        public static int TailleLimiteKo { get; set; } = 1024;
 
         // Additional state flags for JSON and XML (e.g., for logging or output options)
         public static bool IsJsonOn { get; set; } = true;
