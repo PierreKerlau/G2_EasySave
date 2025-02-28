@@ -50,7 +50,7 @@ namespace Livrable1.Model
 
             try
             {
-                _tcpListener = new TcpListener(IPAddress.Loopback, port); // Initialize TCP listener
+                _tcpListener = new TcpListener(IPAddress.Any, port); // Initialize TCP listener
                 _tcpListener.Start(); // Start listening for connections
                 _isRunning = true; // Set running state to true
                 //MessageBox.Show("Server started on port " + port);
