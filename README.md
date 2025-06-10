@@ -30,6 +30,6 @@ ________________________________________________________________________________
 L'application a été développée en C# sur Visual Studio 2022, avec la bibliothèque .Net 8.0. 
 Nous avons également utilisé des diagrammes UML. Le langage Unified Modeling Language est destiné à faciliter la conception des documents nécessaires au développement d'un logiciel orienté objet, comme standard de modélisation de l'architecture logicielle.
 
-**Accès aux documents **
+<a href="https://github.com/PierreKerlau/G2_EasySave/tree/main/Documents">**Accès aux documents**</a>
 ____________________________________________________________________________________________________________________________________________________
 Les documents de la version V1.0 sont disponibles depuis la branche Version1 dans le dossier Documents
